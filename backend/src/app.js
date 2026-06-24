@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
+const authRoutes = require("./modules/auth/auth.routes");
 const errorMiddleware = require("./middlewares/error.middleware");
 
 const app = express();
@@ -14,6 +15,8 @@ app.get("/", (req, res) => {
     message: "Vyronix API is running",
   });
 });
+
+app.use("/api/auth", authRoutes);
 
 app.use(errorMiddleware);
 
