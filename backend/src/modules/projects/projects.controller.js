@@ -34,9 +34,7 @@ const createProject = async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "Project created successfully",
-      data: {
-        project,
-      },
+      data: { project },
     });
   } catch (error) {
     next(error);
@@ -45,13 +43,14 @@ const createProject = async (req, res, next) => {
 
 const getAllProjects = async (req, res, next) => {
   try {
-    const projects = await projectsService.getAllProjects(req.query);
+    const result = await projectsService.getAllProjects(req.query);
 
     res.status(200).json({
       success: true,
-      results: projects.length,
+      results: result.projects.length,
       data: {
-        projects,
+        projects: result.projects,
+        pagination: result.pagination,
       },
     });
   } catch (error) {
@@ -65,9 +64,20 @@ const getProjectById = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: {
-        project,
-      },
+      data: { project },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getProjectBySlug = async (req, res, next) => {
+  try {
+    const project = await projectsService.getProjectBySlug(req.params.slug);
+
+    res.status(200).json({
+      success: true,
+      data: { project },
     });
   } catch (error) {
     next(error);
@@ -81,9 +91,7 @@ const updateProject = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Project updated successfully",
-      data: {
-        project,
-      },
+      data: { project },
     });
   } catch (error) {
     next(error);
@@ -104,6 +112,7 @@ module.exports = {
   createProject,
   getAllProjects,
   getProjectById,
+  getProjectBySlug,
   updateProject,
   deleteProject,
 };
