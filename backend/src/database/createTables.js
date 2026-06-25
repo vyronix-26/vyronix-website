@@ -31,23 +31,22 @@ const createTables = async () => {
 
   await pool.query(usersTable);
 
-
   const projectsTable = `
-  CREATE TABLE IF NOT EXISTS projects (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(150) NOT NULL,
-    description TEXT NOT NULL,
-    image_url VARCHAR(500) NOT NULL,
-    github_url VARCHAR(500),
-    live_url VARCHAR(500),
-    type ENUM('SOFTWARE', 'UI_DESIGN') NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-  )
-`;
+    CREATE TABLE IF NOT EXISTS projects (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      title VARCHAR(150) NOT NULL,
+      description TEXT NOT NULL,
+      image_url VARCHAR(500) NOT NULL,
+      github_url VARCHAR(500),
+      live_url VARCHAR(500),
+      type ENUM('SOFTWARE', 'UI_DESIGN') NOT NULL,
+      category VARCHAR(100) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )
+  `;
 
-await pool.query(projectsTable);
-
+  await pool.query(projectsTable);
 
   const hasRefreshToken = await columnExists("users", "refresh_token");
 
@@ -55,6 +54,15 @@ await pool.query(projectsTable);
     await pool.query(`
       ALTER TABLE users
       ADD COLUMN refresh_token VARCHAR(500)
+    `);
+  }
+
+  const hasCategory = await columnExists("projects", "category");
+
+  if (!hasCategory) {
+    await pool.query(`
+      ALTER TABLE projects
+      ADD COLUMN category VARCHAR(100) NOT NULL DEFAULT 'GENERAL'
     `);
   }
 
