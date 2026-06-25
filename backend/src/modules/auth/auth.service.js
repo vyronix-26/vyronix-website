@@ -1,8 +1,35 @@
-const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const argon2 = require("argon2");
 
 const authRepository = require("./auth.repository");
 const AppError = require("../../utils/AppError");
-const generateToken = require("../../utils/generateToken");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../../utils/generateToken");
+
+const buildSafeUser = (user) => {
+  return {
+    id: user.id,
+    fullName: user.full_name || user.fullName,
+    email: user.email,
+    role: user.role,
+  };
+};
+
+const generateAuthTokens = async (user) => {
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
+
+  const hashedRefreshToken = await argon2.hash(refreshToken);
+
+  await authRepository.updateRefreshToken(user.id, hashedRefreshToken);
+
+  return {
+    accessToken,
+    refreshToken,
+  };
+};
 
 const signup = async ({ fullName, email, password }) => {
   const existingUser = await authRepository.findUserByEmail(email);
@@ -11,7 +38,7 @@ const signup = async ({ fullName, email, password }) => {
     throw new AppError("Email already exists", 409);
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await argon2.hash(password);
 
   const user = await authRepository.createUser({
     fullName,
@@ -19,11 +46,11 @@ const signup = async ({ fullName, email, password }) => {
     password: hashedPassword,
   });
 
-  const token = generateToken(user);
+  const tokens = await generateAuthTokens(user);
 
   return {
     user,
-    token,
+    tokens,
   };
 };
 
@@ -34,28 +61,69 @@ const login = async ({ email, password }) => {
     throw new AppError("Invalid email or password", 401);
   }
 
-  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+  const isPasswordCorrect = await argon2.verify(user.password, password);
 
   if (!isPasswordCorrect) {
     throw new AppError("Invalid email or password", 401);
   }
 
-  const safeUser = {
-    id: user.id,
-    fullName: user.full_name,
-    email: user.email,
-    role: user.role,
-  };
-
-  const token = generateToken(safeUser);
+  const safeUser = buildSafeUser(user);
+  const tokens = await generateAuthTokens(safeUser);
 
   return {
     user: safeUser,
-    token,
+    tokens,
+  };
+};
+
+const refreshToken = async (refreshTokenValue) => {
+  if (!refreshTokenValue) {
+    throw new AppError("Refresh token is required", 400);
+  }
+
+  let decoded;
+
+  try {
+    decoded = jwt.verify(refreshTokenValue, process.env.JWT_REFRESH_SECRET);
+  } catch (error) {
+    throw new AppError("Invalid or expired refresh token", 401);
+  }
+
+  const user = await authRepository.findUserAuthById(decoded.id);
+
+  if (!user || !user.refresh_token) {
+    throw new AppError("Refresh token is not valid", 401);
+  }
+
+  const isRefreshTokenValid = await argon2.verify(
+    user.refresh_token,
+    refreshTokenValue
+  );
+
+  if (!isRefreshTokenValid) {
+    throw new AppError("Refresh token is not valid", 401);
+  }
+
+  const safeUser = buildSafeUser(user);
+  const tokens = await generateAuthTokens(safeUser);
+
+  return {
+    user: safeUser,
+    tokens,
+  };
+};
+
+const logout = async (userId) => {
+  await authRepository.clearRefreshToken(userId);
+
+  return {
+    message: "Logged out successfully",
   };
 };
 
 module.exports = {
   signup,
   login,
+  refreshToken,
+  logout,
 };
