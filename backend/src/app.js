@@ -3,6 +3,8 @@ const cors = require("cors");
 
 const authRoutes = require("./modules/auth/auth.routes");
 const errorMiddleware = require("./middlewares/error.middleware");
+const projectsRoutes = require("./modules/projects/projects.routes");
+
 
 const app = express();
 
@@ -17,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/projects", projectsRoutes);
 
 app.use(errorMiddleware);
 
