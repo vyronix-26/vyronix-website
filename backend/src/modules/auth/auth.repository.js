@@ -36,8 +36,34 @@ const findUserById = async (id) => {
   return rows[0];
 };
 
+const findUserAuthById = async (id) => {
+  const [rows] = await pool.query(
+    `SELECT * FROM users WHERE id = ? LIMIT 1`,
+    [id]
+  );
+
+  return rows[0];
+};
+
+const updateRefreshToken = async (userId, hashedRefreshToken) => {
+  await pool.query(
+    `UPDATE users SET refresh_token = ? WHERE id = ?`,
+    [hashedRefreshToken, userId]
+  );
+};
+
+const clearRefreshToken = async (userId) => {
+  await pool.query(
+    `UPDATE users SET refresh_token = NULL WHERE id = ?`,
+    [userId]
+  );
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
   findUserById,
+  findUserAuthById,
+  updateRefreshToken,
+  clearRefreshToken,
 };

@@ -59,7 +59,16 @@ const validate = (schema) => {
   };
 };
 
+
+const refreshTokenSchema = Joi.object({
+  refreshToken: Joi.string().required().messages({
+    "string.empty": "Refresh token is required",
+    "any.required": "Refresh token is required",
+  }),
+});
+
 module.exports = {
   validateSignup: validate(signupSchema),
   validateLogin: validate(loginSchema),
+  validateRefreshToken: validate(refreshTokenSchema),
 };
