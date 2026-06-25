@@ -40,6 +40,12 @@ router.get(
 );
 
 router.get(
+  "/slug/:slug",
+  projectsValidation.validateProjectSlug,
+  projectsController.getProjectBySlug
+);
+
+router.get(
   "/:id",
   projectsValidation.validateProjectId,
   projectsController.getProjectById

@@ -32,71 +32,55 @@ const Joi = require("joi");
 const AppError = require("../../utils/AppError");
 const { PROJECT_TYPES } = require("./projects.constants");
 
+const categories = [
+  "WEB_APP",
+  "E_COMMERCE",
+  "DASHBOARD",
+  "LANDING_PAGE",
+  "PORTFOLIO",
+  "MOBILE_APP_UI",
+  "WEBSITE_UI",
+  "DASHBOARD_UI",
+  "BRANDING",
+  "GENERAL",
+];
+
 const createProjectSchema = Joi.object({
-  title: Joi.string().trim().min(3).max(150).required().messages({
-    "string.empty": "Project title is required",
-    "string.min": "Project title must be at least 3 characters",
-    "string.max": "Project title must be at most 150 characters",
-    "any.required": "Project title is required",
-  }),
+  title: Joi.string().trim().min(3).max(150).required(),
 
-  description: Joi.string().trim().min(10).required().messages({
-    "string.empty": "Project description is required",
-    "string.min": "Project description must be at least 10 characters",
-    "any.required": "Project description is required",
-  }),
+  description: Joi.string().trim().min(10).required(),
 
-  imageUrl: Joi.string().uri().required().messages({
-    "string.empty": "Project image URL is required",
-    "string.uri": "Project image must be a valid URL",
-    "any.required": "Project image URL is required",
-  }),
+  imageUrl: Joi.string().uri().required(),
 
-  githubUrl: Joi.string().uri().allow(null, "").messages({
-    "string.uri": "GitHub URL must be a valid URL",
-  }),
+  githubUrl: Joi.string().uri().allow(null, ""),
 
-  liveUrl: Joi.string().uri().allow(null, "").messages({
-    "string.uri": "Live URL must be a valid URL",
-  }),
+  liveUrl: Joi.string().uri().allow(null, ""),
 
   type: Joi.string()
     .valid(PROJECT_TYPES.SOFTWARE, PROJECT_TYPES.UI_DESIGN)
-    .required()
-    .messages({
-      "any.only": "Project type must be SOFTWARE or UI_DESIGN",
-      "string.empty": "Project type is required",
-      "any.required": "Project type is required",
-    }),
+    .required(),
+
+  category: Joi.string().valid(...categories).required(),
+
+  isFeatured: Joi.boolean().optional(),
 });
 
 const updateProjectSchema = Joi.object({
-  title: Joi.string().trim().min(3).max(150).messages({
-    "string.min": "Project title must be at least 3 characters",
-    "string.max": "Project title must be at most 150 characters",
-  }),
+  title: Joi.string().trim().min(3).max(150),
 
-  description: Joi.string().trim().min(10).messages({
-    "string.min": "Project description must be at least 10 characters",
-  }),
+  description: Joi.string().trim().min(10),
 
-  imageUrl: Joi.string().uri().messages({
-    "string.uri": "Project image must be a valid URL",
-  }),
+  imageUrl: Joi.string().uri(),
 
-  githubUrl: Joi.string().uri().allow(null, "").messages({
-    "string.uri": "GitHub URL must be a valid URL",
-  }),
+  githubUrl: Joi.string().uri().allow(null, ""),
 
-  liveUrl: Joi.string().uri().allow(null, "").messages({
-    "string.uri": "Live URL must be a valid URL",
-  }),
+  liveUrl: Joi.string().uri().allow(null, ""),
 
-  type: Joi.string()
-    .valid(PROJECT_TYPES.SOFTWARE, PROJECT_TYPES.UI_DESIGN)
-    .messages({
-      "any.only": "Project type must be SOFTWARE or UI_DESIGN",
-    }),
+  type: Joi.string().valid(PROJECT_TYPES.SOFTWARE, PROJECT_TYPES.UI_DESIGN),
+
+  category: Joi.string().valid(...categories),
+
+  isFeatured: Joi.boolean(),
 })
   .min(1)
   .messages({
@@ -104,25 +88,31 @@ const updateProjectSchema = Joi.object({
   });
 
 const projectIdSchema = Joi.object({
-  id: Joi.number().integer().positive().required().messages({
-    "number.base": "Project id must be a number",
-    "number.integer": "Project id must be an integer",
-    "number.positive": "Project id must be positive",
-    "any.required": "Project id is required",
-  }),
+  id: Joi.number().integer().positive().required(),
+});
+
+const projectSlugSchema = Joi.object({
+  slug: Joi.string().trim().min(3).max(180).required(),
 });
 
 const projectQuerySchema = Joi.object({
-  type: Joi.string()
-    .valid(PROJECT_TYPES.SOFTWARE, PROJECT_TYPES.UI_DESIGN)
-    .optional()
-    .messages({
-      "any.only": "Project type must be SOFTWARE or UI_DESIGN",
-    }),
+  type: Joi.string().valid(PROJECT_TYPES.SOFTWARE, PROJECT_TYPES.UI_DESIGN),
+
+  category: Joi.string().valid(...categories),
+
+  search: Joi.string().trim().max(100),
+
+  featured: Joi.boolean(),
+
+  sort: Joi.string().valid("newest", "oldest").default("newest"),
+
+  page: Joi.number().integer().positive().default(1),
+
+  limit: Joi.number().integer().positive().max(50).default(9),
 });
 
-const validateBody = (schema) => (req, res, next) => {
-  const { error, value } = schema.validate(req.body, {
+const validate = (schema, property) => (req, res, next) => {
+  const { error, value } = schema.validate(req[property], {
     abortEarly: false,
     stripUnknown: true,
   });
@@ -132,43 +122,14 @@ const validateBody = (schema) => (req, res, next) => {
     return next(new AppError(message, 400));
   }
 
-  req.body = value;
-  next();
-};
-
-const validateParams = (schema) => (req, res, next) => {
-  const { error, value } = schema.validate(req.params, {
-    abortEarly: false,
-    stripUnknown: true,
-  });
-
-  if (error) {
-    const message = error.details.map((detail) => detail.message).join(", ");
-    return next(new AppError(message, 400));
-  }
-
-  req.params = value;
-  next();
-};
-
-const validateQuery = (schema) => (req, res, next) => {
-  const { error, value } = schema.validate(req.query, {
-    abortEarly: false,
-    stripUnknown: true,
-  });
-
-  if (error) {
-    const message = error.details.map((detail) => detail.message).join(", ");
-    return next(new AppError(message, 400));
-  }
-
-  req.query = value;
+  req[property] = value;
   next();
 };
 
 module.exports = {
-  validateCreateProject: validateBody(createProjectSchema),
-  validateUpdateProject: validateBody(updateProjectSchema),
-  validateProjectId: validateParams(projectIdSchema),
-  validateProjectQuery: validateQuery(projectQuerySchema),
+  validateCreateProject: validate(createProjectSchema, "body"),
+  validateUpdateProject: validate(updateProjectSchema, "body"),
+  validateProjectId: validate(projectIdSchema, "params"),
+  validateProjectSlug: validate(projectSlugSchema, "params"),
+  validateProjectQuery: validate(projectQuerySchema, "query"),
 };
