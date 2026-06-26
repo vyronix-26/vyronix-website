@@ -33,7 +33,9 @@ const express = require("express");
 const projectsController = require("./projects.controller");
 const projectsValidation = require("./projects.validation");
 const { authenticate, authorize } = require("../../middlewares/auth.middleware");
-const { uploadProjectImage } = require("../../middlewares/upload.middleware");
+const { createUploader } = require("../../middlewares/upload.middleware");
+
+const uploadProjectImage = createUploader("projects");
 
 const router = express.Router();
 
