@@ -15,15 +15,18 @@
  * Main validations:
  * - title: required for create, optional for update, 3-150 characters.
  * - description: required for create, optional for update, at least 10 characters.
- * - imageUrl: required for create, optional for update, must be a valid URL.
+ * - imageUrl: optional, must be a valid URL if provided. Uploaded images are handled through Multer.
  * - githubUrl: optional, must be a valid URL if provided.
  * - liveUrl: optional, must be a valid URL if provided.
  * - type: required for create, optional for update, must be either SOFTWARE or UI_DESIGN.
+ * - category: required for create, optional for update, must match one of the supported categories.
+ * - isFeatured: optional boolean flag indicating whether the project is featured.
  *
  * Exported middleware:
  * - validateCreateProject
  * - validateUpdateProject
  * - validateProjectId
+ * - validateProjectSlug
  * - validateProjectQuery
  */
 
@@ -50,7 +53,7 @@ const createProjectSchema = Joi.object({
 
   description: Joi.string().trim().min(10).required(),
 
-  imageUrl: Joi.string().uri().required(),
+  imageUrl: Joi.string().uri().optional(),
 
   githubUrl: Joi.string().uri().allow(null, ""),
 
@@ -70,7 +73,7 @@ const updateProjectSchema = Joi.object({
 
   description: Joi.string().trim().min(10),
 
-  imageUrl: Joi.string().uri(),
+  imageUrl: Joi.string().uri().optional(),
 
   githubUrl: Joi.string().uri().allow(null, ""),
 
