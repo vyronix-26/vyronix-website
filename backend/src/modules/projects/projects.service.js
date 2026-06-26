@@ -7,6 +7,7 @@
  * Responsibilities:
  * - Handle project-related business operations.
  * - Verify that a project exists before updating or deleting it.
+ * - Ensure project image is provided when creating a new project.
  * - Throw appropriate application errors when a project cannot be found.
  * - Delegate database operations to the repository layer.
  *
@@ -14,6 +15,7 @@
  * - Create a new project.
  * - Retrieve all projects (with optional filters).
  * - Retrieve a single project by its ID.
+ * - Retrieve a single project by its slug.
  * - Update an existing project.
  * - Delete a project.
  *
@@ -21,7 +23,6 @@
  * Database queries are handled by the repository layer.
  * This service focuses only on business rules and validation logic.
  */
-
 
 const projectsRepository = require("./projects.repository");
 const AppError = require("../../utils/AppError");
@@ -43,6 +44,10 @@ const buildPagination = ({ page, limit, total }) => {
 };
 
 const createProject = async (projectData) => {
+  if (!projectData.imageUrl) {
+    throw new AppError("Project image is required", 400);
+  }
+
   const slug = createSlug(projectData.title);
 
   const existingProject = await projectsRepository.findProjectBySlug(slug);
@@ -114,7 +119,9 @@ const updateProject = async (id, projectData) => {
   if (projectData.title) {
     const newSlug = createSlug(projectData.title);
 
-    const projectWithSameSlug = await projectsRepository.findProjectBySlug(newSlug);
+    const projectWithSameSlug = await projectsRepository.findProjectBySlug(
+      newSlug
+    );
 
     if (projectWithSameSlug && projectWithSameSlug.id !== Number(id)) {
       throw new AppError("Project with this title already exists", 409);
