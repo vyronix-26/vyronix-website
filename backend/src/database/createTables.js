@@ -19,7 +19,8 @@ const createTables = async () => {
   const usersTable = `
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      full_name VARCHAR(100) NOT NULL,
+      first_name VARCHAR(50) NOT NULL,
+      last_name VARCHAR(50) NOT NULL,
       email VARCHAR(150) NOT NULL UNIQUE,
       password VARCHAR(255) NOT NULL,
       role ENUM('CLIENT', 'ADMIN') NOT NULL DEFAULT 'CLIENT',
@@ -74,8 +75,39 @@ const createTables = async () => {
     `);
   }
 
-  const hasRefreshToken = await columnExists("users", "refresh_token");
+  const hasFirstName = await columnExists("users", "first_name");
+  if (!hasFirstName) {
+    await pool.query(`
+      ALTER TABLE users
+      ADD COLUMN first_name VARCHAR(50) NOT NULL DEFAULT ''
+    `);
+  }
 
+  const hasLastName = await columnExists("users", "last_name");
+  if (!hasLastName) {
+    await pool.query(`
+      ALTER TABLE users
+      ADD COLUMN last_name VARCHAR(50) NOT NULL DEFAULT ''
+    `);
+  }
+
+  const hasFullName = await columnExists("users", "full_name");
+  if (hasFullName) {
+    await pool.query(`
+      UPDATE users
+      SET
+        first_name = SUBSTRING_INDEX(full_name, ' ', 1),
+        last_name = TRIM(SUBSTRING(full_name, LENGTH(SUBSTRING_INDEX(full_name, ' ', 1)) + 1))
+      WHERE first_name = '' AND last_name = '';
+    `);
+
+    await pool.query(`
+      ALTER TABLE users
+      DROP COLUMN full_name
+    `);
+  }
+
+  const hasRefreshToken = await columnExists("users", "refresh_token");
   if (!hasRefreshToken) {
     await pool.query(`
       ALTER TABLE users

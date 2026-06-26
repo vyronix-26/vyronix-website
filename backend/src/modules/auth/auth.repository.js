@@ -9,16 +9,17 @@ const findUserByEmail = async (email) => {
   return rows[0];
 };
 
-const createUser = async ({ fullName, email, password }) => {
+const createUser = async ({ firstName, lastName, email, password }) => {
   const [result] = await pool.query(
-    `INSERT INTO users (full_name, email, password, role)
-     VALUES (?, ?, ?, 'CLIENT')`,
-    [fullName, email, password]
+    `INSERT INTO users (first_name, last_name, email, password, role)
+     VALUES (?, ?, ?, ?, ?)`,
+    [firstName, lastName, email, password, "CLIENT"]
   );
 
   return {
     id: result.insertId,
-    fullName,
+    firstName,
+    lastName,
     email,
     role: "CLIENT",
   };
@@ -26,7 +27,13 @@ const createUser = async ({ fullName, email, password }) => {
 
 const findUserById = async (id) => {
   const [rows] = await pool.query(
-    `SELECT id, full_name AS fullName, email, role, created_at AS createdAt
+    `SELECT
+      id,
+      first_name AS firstName,
+      last_name AS lastName,
+      email,
+      role,
+      created_at AS createdAt
      FROM users
      WHERE id = ?
      LIMIT 1`,
