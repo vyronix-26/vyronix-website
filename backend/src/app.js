@@ -5,6 +5,7 @@ const authRoutes = require("./modules/auth/auth.routes");
 const errorMiddleware = require("./middlewares/error.middleware");
 const projectsRoutes = require("./modules/projects/projects.routes");
 const servicesRoutes = require("./modules/services/services.routes");
+const projectRequestsRoutes = require("./modules/projectRequests/projectRequests.routes");
 
 
 
@@ -24,7 +25,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectsRoutes);
 app.use("/api/services", servicesRoutes);
-
+app.use("/api/project-requests", projectRequestsRoutes);
 app.use(errorMiddleware);
 
 module.exports = app;
