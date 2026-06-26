@@ -12,8 +12,8 @@ const findUserByEmail = async (email) => {
 const createUser = async ({ firstName, lastName, email, password }) => {
   const [result] = await pool.query(
     `INSERT INTO users (first_name, last_name, email, password, role)
-     VALUES (?, ?, ?, ?, ?)`,
-    [firstName, lastName, email, password, "CLIENT"]
+     VALUES (?, ?, ?, ?, 'CLIENT')`,
+    [firstName, lastName, email, password]
   );
 
   return {
@@ -27,16 +27,22 @@ const createUser = async ({ firstName, lastName, email, password }) => {
 
 const findUserById = async (id) => {
   const [rows] = await pool.query(
-    `SELECT
+    `
+    SELECT 
       id,
       first_name AS firstName,
       last_name AS lastName,
       email,
       role,
+      profile_image AS profileImage,
+      is_active AS isActive,
+      email_verified AS emailVerified,
+      last_login AS lastLogin,
       created_at AS createdAt
-     FROM users
-     WHERE id = ?
-     LIMIT 1`,
+    FROM users
+    WHERE id = ?
+    LIMIT 1
+    `,
     [id]
   );
 
@@ -66,6 +72,13 @@ const clearRefreshToken = async (userId) => {
   );
 };
 
+const updateLastLogin = async (userId) => {
+  await pool.query(
+    `UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?`,
+    [userId]
+  );
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
@@ -73,4 +86,5 @@ module.exports = {
   findUserAuthById,
   updateRefreshToken,
   clearRefreshToken,
+  updateLastLogin,
 };
