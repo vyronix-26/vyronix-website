@@ -4,10 +4,18 @@ const AppError = require("../../utils/AppError");
 const { nameRegex, emailRegex, passwordRegex } = require("../../utils/regex");
 
 const signupSchema = Joi.object({
-  fullName: Joi.string().pattern(nameRegex).required().messages({
-    "string.empty": "Full name is required",
-    "string.pattern.base": "Full name must contain only letters and spaces, 3-50 characters",
-    "any.required": "Full name is required",
+  firstName: Joi.string().pattern(nameRegex).required().messages({
+    "string.empty": "First name is required",
+    "string.pattern.base":
+      "First name must contain only letters and spaces, 3-50 characters",
+    "any.required": "First name is required",
+  }),
+
+  lastName: Joi.string().pattern(nameRegex).required().messages({
+    "string.empty": "Last name is required",
+    "string.pattern.base":
+      "Last name must contain only letters and spaces, 3-50 characters",
+    "any.required": "Last name is required",
   }),
 
   email: Joi.string().pattern(emailRegex).required().messages({
@@ -58,7 +66,6 @@ const validate = (schema) => {
     next();
   };
 };
-
 
 const refreshTokenSchema = Joi.object({
   refreshToken: Joi.string().required().messages({

@@ -11,7 +11,8 @@ const {
 const buildSafeUser = (user) => {
   return {
     id: user.id,
-    fullName: user.full_name || user.fullName,
+    firstName: user.first_name || user.firstName,
+    lastName: user.last_name || user.lastName,
     email: user.email,
     role: user.role,
   };
@@ -31,7 +32,7 @@ const generateAuthTokens = async (user) => {
   };
 };
 
-const signup = async ({ fullName, email, password }) => {
+const signup = async ({ firstName, lastName, email, password }) => {
   const existingUser = await authRepository.findUserByEmail(email);
 
   if (existingUser) {
@@ -41,7 +42,8 @@ const signup = async ({ fullName, email, password }) => {
   const hashedPassword = await argon2.hash(password);
 
   const user = await authRepository.createUser({
-    fullName,
+    firstName,
+    lastName,
     email,
     password: hashedPassword,
   });
