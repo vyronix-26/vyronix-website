@@ -15,6 +15,10 @@ const buildSafeUser = (user) => {
     lastName: user.last_name || user.lastName,
     email: user.email,
     role: user.role,
+    profileImage: user.profile_image || user.profileImage || null,
+    isActive: user.is_active ?? user.isActive,
+    emailVerified: user.email_verified ?? user.emailVerified,
+    lastLogin: user.last_login || user.lastLogin || null,
   };
 };
 
@@ -69,7 +73,13 @@ const login = async ({ email, password }) => {
     throw new AppError("Invalid email or password", 401);
   }
 
-  const safeUser = buildSafeUser(user);
+  await authRepository.updateLastLogin(user.id);
+
+  const safeUser = buildSafeUser({
+    ...user,
+    last_login: new Date(),
+  });
+
   const tokens = await generateAuthTokens(safeUser);
 
   return {
