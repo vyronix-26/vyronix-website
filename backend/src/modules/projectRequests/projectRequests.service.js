@@ -13,6 +13,8 @@
  * - Update request status and admin note.
  * - Delete an existing project request.
  * - Enforce ownership checks for client-specific request access.
+ * - Send notifications to admins when a new project request is created.
+ * - Send notifications to clients when their request status is updated.
  * - Throw application-specific errors when requests are not found or access is denied.
  *
  * Notes:
@@ -23,13 +25,29 @@
  */
 
 const projectRequestsRepository = require("./projectRequests.repository");
+const notificationsRepository = require("../notifications/notifications.repository");
+const {
+  NOTIFICATION_TYPES,
+} = require("../notifications/notifications.constants");
 const AppError = require("../../utils/AppError");
 
 const createRequest = async (clientId, requestData) => {
-  return projectRequestsRepository.createRequest({
+  const request = await projectRequestsRepository.createRequest({
     ...requestData,
     clientId,
   });
+
+  const adminIds = await notificationsRepository.findUserIdsByRole("ADMIN");
+
+  await notificationsRepository.createNotificationsForUsers({
+    userIds: adminIds,
+    title: "New Project Request",
+    message: "A client submitted a new project request.",
+    type: NOTIFICATION_TYPES.PROJECT_REQUEST,
+    referenceId: request.id,
+  });
+
+  return request;
 };
 
 const getAllRequests = async () => {
@@ -65,16 +83,24 @@ const getMyRequestById = async (clientId, requestId) => {
 };
 
 const updateRequestStatus = async (id, statusData) => {
-  const request = await projectRequestsRepository.updateRequestStatus(
+  const updatedRequest = await projectRequestsRepository.updateRequestStatus(
     id,
     statusData
   );
 
-  if (!request) {
+  if (!updatedRequest) {
     throw new AppError("Project request not found", 404);
   }
 
-  return request;
+  await notificationsRepository.createNotification({
+    userId: updatedRequest.clientId,
+    title: "Project Request Updated",
+    message: `Your project request status is now ${updatedRequest.status}.`,
+    type: NOTIFICATION_TYPES.PROJECT_REQUEST,
+    referenceId: updatedRequest.id,
+  });
+
+  return updatedRequest;
 };
 
 const deleteRequest = async (id) => {

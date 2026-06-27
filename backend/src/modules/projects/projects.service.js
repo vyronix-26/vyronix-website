@@ -25,6 +25,10 @@
  */
 
 const projectsRepository = require("./projects.repository");
+const notificationsRepository = require("../notifications/notifications.repository");
+const {
+  NOTIFICATION_TYPES,
+} = require("../notifications/notifications.constants");
 const AppError = require("../../utils/AppError");
 const createSlug = require("../../utils/createSlug");
 
@@ -56,10 +60,22 @@ const createProject = async (projectData) => {
     throw new AppError("Project with this title already exists", 409);
   }
 
-  return projectsRepository.createProject({
+  const project = await projectsRepository.createProject({
     ...projectData,
     slug,
   });
+
+  const clientIds = await notificationsRepository.findUserIdsByRole("CLIENT");
+
+  await notificationsRepository.createNotificationsForUsers({
+    userIds: clientIds,
+    title: "New Project Added",
+    message: `A new project has been added: ${project.title}.`,
+    type: NOTIFICATION_TYPES.PROJECT,
+    referenceId: project.id,
+  });
+
+  return project;
 };
 
 const getAllProjects = async (filters) => {

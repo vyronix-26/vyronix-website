@@ -11,6 +11,7 @@
  * - Update an existing service.
  * - Delete a service.
  * - Ensure a service image is provided when creating a new service.
+ * - Send notifications to clients when a new service is added.
  * - Throw application-specific errors when business rules are violated.
  *
  * Notes:
@@ -21,6 +22,10 @@
  */
 
 const servicesRepository = require("./services.repository");
+const notificationsRepository = require("../notifications/notifications.repository");
+const {
+  NOTIFICATION_TYPES,
+} = require("../notifications/notifications.constants");
 const AppError = require("../../utils/AppError");
 
 const createService = async (serviceData) => {
@@ -28,7 +33,19 @@ const createService = async (serviceData) => {
     throw new AppError("Service image is required", 400);
   }
 
-  return servicesRepository.createService(serviceData);
+  const service = await servicesRepository.createService(serviceData);
+
+  const clientIds = await notificationsRepository.findUserIdsByRole("CLIENT");
+
+  await notificationsRepository.createNotificationsForUsers({
+    userIds: clientIds,
+    title: "New Service Added",
+    message: `A new service has been added: ${service.title}.`,
+    type: NOTIFICATION_TYPES.SERVICE,
+    referenceId: service.id,
+  });
+
+  return service;
 };
 
 const getAllServices = async () => {
