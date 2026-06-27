@@ -11,6 +11,7 @@ const notificationsRoutes = require("./modules/notifications/notifications.route
 const userManagementRoutes = require(
     "./modules/userManagement/userManagement.routes"
 );
+const feedbackRoutes = require("./modules/feedback/feedback.routes");
 
 
 
@@ -35,6 +36,7 @@ app.use("/api/project-requests", projectRequestsRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/admin/users", userManagementRoutes);
+app.use("/api/feedback", feedbackRoutes);
 app.use(errorMiddleware);
 
 module.exports = app;
