@@ -12,6 +12,7 @@ const userManagementRoutes = require(
     "./modules/userManagement/userManagement.routes"
 );
 const feedbackRoutes = require("./modules/feedback/feedback.routes");
+const reportsRoutes = require("./modules/reports/reports.routes");
 
 
 
@@ -37,6 +38,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/admin/users", userManagementRoutes);
 app.use("/api/feedback", feedbackRoutes);
+app.use("/api/admin/reports", reportsRoutes);
 app.use(errorMiddleware);
 
 module.exports = app;
