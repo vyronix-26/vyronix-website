@@ -33,6 +33,7 @@ const findUserById = async (id) => {
       first_name AS firstName,
       last_name AS lastName,
       email,
+      phone,
       role,
       profile_image AS profileImage,
       is_active AS isActive,

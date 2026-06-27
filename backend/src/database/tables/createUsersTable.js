@@ -8,6 +8,7 @@ const createUsersTable = async () => {
       first_name VARCHAR(50) NOT NULL,
       last_name VARCHAR(50) NOT NULL,
       email VARCHAR(150) NOT NULL UNIQUE,
+      phone VARCHAR(30),
       password VARCHAR(255) NOT NULL,
       role ENUM('CLIENT', 'ADMIN') NOT NULL DEFAULT 'CLIENT',
       profile_image VARCHAR(500),
@@ -24,6 +25,7 @@ const createUsersTable = async () => {
 
   await addColumnIfNotExists("users", "first_name", "VARCHAR(50) NOT NULL DEFAULT ''");
   await addColumnIfNotExists("users", "last_name", "VARCHAR(50) NOT NULL DEFAULT ''");
+  await addColumnIfNotExists("users", "phone", "VARCHAR(30)");
   await addColumnIfNotExists("users", "profile_image", "VARCHAR(500)");
   await addColumnIfNotExists("users", "is_active", "BOOLEAN DEFAULT TRUE");
   await addColumnIfNotExists("users", "email_verified", "BOOLEAN DEFAULT FALSE");
