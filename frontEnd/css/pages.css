@@ -14,7 +14,10 @@
     gap: 10px;
     margin-top: 15px;
 }
-
+.navbar a:hover,
+.navbar a.active {
+  color: #22c7e8;
+}
 .btn {
     padding: 10px 14px;
     border-radius: 10px;

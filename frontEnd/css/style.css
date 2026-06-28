@@ -353,6 +353,7 @@ a {
 
 }
 
+
 /* Learn More */
 
 .service-card a{
@@ -650,4 +651,8 @@ a {
     font-size:13px;
     color:#8ea7b8;
     text-align:center;
+}
+.navbar a:hover,
+.navbar a.active {
+  color: #22c7e8;
 }

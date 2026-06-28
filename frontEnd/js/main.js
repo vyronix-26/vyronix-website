@@ -26,7 +26,7 @@ function filterCards(value) {
     });
 }
 
-// debounce عشان ما يشتغل على كل حرف بشكل مزعج
+
 function debounce(func, delay) {
     let timer;
     return function (...args) {
