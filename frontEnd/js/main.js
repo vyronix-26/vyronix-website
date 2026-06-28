@@ -1,14 +1,186 @@
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll() {
+    reveals.forEach((el) => {
+        const windowHeight = window.innerHeight;
+        const elementTop = el.getBoundingClientRect().top;
+
+        if (elementTop < windowHeight - 90) {
+            el.classList.add("active");
+        }
+    });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll);
+
+const menuBtn = document.getElementById("menuBtn");
+const navbar = document.getElementById("navbar");
+
+if (menuBtn && navbar) {
+    menuBtn.addEventListener("click", () => {
+        navbar.classList.toggle("show");
+    });
+
+    document.querySelectorAll(".navbar a").forEach((link) => {
+        link.addEventListener("click", () => {
+            navbar.classList.remove("show");
+        });
+    });
+}
+
+const counters = document.querySelectorAll("[data-count]");
+let countersStarted = false;
+
+function startCounters() {
+    if (countersStarted) return;
+
+    const statsSection = document.querySelector(".stats-section");
+    if (!statsSection) return;
+
+    const top = statsSection.getBoundingClientRect().top;
+
+    if (top < window.innerHeight - 120) {
+        countersStarted = true;
+
+        counters.forEach((counter) => {
+            const target = Number(counter.dataset.count);
+            let current = 0;
+            const speed = Math.max(1, Math.floor(target / 70));
+
+            const update = () => {
+                current += speed;
+
+                if (current >= target) {
+                    counter.textContent = target;
+                    return;
+                }
+
+                counter.textContent = current;
+                requestAnimationFrame(update);
+            };
+
+            update();
+        });
+    }
+}
+
+window.addEventListener("scroll", startCounters);
+window.addEventListener("load", startCounters);
+const glow = document.getElementById("cursor-glow");
+
+document.addEventListener("mousemove",(e)=>{
+
+    glow.style.left = e.clientX + "px";
+    glow.style.top  = e.clientY + "px";
+
+});
+/* Active navbar */
 const navLinks = document.querySelectorAll(".navbar a");
 
-navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-        navLinks.forEach(item => item.classList.remove("active"));
-        link.classList.add("active");
+function updateActiveNav() {
+    const currentPage = window.location.pathname.split("/").pop();
+    const currentHash = window.location.hash;
+
+    navLinks.forEach(link => {
+        link.classList.remove("active");
+
+        const linkHref = link.getAttribute("href");
+
+        if (currentPage === "index.html" || currentPage === "") {
+            if (currentHash) {
+                if (linkHref === `index.html${currentHash}`) {
+                    link.classList.add("active");
+                }
+            } else if (linkHref === "index.html#home") {
+                link.classList.add("active");
+            }
+        }
+
+        if (currentPage === "ourteam.html" && linkHref === "ourteam.html") {
+            link.classList.add("active");
+        }
+
+        if (currentPage === "contact.html" && linkHref === "contact.html") {
+            link.classList.add("active");
+        }
+
+        if (currentPage === "chatbot.html" && linkHref === "chatbot.html") {
+            link.classList.add("active");
+        }
+    });
+}
+
+window.addEventListener("load", updateActiveNav);
+window.addEventListener("hashchange", updateActiveNav);
+
+/* Loader between pages */
+const pageLoader = document.getElementById("pageLoader");
+
+document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", function(e) {
+        const href = this.getAttribute("href");
+
+        if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+            return;
+        }
+
+        if (href.includes("#") && href.includes("index.html") && window.location.pathname.includes("index.html")) {
+            return;
+        }
+
+        e.preventDefault();
+
+        if (pageLoader) {
+            pageLoader.classList.add("show");
+        }
+
+        setTimeout(() => {
+            window.location.href = href;
+        }, 450);
     });
 });
 
-const chatBtn = document.querySelector(".chat-btn");
+/* Card 3D movement */
+const motionCards = document.querySelectorAll(".project-category-card, .service-card");
 
-chatBtn.addEventListener("click", () => {
-    alert("Hello! I am VYRONIX smart assistant.");
+motionCards.forEach(card => {
+    card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const rotateX = ((y / rect.height) - .5) * -10;
+        const rotateY = ((x / rect.width) - .5) * 10;
+
+        card.style.transform = `translateY(-12px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    card.addEventListener("mouseleave", () => {
+        card.style.transform = "";
+    });
 });
+/* Profile Dropdown */
+const profileBtn = document.getElementById("profileBtn");
+const profileDropdown = document.getElementById("profileDropdown");
+
+if (profileBtn && profileDropdown) {
+    profileBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        profileDropdown.classList.toggle("show");
+    });
+
+    profileDropdown.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+
+    document.addEventListener("click", () => {
+        profileDropdown.classList.remove("show");
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            profileDropdown.classList.remove("show");
+        }
+    });
+}

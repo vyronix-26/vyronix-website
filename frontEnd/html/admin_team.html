@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VYRONIX | Manage Team</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-logo">
+        <img src="../assets/images/logo.png" alt="VYRONIX Logo">
+        <span>VYRONIX</span>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html#home">Home</a>
+        <a href="our-team.html">Our Team</a>
+        <a href="admin-team.html" class="active">Manage Team</a>
+    </nav>
+</header>
+
+<main>
+    <section class="section admin-team-section">
+
+        <div class="section-header">
+            <h2>Manage Team</h2>
+            <p>Add team members and test how they appear on Our Team page.</p>
+        </div>
+
+        <form class="admin-form" id="teamForm">
+            <input type="text" id="name" placeholder="Member Name" required>
+            <input type="text" id="role" placeholder="Role / Position" required>
+            <input type="text" id="image" placeholder="Image URL or path" required>
+            <textarea id="description" placeholder="Short Description" required></textarea>
+            <button type="submit">Add Member</button>
+        </form>
+
+        <div class="team-grid" id="adminTeamGrid"></div>
+
+    </section>
+</main>
+
+<script src="../js/admin-team.js"></script>
+</body>
+</html>

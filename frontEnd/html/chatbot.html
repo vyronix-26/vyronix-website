@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VYRONIX | Smart Assistant</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+<div id="cursor-glow"></div>
+
+<header class="header">
+    <a href="index.html" class="header-logo">
+        <img src="../assets/images/logo.png" alt="VYRONIX Logo">
+        <span>VYRONIX</span>
+    </a>
+
+    <nav class="navbar" id="navbar">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="our-team.html">Our Team</a>
+        <a href="contact.html">Contact</a>
+        <a href="chatbot.html" class="active">Chatbot</a>
+    </nav>
+
+    <div class="header-actions">
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search">
+        </div>
+
+        <button class="header-icon-btn" aria-label="Messages">
+            <i class="bi bi-envelope"></i>
+        </button>
+
+        <button class="header-icon-btn" aria-label="Notifications">
+            <i class="bi bi-bell"></i>
+        </button>
+
+        <div class="user-avatar">R</div>
+    </div>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Open Menu">
+        <i class="bi bi-list"></i>
+    </button>
+</header>
+
+<main>
+    <section class="chatbot-page">
+        <div class="chat-orb orb-one"></div>
+        <div class="chat-orb orb-two"></div>
+        <div class="hero-bg-grid"></div>
+
+        <div class="chatbot-intro reveal">
+            <span class="section-badge">VYRONIX AI Assistant</span>
+            <h1>Smart Support for Digital Products</h1>
+            <p>
+                Ask about websites, mobile apps, dashboards, AI assistants, UI/UX design,
+                pricing, timelines, and project consultation.
+            </p>
+
+            <div class="chatbot-features">
+                <div><i class="bi bi-lightning-charge"></i> Fast Answers</div>
+                <div><i class="bi bi-cpu"></i> AI Powered</div>
+                <div><i class="bi bi-shield-check"></i> Business Focused</div>
+            </div>
+        </div>
+
+        <div class="chatbot-layout reveal">
+            <aside class="chatbot-sidebar">
+                <div class="assistant-profile">
+                    <div class="assistant-avatar">
+                        <i class="bi bi-robot"></i>
+                    </div>
+                    <div>
+                        <h3>VYRONIX Assistant</h3>
+                        <p><span></span> Online now</p>
+                    </div>
+                </div>
+
+                <h4>Suggested Questions</h4>
+
+                <button class="suggestion-btn">What services does VYRONIX provide?</button>
+                <button class="suggestion-btn">I need a company website.</button>
+                <button class="suggestion-btn">Can you build a dashboard system?</button>
+                <button class="suggestion-btn">How much does a mobile app cost?</button>
+                <button class="suggestion-btn">How can I contact the team?</button>
+
+                <div class="chat-mini-card">
+                    <i class="bi bi-stars"></i>
+                    <h4>Need a custom solution?</h4>
+                    <p>Tell us your idea and we will guide you to the best digital product.</p>
+                </div>
+            </aside>
+
+            <section class="chat-window">
+                <div class="chat-header">
+                    <div class="chat-header-left">
+                        <div class="assistant-avatar small">
+                            <i class="bi bi-robot"></i>
+                        </div>
+                        <div>
+                            <h3>VYRONIX Assistant</h3>
+                            <p>Smart support for digital solutions</p>
+                        </div>
+                    </div>
+
+                    <div class="chat-header-actions">
+                        <button type="button" id="clearChat" aria-label="Clear Chat">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        <div class="message-icon">
+                            <i class="bi bi-robot"></i>
+                        </div>
+                        <p>Hello! I’m VYRONIX smart assistant. How can I help your business today?</p>
+                    </div>
+                </div>
+
+                <form class="chat-input-area" id="chatForm">
+                    <input type="text" id="chatInput" placeholder="Write your message..." autocomplete="off" required>
+                    <button type="submit" aria-label="Send Message">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </form>
+            </section>
+        </div>
+    </section>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/chatbot.js"></script>
+</body>
+</html>
