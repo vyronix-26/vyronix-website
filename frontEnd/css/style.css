@@ -2877,3 +2877,16 @@ img {
 .navbar a.active {
   color: #22c7e8;
 }
+.service-card::before,
+.service-card::after,
+.project-category-card::before,
+.project-category-card::after {
+    pointer-events: none;
+}
+
+.service-card a,
+.project-category-card a {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+}
