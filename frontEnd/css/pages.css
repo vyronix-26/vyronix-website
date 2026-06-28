@@ -33,10 +33,7 @@
     border: 1px solid rgba(255,255,255,0.2);
 }
 
-.btn.live {
-    background: #4f9cff;
-    color: #fff;
-}
+.btn.live { background: #22c7e8; color: #06131d; }
 
 .btn:hover {
     transform: translateY(-2px);
