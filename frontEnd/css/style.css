@@ -3,7 +3,49 @@
     padding: 0;
     box-sizing: border-box;
 }
+.service-hero {
+    padding: 80px 20px;
+    text-align: center;
+}
 
+.service-hero h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.service-hero p {
+    color: #c9d8e6;
+    font-size: 18px;
+}
+
+.service-details {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.service-block {
+    margin-bottom: 30px;
+}
+
+.service-block h2 {
+    margin-bottom: 10px;
+}
+
+.service-block p,
+.service-block ul {
+    color: #c9d8e6;
+    line-height: 1.7;
+}
+
+.service-block ul {
+    padding-left: 20px;
+}
+
+.service-cta {
+    margin-top: 40px;
+    text-align: center;
+}
 html {
     scroll-behavior: smooth;
 }
@@ -477,6 +519,7 @@ animation:glowPulse 5s ease-in-out infinite;
     margin-bottom:28px;
 
 }
+
 
 /* Learn More */
 
@@ -2829,4 +2872,8 @@ img {
 
 .logout-btn:hover {
     background: rgba(255,77,90,.10) !important;
+}
+.navbar a:hover,
+.navbar a.active {
+  color: #22c7e8;
 }
