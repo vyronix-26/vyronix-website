@@ -79,54 +79,10 @@
     </button>
 </header>
 
-
-    <div class="digital-grid">
-
-    <article class="digital-card">
-        <img src="../assets/images/design.jpg" alt="Environmental Company Website Design">
-        <h3>Environmental Company Website Design</h3>
-
-        <p class="card-desc">
-            Modern eco-focused website design with clean UI and structured layout for sustainability companies.
-        </p>
-
-        <div class="card-actions">
-            <a href="https://github.com/yourrepo" target="_blank" class="btn github">GitHub</a>
-            <a href="https://your-live-site.com" target="_blank" class="btn live">Live Demo</a>
-        </div>
-    </article>
-
-    <article class="digital-card">
-        <img src="../assets/images/uiux.jpg" alt="Corporate Identity Design">
-        <h3>Corporate Identity Design</h3>
-
-        <p class="card-desc">
-            Complete branding system including logo, typography, and visual identity for corporate use.
-        </p>
-
-        <div class="card-actions">
-            <a href="https://github.com/yourrepo" target="_blank" class="btn github">GitHub</a>
-            <a href="https://your-live-site.com" target="_blank" class="btn live">Live Demo</a>
-        </div>
-    </article>
-
-    <article class="digital-card">
-        <img src="../assets/images/mobile.png" alt="Anti-Blackmail App">
-        <h3>Anti-Blackmail App</h3>
-
-        <p class="card-desc">
-            Security-focused mobile application designed to protect users from blackmail threats and suspicious activity.
-        </p>
-
-        <div class="card-actions">
-            <a href="https://github.com/yourrepo" target="_blank" class="btn github">GitHub</a>
-            <a href="https://your-live-site.com" target="_blank" class="btn live">Live Demo</a>
-        </div>
-    </article>
-
-</div>
+  <!-- Getting the designs from the database not a static list -->
+    <div class="digital-grid" id="digitalGrid">
+    </div>
     
-
     <button class="chat-btn"><img src="../assets/images/chatbot.png" alt="Chat Bot"></button>
     <script src="../js/main.js"></script>
     <script>
@@ -148,6 +104,59 @@
         userDropdown.addEventListener('click', (e) => {
             e.stopPropagation();
         });
+    </script>
+    <script>
+        // Fetch designs from the database
+        async function fetchDesigns() {
+            try {
+                const response = await fetch('http://localhost:3000/designs');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const designs = await response.json();
+                displayDesigns(designs);
+            } catch (error) {
+                console.error('Error fetching designs:', error);
+            }
+      
+            displayDesigns(designs);
+
+        }
+
+        function displayDesigns(designs) {
+            //check if designs empty
+            if (designs.length === 0) {
+                const digitalGrid = document.getElementById('digitalGrid');
+                digitalGrid.innerHTML = '<p>No designs available at the moment.</p>';
+                return;
+            }
+            const digitalGrid = document.getElementById('digitalGrid');
+            digitalGrid.innerHTML = ''; // Clear existing content
+            designs.forEach(design => {
+                const designCard = document.createElement('article');
+                designCard.classList.add('digital-card');
+                designCard.innerHTML = `
+                   <img src="${design.image}" alt="${design.name}">
+                   <h3>${design.name}</h3>
+                   <p class="card-desc">
+                   ${design.description}
+                   </p>
+                   <div class="card-actions">
+                   <a href="${design.github}" target="_blank" class="btn github">
+                      GitHub
+                   </a>
+                   <a href="${design.liveDemo}" target="_blank" class="btn live">
+                     Live Demo
+                   </a>
+                </div>
+                    `;
+
+                digitalGrid.appendChild(designCard);
+            });
+        }
+
+        // Call the function to fetch and display designs on page load
+        fetchDesigns();
     </script>
 </body>
 </html>

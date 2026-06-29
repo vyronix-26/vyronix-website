@@ -74,46 +74,11 @@
         <i class="bi bi-list"></i>
     </button>
 </header>
-
-   <div class="digital-grid">
-
-    <article class="digital-card">
-        <img src="../assets/images/digital.png" alt="All-in-One Online Store">
-        <h3>All-in-One Online Store</h3>
-        <p class="card-desc">Full e-commerce platform with product management, cart system, and checkout flow.</p>
-
-        <div class="card-actions">
-            <a href="https://github.com/yourrepo" target="_blank" class="btn github">GitHub</a>
-            <a href="https://your-live-site.com" target="_blank" class="btn live">Live Demo</a>
-        </div>
-    </article>
-
-    <article class="digital-card">
-        <img src="../assets/images/mobile.png" alt="Project Management System">
-        <h3>Project Management System</h3>
-        <p class="card-desc">Task tracking system with team management and progress monitoring.</p>
-
-        <div class="card-actions">
-            <a href="https://github.com/yourrepo" target="_blank" class="btn github">GitHub</a>
-            <a href="https://your-live-site.com" target="_blank" class="btn live">Live Demo</a>
-        </div>
-    </article>
-
-    <article class="digital-card">
-        <img src="../assets/images/web.png" alt="Delivery App">
-        <h3>Delivery App</h3>
-        <p class="card-desc">Food delivery application with real-time order tracking and user interface.</p>
-
-        <div class="card-actions">
-            <a href="https://github.com/yourrepo" target="_blank" class="btn github">GitHub</a>
-            <a href="https://your-live-site.com" target="_blank" class="btn live">Live Demo</a>
-        </div>
-    </article>
-
-</div>
+<!-- Getting the digital platforms from the database not a static list -->
+   <div class="digital-grid" id="digitalGrid">
+   </div>
 
  
-
     <button class="chat-btn"><img src="../assets/images/chatbot.png" alt="Chat Bot"></button>
     <script src="../js/main.js"></script>
     <script>
@@ -135,6 +100,56 @@
         userDropdown.addEventListener('click', (e) => {
             e.stopPropagation();
         });
+    </script>
+    <script>
+        // Fetch digital platforms from the database
+        async function fetchDigitalPlatforms() {
+            try {
+                const response = await fetch('http://localhost:3000/api/digital-platforms');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const platforms = await response.json();
+                displayPlatforms(platforms);
+            } catch (error) {
+                console.error('Error fetching digital platforms:', error);
+            }
+        }
+
+
+    function displayPlatforms(platforms) {
+        if (platforms.length === 0) {
+            const digitalGrid = document.getElementById('digitalGrid');
+            digitalGrid.innerHTML = '<p>No digital platforms available at the moment.</p>';
+            return;
+        }
+    const grid = document.getElementById('digitalGrid');
+    grid.innerHTML = '';
+    platforms.forEach(platform => {
+        const platformCard = document.createElement('article');
+        platformCard.classList.add('digital-card');
+        platformCard.innerHTML = `
+            <img src="${platform.image}" alt="${platform.name}">
+            <h3>${platform.name}</h3>
+            <p class="card-desc">
+                ${platform.description}
+            </p>
+            <div class="card-actions">
+                <a href="${platform.github}" target="_blank" class="btn github">
+                    GitHub
+                </a>
+                <a href="${platform.liveDemo}" target="_blank" class="btn live">
+                    Live Demo
+                </a>
+            </div>
+        `;
+
+        grid.appendChild(platformCard);
+    });
+}
+
+        // Call the function to fetch and display platforms on page load
+        fetchDigitalPlatforms();
     </script>
 </body>
 </html>
