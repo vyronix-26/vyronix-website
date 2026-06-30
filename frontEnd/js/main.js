@@ -67,14 +67,16 @@ function startCounters() {
 
 window.addEventListener("scroll", startCounters);
 window.addEventListener("load", startCounters);
+
 const glow = document.getElementById("cursor-glow");
 
-document.addEventListener("mousemove",(e)=>{
+if (glow) {
+    document.addEventListener("mousemove", (e) => {
+        glow.style.left = e.clientX + "px";
+        glow.style.top = e.clientY + "px";
+    });
+}
 
-    glow.style.left = e.clientX + "px";
-    glow.style.top  = e.clientY + "px";
-
-});
 /* Active navbar */
 const navLinks = document.querySelectorAll(".navbar a");
 
@@ -118,7 +120,7 @@ window.addEventListener("hashchange", updateActiveNav);
 const pageLoader = document.getElementById("pageLoader");
 
 document.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", function(e) {
+    link.addEventListener("click", function (e) {
         const href = this.getAttribute("href");
 
         if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) {
@@ -160,6 +162,7 @@ motionCards.forEach(card => {
         card.style.transform = "";
     });
 });
+
 /* Profile Dropdown */
 const profileBtn = document.getElementById("profileBtn");
 const profileDropdown = document.getElementById("profileDropdown");
@@ -168,6 +171,10 @@ if (profileBtn && profileDropdown) {
     profileBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         profileDropdown.classList.toggle("show");
+
+        // close notif dropdown if open
+        const notifDropdownEl = document.getElementById("notifDropdown");
+        if (notifDropdownEl) notifDropdownEl.classList.remove("show");
     });
 
     profileDropdown.addEventListener("click", (e) => {
@@ -184,35 +191,75 @@ if (profileBtn && profileDropdown) {
         }
     });
 }
-chatBtn.addEventListener("click", () => {
-    alert("Hello! I am VYRONIX smart assistant.");
-});
-// search functionality
-const searchInput = document.getElementById("searchInput");
-const cards = document.querySelectorAll(".digital-card");
 
-function filterCards(value) {
-    cards.forEach(card => {
-        const title = card.querySelector("h3").textContent.toLowerCase();
+/* Chat button (fix: select by class since no #chatBtn id exists in markup) */
+const chatBtn = document.querySelector(".chat-btn");
 
-        const match = title.includes(value);
-
-        card.style.display = match ? "flex" : "none";
+if (chatBtn) {
+    chatBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("Hello! I am VYRONIX smart assistant.");
     });
 }
 
+/* Search functionality (fix: guard for pages without #searchInput) */
+const searchInput = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".digital-card");
 
-function debounce(func, delay) {
-    let timer;
-    return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => func.apply(this, args), delay);
+if (searchInput && cards.length) {
+    const filterCards = (value) => {
+        cards.forEach(card => {
+            const title = card.querySelector("h3").textContent.toLowerCase();
+            const match = title.includes(value);
+            card.style.display = match ? "flex" : "none";
+        });
     };
+
+    const debounce = (func, delay) => {
+        let timer;
+        return function (...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => func.apply(this, args), delay);
+        };
+    };
+
+    const handleSearch = debounce(function (e) {
+        const value = e.target.value.toLowerCase().trim();
+        filterCards(value);
+    }, 200);
+
+    searchInput.addEventListener("input", handleSearch);
 }
 
-const handleSearch = debounce(function (e) {
-    const value = e.target.value.toLowerCase().trim();
-    filterCards(value);
-}, 200);
+/* Notification dropdown */
+const notifBtn = document.getElementById("notifBtn");
+const notifDropdown = document.getElementById("notifDropdown");
+const notifDot = document.getElementById("notifDot");
+const notifClear = document.getElementById("notifClear");
 
-searchInput.addEventListener("input", handleSearch);
+if (notifBtn && notifDropdown) {
+    notifBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        notifDropdown.classList.toggle("show");
+
+        // close profile dropdown if open
+        const profileDropdownEl = document.getElementById("profileDropdown");
+        if (profileDropdownEl) profileDropdownEl.classList.remove("show");
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!notifDropdown.contains(e.target) && !notifBtn.contains(e.target)) {
+            notifDropdown.classList.remove("show");
+        }
+    });
+}
+
+if (notifClear && notifDot) {
+    notifClear.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.querySelectorAll(".notif-item.unread").forEach(item => {
+            item.classList.remove("unread");
+        });
+        notifDot.classList.add("hidden");
+    });
+}

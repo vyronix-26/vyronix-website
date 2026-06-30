@@ -36,15 +36,53 @@
             <input type="text" placeholder="Search">
         </div>
 
-        <div class="header-action-icons">
-            <button class="header-icon-btn" aria-label="Messages">
-                <i class="bi bi-envelope"></i>
-            </button>
+   <div class="header-action-icons">
+    <a href="mailto:Vyronix@gmail.com" class="header-icon-btn" aria-label="Messages">
+    <i class="bi bi-envelope"></i>
+</a>
 
-            <button class="header-icon-btn" aria-label="Notifications">
-                <i class="bi bi-bell"></i>
-            </button>
+    <div class="notif-menu">
+        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
+            <i class="bi bi-bell"></i>
+            <span class="notif-dot" id="notifDot"></span>
+        </button>
+
+        <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-header">
+                <h4>Notifications</h4>
+                <a href="#" class="notif-clear" id="notifClear">Mark all read</a>
+            </div>
+
+            <div class="notif-list" id="notifList">
+                <a href="#" class="notif-item unread">
+                    <span class="notif-icon"><i class="bi bi-chat-dots"></i></span>
+                    <div>
+                        <p>New message from a client about their project.</p>
+                        <span class="notif-time">5 min ago</span>
+                    </div>
+                </a>
+
+                <a href="#" class="notif-item unread">
+                    <span class="notif-icon"><i class="bi bi-star"></i></span>
+                    <div>
+                        <p>You received a new 5-star rating.</p>
+                        <span class="notif-time">2 hours ago</span>
+                    </div>
+                </a>
+
+                <a href="#" class="notif-item">
+                    <span class="notif-icon"><i class="bi bi-person-plus"></i></span>
+                    <div>
+                        <p>A new account was created on VYRONIX.</p>
+                        <span class="notif-time">1 day ago</span>
+                    </div>
+                </a>
+            </div>
+
+            <a href="#" class="notif-footer">View All Notifications</a>
         </div>
+    </div>
+</div>
 
         <div class="header-divider"></div>
 
