@@ -1,0 +1,10 @@
+const REQUEST_STATUS = {
+  PENDING: "PENDING",
+  IN_REVIEW: "IN_REVIEW",
+  ACCEPTED: "ACCEPTED",
+  REJECTED: "REJECTED",
+};
+
+module.exports = {
+  REQUEST_STATUS,
+};
