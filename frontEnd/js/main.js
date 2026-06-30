@@ -263,3 +263,43 @@ if (notifClear && notifDot) {
         notifDot.classList.add("hidden");
     });
 }
+/* ===========================
+   Mobile Bottom Navigation
+=========================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const bottomNav = document.querySelector(".mobile-bottom-nav");
+
+    if (!bottomNav) return;
+
+    let lastScrollY = window.scrollY;
+    let hideNavTimer;
+
+    function showBottomNav() {
+        if (window.innerWidth > 768) return;
+
+        bottomNav.classList.add("show");
+        document.body.classList.add("bottom-nav-visible");
+
+        clearTimeout(hideNavTimer);
+
+        hideNavTimer = setTimeout(() => {
+            bottomNav.classList.remove("show");
+            document.body.classList.remove("bottom-nav-visible");
+        }, 2500);
+    }
+
+    showBottomNav();
+
+    window.addEventListener("scroll", () => {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY < lastScrollY) {
+            showBottomNav();
+        } else {
+            bottomNav.classList.remove("show");
+            document.body.classList.remove("bottom-nav-visible");
+        }
+
+        lastScrollY = currentScrollY;
+    });
+});
