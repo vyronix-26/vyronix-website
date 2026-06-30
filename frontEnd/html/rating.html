@@ -137,8 +137,8 @@
 
                 <div class="rating-card review-card">
                     <h3>Submit your rating</h3>
-                    <form class="rating-form">
-                        <label for="score">Star rating</label>
+<form class="rating-form" id="ratingForm">
+                            <label for="score">Star rating</label>
                         <div class="star-input" id="score">
                             <button type="button"><i class="bi bi-star"></i></button>
                             <button type="button"><i class="bi bi-star"></i></button>
@@ -259,6 +259,7 @@
     <a href="chatbot.html" class="chat-btn" aria-label="Open Chatbot">
         <img src="../assets/images/chatbot.png" alt="Chat Bot">
     </a>
+<script src="../js/api.js"></script>
 
     <script src="../js/main.js"></script>
     <script>
@@ -297,6 +298,46 @@ if (tokenlogin) {
     logoutBtn.style.display = "block";
 } else {
     logoutBtn.style.display = "none";
+}
+</script>
+<script>
+let selectedRating = 0;
+
+document.querySelectorAll(".star-input button").forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+        selectedRating = index + 1;
+
+        document.querySelectorAll(".star-input button i").forEach((star, i) => {
+            star.className = i < selectedRating ? "bi bi-star-fill" : "bi bi-star";
+        });
+    });
+});
+
+const ratingForm = document.getElementById("ratingForm");
+
+if (ratingForm) {
+    ratingForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = {
+            rating: selectedRating,
+            review: document.getElementById("review").value,
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value
+        };
+
+        try {
+            await apiRequest("/feedback", "POST", {
+    rating: selectedRating,
+    comment: document.getElementById("review").value
+});
+            alert("Feedback sent successfully");
+            ratingForm.reset();
+        } catch (error) {
+            alert("Failed to send feedback");
+            console.error(error);
+        }
+    });
 }
 </script>
 </body>

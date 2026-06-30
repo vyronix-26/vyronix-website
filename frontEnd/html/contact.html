@@ -101,32 +101,31 @@
 
         <div class="contact-container contact-page-container">
 
-            <form class="contact-form">
-                <h3>Send Us a Message</h3>
+<form class="contact-form" id="consultationForm">                <h3>Send Us a Message</h3>
 
                 <div class="form-row">
-                    <input type="text" placeholder="Full Name">
-                    <input type="email" placeholder="Email Address">
+                    <input type="text" id="consultationName" placeholder="Full Name">
+                    <input type="email" id="consultationEmail" placeholder="Email Address">
                 </div>
 
                 <div class="form-row">
-                    <input type="text" placeholder="Phone Number">
-                    <input type="text" placeholder="Company Name">
+                    <input type="text" id="consultationPhone" placeholder="Phone Number">
+                    <input type="text" id="consultationCompany" placeholder="Company Name">
                 </div>
 
-                <select>
+                <select id="consultationService">
                     <option>Choose Service</option>
                     <option>Web Development</option>
                     <option>Mobile Development</option>
                     <option>Dashboards & Systems</option>
                     <option>UI/UX Design</option>
                     <option>Digital Platform</option>
-                </select>
+                </>
 
-                <textarea placeholder="Describe your project..."></textarea>
+                <textarea id="consultationMessage"  placeholder="Describe your project..."></textarea>
 
                 <button type="submit">Request Consultation →</button>
-            </form>
+</form>
 
             <div class="contact-info professional-info">
                 <h3>Contact Information</h3>
@@ -244,6 +243,8 @@
         <span>Contact</span>
     </a>
 </div>
+<script src="../js/api.js"></script>
+
 <script src="../js/main.js"></script>
 <script>
     const avatar = document.getElementById("avatarContent");
@@ -285,6 +286,32 @@ if (tokenlogin) {
 
 
 </script>
+<script>
+const consultationForm = document.getElementById("consultationForm");
 
+if (consultationForm) {
+    consultationForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = {
+            name: document.getElementById("consultationName").value,
+            email: document.getElementById("consultationEmail").value,
+            phone: document.getElementById("consultationPhone").value,
+            companyName: document.getElementById("consultationCompany").value,
+            service: document.getElementById("consultationService").value,
+            message: document.getElementById("consultationMessage").value
+        };
+
+        try {
+            await apiRequest("/project-requests", "POST", data);
+            alert("Consultation request sent successfully");
+            consultationForm.reset();
+        } catch (error) {
+            alert("You must login first to send a request.");
+            console.error(error);
+        }
+    });
+}
+</script>
 </body>
 </html>
