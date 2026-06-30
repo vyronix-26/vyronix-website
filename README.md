@@ -1,1 +1,0 @@
-# vyronix-website
