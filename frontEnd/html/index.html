@@ -50,6 +50,7 @@
 
         <div class="profile-menu">
 <button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
+  <i class="bi bi-person avatar-icon" id="avatarIcon"></i>
   <span id="avatarContent"></span>
 </button>
             <div class="profile-dropdown" id="profileDropdown">
@@ -419,6 +420,7 @@
 </script>
 <script>
     const avatar = document.getElementById("avatarContent");
+    const avatarIcon = document.getElementById("avatarIcon");
     const profileLink = document.getElementById("profileLink");
     const addAccountLink = document.querySelector('.profile-dropdown a[href="SignUp.html"]');
     const logoutBtn = document.getElementById("logoutBtn");
@@ -441,7 +443,12 @@
     const isLoggedIn = Boolean(token || (user && (user.name || user.email)));
 
     if (avatar) {
-        avatar.textContent = isLoggedIn && user?.name ? user.name.charAt(0).toUpperCase() : "👤";
+        const showIcon = !isLoggedIn || !user?.name;
+        avatar.textContent = !showIcon && user?.name ? user.name.charAt(0).toUpperCase() : "";
+        avatar.style.display = showIcon ? "none" : "inline-block";
+        if (avatarIcon) {
+            avatarIcon.style.display = showIcon ? "inline-block" : "none";
+        }
     }
 
     if (profileLink) {
