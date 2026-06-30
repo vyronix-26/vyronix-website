@@ -53,7 +53,7 @@
   <span id="avatarContent"></span>
 </button>
             <div class="profile-dropdown" id="profileDropdown">
-            <div class="profile-head hidden" id="profileHead">
+            <div class="profile-head hidden" id="profileHead" style="display: none;">
     <img src="../assets/images/user.jpg" alt="User Profile">
     <div>
         <h4 id="userName">VYRONIX User</h4>
@@ -467,9 +467,11 @@
     }
 
     if (profileHead) {
-        profileHead.classList.toggle("hidden", !isLoggedIn);
+        const showProfile = Boolean(isLoggedIn);
+        profileHead.classList.toggle("hidden", !showProfile);
+        profileHead.style.display = showProfile ? "flex" : "none";
 
-        if (isLoggedIn && user) {
+        if (showProfile && user) {
             if (userNameEl) userNameEl.textContent = user.name || userNameEl.textContent;
             if (userEmailEl) userEmailEl.textContent = user.email || userEmailEl.textContent;
         }
