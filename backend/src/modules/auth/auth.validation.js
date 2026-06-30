@@ -51,6 +51,41 @@ const loginSchema = Joi.object({
   }),
 });
 
+const refreshTokenSchema = Joi.object({
+  refreshToken: Joi.string().required().messages({
+    "string.empty": "Refresh token is required",
+    "any.required": "Refresh token is required",
+  }),
+});
+
+const forgotPasswordSchema = Joi.object({
+  email: Joi.string().pattern(emailRegex).required().messages({
+    "string.empty": "Email is required",
+    "string.pattern.base": "Invalid email format",
+    "any.required": "Email is required",
+  }),
+});
+
+const resetPasswordSchema = Joi.object({
+  token: Joi.string().required().messages({
+    "string.empty": "Reset token is required",
+    "any.required": "Reset token is required",
+  }),
+
+  password: Joi.string().pattern(passwordRegex).required().messages({
+    "string.empty": "Password is required",
+    "string.pattern.base":
+      "Password must be at least 8 characters and include uppercase, lowercase, number, and special character",
+    "any.required": "Password is required",
+  }),
+
+  confirmPassword: Joi.string().valid(Joi.ref("password")).required().messages({
+    "any.only": "Passwords do not match",
+    "string.empty": "Confirm password is required",
+    "any.required": "Confirm password is required",
+  }),
+});
+
 const validate = (schema) => {
   return (req, res, next) => {
     const { error } = schema.validate(req.body, {
@@ -67,15 +102,10 @@ const validate = (schema) => {
   };
 };
 
-const refreshTokenSchema = Joi.object({
-  refreshToken: Joi.string().required().messages({
-    "string.empty": "Refresh token is required",
-    "any.required": "Refresh token is required",
-  }),
-});
-
 module.exports = {
   validateSignup: validate(signupSchema),
   validateLogin: validate(loginSchema),
   validateRefreshToken: validate(refreshTokenSchema),
+  validateForgotPassword: validate(forgotPasswordSchema),
+  validateResetPassword: validate(resetPasswordSchema),
 };

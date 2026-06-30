@@ -6,9 +6,17 @@ const { authenticate, authorize } = require("../../middlewares/auth.middleware")
 
 const router = express.Router();
 
-router.post("/signup", authValidation.validateSignup, authController.signup);
+router.post(
+  "/signup",
+  authValidation.validateSignup,
+  authController.signup
+);
 
-router.post("/login", authValidation.validateLogin, authController.login);
+router.post(
+  "/login",
+  authValidation.validateLogin,
+  authController.login
+);
 
 router.post(
   "/refresh-token",
@@ -16,9 +24,31 @@ router.post(
   authController.refreshToken
 );
 
-router.post("/logout", authenticate, authController.logout);
+// Forgot Password
+router.post(
+  "/forgot-password",
+  authValidation.validateForgotPassword,
+  authController.forgotPassword
+);
 
-router.get("/me", authenticate, authController.getMe);
+// Reset Password
+router.post(
+  "/reset-password",
+  authValidation.validateResetPassword,
+  authController.resetPassword
+);
+
+router.post(
+  "/logout",
+  authenticate,
+  authController.logout
+);
+
+router.get(
+  "/me",
+  authenticate,
+  authController.getMe
+);
 
 router.get(
   "/admin-test",

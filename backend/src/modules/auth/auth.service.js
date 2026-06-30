@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const argon2 = require("argon2");
+const crypto = require("crypto");
 
 const authRepository = require("./auth.repository");
 const AppError = require("../../utils/AppError");
@@ -133,9 +134,47 @@ const logout = async (userId) => {
   };
 };
 
+const forgotPassword = async (email) => {
+  const user = await authRepository.findUserByEmail(email);
+
+  if (!user) {
+    return {
+      message: "If this email exists, a reset password token has been generated",
+    };
+  }
+
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+  await authRepository.updateResetPasswordToken(user.id, resetToken, expiresAt);
+
+  return {
+    message: "Reset password token generated successfully",
+    resetToken,
+  };
+};
+
+const resetPassword = async ({ token, password }) => {
+  const user = await authRepository.findUserByResetToken(token);
+
+  if (!user) {
+    throw new AppError("Invalid or expired reset token", 400);
+  }
+
+  const hashedPassword = await argon2.hash(password);
+
+  await authRepository.updatePassword(user.id, hashedPassword);
+
+  return {
+    message: "Password reset successfully",
+  };
+};
+
 module.exports = {
   signup,
   login,
   refreshToken,
   logout,
+  forgotPassword,
+  resetPassword,
 };

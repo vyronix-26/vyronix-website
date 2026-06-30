@@ -80,6 +80,39 @@ const updateLastLogin = async (userId) => {
   );
 };
 
+const updateResetPasswordToken = async (userId, token, expiresAt) => {
+  await pool.query(
+    `UPDATE users 
+     SET reset_password_token = ?, reset_password_expires = ?
+     WHERE id = ?`,
+    [token, expiresAt, userId]
+  );
+};
+
+const findUserByResetToken = async (token) => {
+  const [rows] = await pool.query(
+    `SELECT * FROM users
+     WHERE reset_password_token = ?
+     AND reset_password_expires > NOW()
+     LIMIT 1`,
+    [token]
+  );
+
+  return rows[0];
+};
+
+const updatePassword = async (userId, hashedPassword) => {
+  await pool.query(
+    `UPDATE users
+     SET password = ?,
+         reset_password_token = NULL,
+         reset_password_expires = NULL,
+         refresh_token = NULL
+     WHERE id = ?`,
+    [hashedPassword, userId]
+  );
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
@@ -88,4 +121,7 @@ module.exports = {
   updateRefreshToken,
   clearRefreshToken,
   updateLastLogin,
+  updateResetPasswordToken,
+  findUserByResetToken,
+  updatePassword,
 };
