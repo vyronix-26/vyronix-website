@@ -28,6 +28,24 @@
   border-radius: 12px;
   padding: 9px 12px;
   outline: none;
+  color-scheme: dark;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237a8ea1' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.filter-group select option {
+  background-color: #0c1827;
+  color: #fff;
+}
+
+.filter-group select option:checked,
+.filter-group select option:hover {
+  background-color: #1c78d1;
+  color: #fff;
 }
 
 .project-table-wrap {
@@ -136,10 +154,11 @@
 }
 
 .kebab-menu {
-  position: absolute;
-  top: 46px;
-  right: 0;
-  min-width: 160px;
+  position: fixed;
+  min-width: 150px;
+  z-index: 9999;
+  max-height: none;
+  overflow: visible;
   background: rgba(12, 24, 39, .98);
   border: 1px solid rgba(255,255,255,.10);
   border-radius: 14px;
@@ -148,7 +167,6 @@
   display: none;
   flex-direction: column;
   gap: 2px;
-  z-index: 50;
 }
 
 .kebab-menu.open {
@@ -212,6 +230,9 @@
 
 .modal-card {
   width: min(100%, 520px);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
   background: rgba(12, 24, 39, .96);
   border: 1px solid rgba(34,199,232,.18);
   border-radius: 22px;
@@ -244,8 +265,21 @@
 }
 
 .modal-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.modal-form-scroll {
   display: grid;
   gap: 14px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding-right: 6px;
+  margin-right: -6px;
+  max-height: calc(85vh - 170px);
 }
 
 .modal-form label {
@@ -254,7 +288,8 @@
 }
 
 .modal-form input,
-.modal-form select {
+.modal-form select,
+.modal-form textarea {
   width: 100%;
   border: 1px solid rgba(255,255,255,.12);
   background: rgba(255,255,255,.04);
@@ -262,12 +297,36 @@
   border-radius: 12px;
   padding: 12px 14px;
   outline: none;
+  font-family: inherit;
+  resize: vertical;
 }
 
 .modal-form input:focus,
-.modal-form select:focus {
+.modal-form select:focus,
+.modal-form textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 20px rgba(34,199,232,.12);
+}
+
+.modal-form select {
+  color-scheme: dark;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237a8ea1' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+}
+
+.modal-form select option {
+  background-color: #0c1827;
+  color: #fff;
+}
+
+.modal-form select option:checked,
+.modal-form select option:hover {
+  background-color: #1c78d1;
+  color: #fff;
 }
 
 .form-actions {

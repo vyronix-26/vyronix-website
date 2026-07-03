@@ -90,6 +90,7 @@ const updateStatusSchema = Joi.object({
     }),
 
   adminNote: Joi.string().trim().allow(null, "").optional(),
+  admin_note: Joi.string().trim().allow(null, "").optional(),
 });
 
 const requestIdSchema = Joi.object({

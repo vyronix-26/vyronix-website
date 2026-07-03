@@ -108,9 +108,14 @@ const getMyRequestById = async (req, res, next) => {
 
 const updateRequestStatus = async (req, res, next) => {
   try {
+    const normalizedBody = {
+      ...req.body,
+      adminNote: req.body.adminNote ?? req.body.admin_note ?? null,
+    };
+
     const request = await projectRequestsService.updateRequestStatus(
       req.params.id,
-      req.body
+      normalizedBody
     );
 
     res.status(200).json({
