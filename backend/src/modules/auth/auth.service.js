@@ -4,6 +4,7 @@ const crypto = require("crypto");
 
 const authRepository = require("./auth.repository");
 const AppError = require("../../utils/AppError");
+const sendEmail = require("../../utils/sendEmail");
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -139,7 +140,7 @@ const forgotPassword = async (email) => {
 
   if (!user) {
     return {
-      message: "If this email exists, a reset password token has been generated",
+      message: "If this email exists, a reset password link has been sent",
     };
   }
 
@@ -148,9 +149,24 @@ const forgotPassword = async (email) => {
 
   await authRepository.updateResetPasswordToken(user.id, resetToken, expiresAt);
 
+  const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+
+  await sendEmail({
+    to: user.email,
+    subject: "Reset Your Password",
+    html: `
+      <h2>Reset Password</h2>
+      <p>Hello ${user.first_name || "User"},</p>
+      <p>You requested to reset your password.</p>
+      <p>Click the link below to set a new password:</p>
+      <a href="${resetLink}">${resetLink}</a>
+      <p>This link will expire in 15 minutes.</p>
+      <p>If you did not request this, please ignore this email.</p>
+    `,
+  });
+
   return {
-    message: "Reset password token generated successfully",
-    resetToken,
+    message: "Reset password link sent to your email",
   };
 };
 
