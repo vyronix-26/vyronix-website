@@ -6,6 +6,58 @@
     <title>VYRONIX | Smart Assistant</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+/* Chatbot page compact fix */
+.chatbot-page {
+    min-height: auto !important;
+    padding-top: 120px !important;
+    padding-bottom: 70px !important;
+}
+
+.chatbot-layout {
+    margin-top: 0 !important;
+    min-height: 560px !important;
+    max-width: 1180px !important;
+}
+
+.chat-window {
+    min-height: 560px !important;
+    height: 560px !important;
+}
+
+.chatbot-sidebar {
+    min-height: 560px !important;
+}
+
+.chat-messages,
+#chatMessages,
+.messages,
+.chat-body {
+    min-height: 390px !important;
+    max-height: 390px !important;
+    overflow-y: auto !important;
+}
+
+.chat-input-area {
+    margin-top: auto !important;
+}
+
+@media (max-width: 900px) {
+    .chatbot-page {
+        padding-top: 100px !important;
+        padding-bottom: 45px !important;
+    }
+
+    .chatbot-layout,
+    .chat-window,
+    .chatbot-sidebar {
+        min-height: auto !important;
+        height: auto !important;
+    }
+}
+</style>
+
 </head>
 
 <body>
@@ -98,21 +150,6 @@
         <div class="chat-orb orb-two"></div>
         <div class="hero-bg-grid"></div>
 
-        <div class="chatbot-intro reveal">
-            <span class="section-badge">VYRONIX AI Assistant</span>
-            <h1>Smart Support for Digital Products</h1>
-            <p>
-                Ask about websites, mobile apps, dashboards, AI assistants, UI/UX design,
-                pricing, timelines, and project consultation.
-            </p>
-
-            <div class="chatbot-features">
-                <div><i class="bi bi-lightning-charge"></i> Fast Answers</div>
-                <div><i class="bi bi-cpu"></i> AI Powered</div>
-                <div><i class="bi bi-shield-check"></i> Business Focused</div>
-            </div>
-        </div>
-
         <div class="chatbot-layout reveal">
             <aside class="chatbot-sidebar">
                 <div class="assistant-profile">
@@ -140,17 +177,48 @@
                 </div>
             </aside>
 
-            <section class="chat-window">
-                <div class="chat-header">
-                    <div class="chat-header-left">
-                        <div class="assistant-avatar small">
-                            <i class="bi bi-robot"></i>
-                        </div>
-                        <div>
-                            <h3>VYRONIX Assistant</h3>
-                            <p>Smart support for digital solutions</p>
-                        </div>
-                    </div>
+          <section class="chat-window">
+
+    <div class="chat-header">
+        <div class="chat-header-left">
+            <div class="assistant-avatar small">
+                <i class="bi bi-robot"></i>
+            </div>
+
+            <div>
+                <h3>VYRONIX Assistant</h3>
+                <p>Smart support for digital solutions</p>
+            </div>
+        </div>
+
+        <div class="chat-header-actions">
+            <button type="button" id="clearChat" aria-label="Clear Chat">
+                <i class="bi bi-trash3"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="chat-messages" id="chatMessages">
+
+    </div>
+
+    <!-- Chat Input -->
+    <form class="chat-input-area" id="chatForm">
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Write your message..."
+            autocomplete="off"
+            required
+        >
+
+        <button type="submit" aria-label="Send Message">
+            <i class="bi bi-send"></i>
+        </button>
+    </form>
+
+</section>
 
                     <div class="chat-header-actions">
                         <button type="button" id="clearChat" aria-label="Clear Chat">

@@ -2,8 +2,11 @@ const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
 const chatMessages = document.getElementById("chatMessages");
 const clearChat = document.getElementById("clearChat");
-
+const welcomeMessage =
+"Hello! I'm your Vyronix website assistant. How can I help you ?";
+addMessage(welcomeMessage, "bot");
 function addMessage(text, type = "bot") {
+    
     const message = document.createElement("div");
     message.className = `message ${type}-message`;
 
@@ -61,13 +64,7 @@ document.querySelectorAll(".suggestion-btn").forEach((btn) => {
 
 if (clearChat) {
     clearChat.addEventListener("click", () => {
-        chatMessages.innerHTML = `
-            <div class="message bot-message">
-                <div class="message-icon">
-                    <i class="bi bi-robot"></i>
-                </div>
-                <p>Hello! I’m VYRONIX smart assistant. How can I help your business today?</p>
-            </div>
-        `;
+        chatMessages.innerHTML = "";
+        addMessage(welcomeMessage, "bot");
     });
 }
