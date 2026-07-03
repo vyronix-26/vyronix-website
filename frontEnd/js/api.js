@@ -1,8 +1,9 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
 async function apiRequest(endpoint, method = "GET", data = null) {
-  const token = localStorage.getItem("accessToken");
-
+const token =
+    localStorage.getItem("accessToken") ||
+    localStorage.getItem("token");
   const options = {
     method,
     headers: {

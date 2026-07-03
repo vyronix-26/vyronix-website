@@ -159,15 +159,6 @@
                     </div>
                 </div>
 
-                <div class="chat-messages" id="chatMessages">
-                    <div class="message bot-message">
-                        <div class="message-icon">
-                            <i class="bi bi-robot"></i>
-                        </div>
-                        <p>Hello! I’m VYRONIX smart assistant. How can I help your business today?</p>
-                    </div>
-                </div>
-
                 <form class="chat-input-area" id="chatForm">
                     <input type="text" id="chatInput" placeholder="Write your message..." autocomplete="off" required>
                     <button type="submit" aria-label="Send Message">
@@ -179,8 +170,11 @@
     </section>
 </main>
 
+<script src="../js/api.js"></script>
 <script src="../js/main.js"></script>
 <script src="../js/chatbot.js"></script>
+
+
 <script>
     const avatar = document.getElementById("avatarContent");
     const avatarIcon = document.getElementById("avatarIcon");
