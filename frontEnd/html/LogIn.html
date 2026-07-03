@@ -38,29 +38,14 @@
             </div>
 
             <div class="options-row">
-                <label class="remember-label">
-                    <input type="checkbox">
-                    Remember me
-                </label>
-                <a href="#" class="forgot-link">Forgot password?</a>
+              
+                <a href="Forgetpassword.html" class="forgot-link">Forgot password?</a>
             </div>
 
             <button type="submit" class="btn-login">Log in</button>
         </form>
 
-        <p class="divider-text">Or Sign In With</p>
-
-        <div class="social-icons">
-            <a href="#" aria-label="Facebook">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" aria-label="Google/Email">
-                <i class="fa-brands fa-google"></i>
-            </a>
-            <a href="#" aria-label="Apple">
-                <i class="fa-brands fa-apple"></i>
-            </a>
-        </div>
+       
 
         <p class="signup-text">
             Don't have an account? <a href="SignUp.html" class="signup-link">Sign Up</a>
@@ -97,7 +82,16 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         if (res.ok) {
             alert("Login success");
             console.log(result);
-         window.location.href = "index.html"; // Redirect to dashboard/home page
+            // Store the token in localStorage
+            localStorage.setItem("accessToken", result.data.tokens.accessToken);
+            localStorage.setItem("vyronixUser", JSON.stringify(result.data.user));
+            //check if the user is admin or not
+            if (result.data.user.role === "ADMIN") {
+                window.location.href = "AdminHomePage.html";
+            }
+            else {
+                window.location.href = "index.html"; // Redirect to dashboard/home page
+            }
         } else {
             alert(result.message || "Login failed");
         }

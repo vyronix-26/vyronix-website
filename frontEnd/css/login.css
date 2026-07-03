@@ -181,6 +181,8 @@ body {
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
     letter-spacing: 1px;
+    /**Increae the margin bottom to 30px for better spacing**/
+    margin-bottom: 30px;
 }
 
 .btn-login:hover {

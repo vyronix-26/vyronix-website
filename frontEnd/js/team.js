@@ -2,22 +2,59 @@ const teamGrid = document.getElementById("teamGrid");
 
 const staticTeamMembers = [
     {
+        name: "Akef Ali",
+        role: "Founder",
+        description: "Leads the company's vision, strategy, and overall growth.",
+        icon: "bi bi-person-circle"
+    },
+    {
+        name: "Fares Abu Samra",
+        role: "Founder",
+        description: "Co-founder responsible for business development and innovation.",
+        icon: "bi bi-person-circle"
+    },
+    {
         name: "Alaa Sunono",
         role: "Frontend Developer",
         description: "Builds modern, responsive, and user-friendly web interfaces.",
-        image: "../assets/images/user.jpg"
+        icon: "bi bi-person-circle"
     },
-    {
-        name: "Team Member",
+     {
+        name: "Ruba Abu Samra",
         role: "Backend Developer",
         description: "Develops APIs, database structure, authentication, and server-side logic.",
-        image: "../assets/images/user.jpg"
+        icon: "bi bi-person-circle"
     },
     {
-        name: "Team Member",
-        role: "UI/UX Designer",
-        description: "Designs clean user experiences and professional visual interfaces.",
-        image: "../assets/images/user.jpg"
+        name: "Eman Subhi",
+        role: "Frontend Developer",
+        description: "Develops responsive and interactive user interfaces.",
+        icon: "bi bi-person-circle"
+    },
+    {
+        name: "Aish Ryad",
+        role: "Frontend Developer",
+        description: "Creates engaging and user-friendly web experiences.",
+        icon: "bi bi-person-circle"
+    },
+   
+    {
+        name: "Nada Saleh",
+        role: "Media",
+        description: "Manages media content, communication, and brand presence.",
+        icon: "bi bi-person-circle"
+    },
+    {
+        name: "Lamees Omran",
+        role: "Media Representative",
+        description: "Represents the organization in media and public communications.",
+        icon: "bi bi-person-circle"
+    },
+    {
+        name: "Dania Sider",
+        role: "Designer",
+        description: "Designs creative visuals and enhances the user experience.",
+        icon: "bi bi-person-circle"
     }
 ];
 
@@ -26,13 +63,17 @@ function loadTeamMembers() {
 
     teamGrid.innerHTML = staticTeamMembers.map(member => `
         <article class="team-card">
-            <div class="team-img">
-                <img src="${member.image}" alt="${member.name}">
+
+            <div class="team-avatar">
+                <i class="${member.icon}"></i>
             </div>
 
-            <h3>${member.name}</h3>
-            <span>${member.role}</span>
-            <p>${member.description}</p>
+            <div class="team-info">
+                <h3>${member.name}</h3>
+                <span>${member.role}</span>
+                <p>${member.description}</p>
+            </div>
+
         </article>
     `).join("");
 }
