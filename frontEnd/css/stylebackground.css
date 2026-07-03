@@ -294,13 +294,51 @@ footer {
     gap: 18px;
     white-space: nowrap;
 }
+#avatarContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#avatarContent img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
 .user-avatar #avatarContent,
 .user-avatar .avatar-icon {
   color: #ffffff;
   font-size: 18px;
 }
+.user-avatar #avatarContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border-radius: 50%;
+    overflow: hidden; /* clip the img itself */
+    padding: 0;
+}
 .user-avatar .avatar-icon {
   display: none;
+}
+.profile-dropdown-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--cyan), #137eaa);
+    color: #fff;
+    font-size: 21px;
+    font-weight: 900;
 }
 .search-box {
     width: 220px;
@@ -395,7 +433,32 @@ footer {
 .profile-menu {
     position: relative;
 }
+.profile-avatar {
+    width: 96px;
+    height: 96px;
+    min-width: 96px;
+    min-height: 96px;
 
+    border-radius: 50%;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, var(--cyan), #137eaa);
+    color: #fff;
+    font-size: 36px;
+    font-weight: 900;
+
+    box-shadow: 0 0 25px rgba(34,199,232,.25);
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: relative;
+}
 .user-avatar {
     width: 54px;
     height: 54px;
@@ -403,13 +466,16 @@ footer {
     border-radius: 50%;
     background: linear-gradient(135deg, var(--cyan), #137eaa);
     color: #fff;
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 21px;
     font-weight: 900;
     box-shadow: 0 0 24px rgba(34,199,232,.35);
     cursor: pointer;
     transition: .3s ease;
+    overflow: hidden;
+    padding: 0;
 }
 
 .user-avatar:hover {
@@ -1964,6 +2030,7 @@ footer {
     transform: translateY(-3px);
     box-shadow: 0 0 24px rgba(34,199,232,.45);
 }
+
 
 /* ===================== 16. ANIMATIONS ===================== */
 @keyframes glowPulse {

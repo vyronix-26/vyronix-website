@@ -1,0 +1,395 @@
+.project-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0 10px;
+}
+
+.project-stats {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.filter-group select {
+  min-width: 140px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: #fff;
+  border-radius: 12px;
+  padding: 9px 12px;
+  outline: none;
+}
+
+.project-table-wrap {
+  overflow-x: auto;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+}
+
+.project-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 860px;
+}
+
+.project-table th,
+.project-table td {
+  padding: 18px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.project-table th {
+  color: var(--muted2);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.project-table tr:last-child td {
+  border-bottom: none;
+}
+
+.project-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.project-thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.project-thumb-blue { background: linear-gradient(135deg, rgba(34,199,232,.72), rgba(75,123,255,.90)); }
+.project-thumb-purple { background: linear-gradient(135deg, rgba(139,92,246,.80), rgba(79,70,229,.95)); }
+.project-thumb-teal { background: linear-gradient(135deg, rgba(20,184,166,.80), rgba(34,199,232,.95)); }
+
+.project-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.project-desc {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-active { background: rgba(34,199,232,.14); color: var(--accent); }
+.status-draft { background: rgba(255,255,255,.08); color: #d8e8f2; }
+.status-archived { background: rgba(255,77,90,.12); color: #ff6b6b; }
+
+/* ===== Two-dot action toggle ===== */
+.action-cell {
+  width: 60px;
+  text-align: center;
+  position: relative;
+}
+
+.kebab-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.kebab-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.04);
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .25s ease, transform .2s ease;
+}
+
+.kebab-btn:hover,
+.kebab-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(34,199,232,.10);
+  transform: translateY(-1px);
+}
+
+.action-icon {
+  font-size: 14px;
+  line-height: 1;
+  margin-right: 6px;
+}
+
+.kebab-menu {
+  position: fixed;
+  min-width: 150px;
+  z-index: 9999;
+  max-height: none;
+  overflow: visible;
+
+  background: rgba(12, 24, 39, .98);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.45);
+
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kebab-menu.open {
+  display: flex;
+}
+
+.kebab-menu-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #e7eef5;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background .2s ease, color .2s ease;
+}
+
+.kebab-menu-item svg {
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: color .2s ease;
+}
+
+.kebab-menu-item:hover {
+  background: rgba(34,199,232,.10);
+  color: var(--accent);
+}
+
+.kebab-menu-item:hover svg {
+  color: var(--accent);
+}
+
+.kebab-menu-item.danger:hover {
+  background: rgba(255,77,90,.12);
+  color: #ff6b6b;
+}
+
+.kebab-menu-item.danger:hover svg {
+  color: #ff6b6b;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 17, 28, 0.88);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+}
+
+.modal-overlay.visible {
+  display: flex;
+}
+
+.modal-card {
+  width: min(100%, 520px);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(12, 24, 39, .96);
+  border: 1px solid rgba(34,199,232,.18);
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 25px 80px rgba(0,0,0,.35);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-shrink: 0;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.modal-close {
+  border: none;
+  background: rgba(255,255,255,.05);
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* the scrollable body — keeps the header and Save/Cancel buttons fixed
+   in view even when the form has many fields */
+.modal-form-scroll {
+  display: grid;
+  gap: 14px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding-right: 6px;
+  margin-right: -6px;
+  max-height: calc(85vh - 170px);
+}
+
+@media (max-width: 620px) {
+  .modal-card {
+    width: min(100%, 100vw);
+    max-height: 90vh;
+    margin: 0 12px;
+    border-radius: 18px;
+    padding: 18px;
+  }
+}
+
+.modal-form label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.modal-form input,
+.modal-form select,
+.modal-form textarea {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(34,199,232,.12);
+}
+
+/* ===== Dark-themed <select> dropdown lists =====
+   Native <select> popups are rendered by the browser/OS, not the page, so
+   most CSS can't reach them. `color-scheme: dark` tells the browser to draw
+   its native UI (including the options popup) using a dark palette instead
+   of defaulting to white, and modern Chromium/Firefox additionally respect
+   background-color/color set directly on <option>, so every choice in the
+   list gets the same dark style instead of only the selected one. */
+.modal-form select,
+.filter-group select {
+  color-scheme: dark;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237a8ea1' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+}
+
+.modal-form select option,
+.filter-group select option {
+  background-color: #0c1827;
+  color: #fff;
+}
+
+.modal-form select option:checked,
+.modal-form select option:hover,
+.filter-group select option:checked,
+.filter-group select option:hover {
+  background-color: #1c78d1;
+  color: #fff;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  flex-shrink: 0;
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  color: #fff;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .project-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .project-table {
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 620px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .topbar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .project-table {
+    min-width: 100%;
+  }
+}

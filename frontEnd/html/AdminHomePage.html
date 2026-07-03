@@ -25,41 +25,22 @@
       <div class="nav-item">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Users
-        <span class="nav-badge">12</span>
       </div>
-      <div class="nav-item">
+      <div class="nav-item" onclick="window.location.href='AdminProjects.html'">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
         Projects
       </div>
-      <div class="nav-item">
+      <div class="nav-item" onclick="window.location.href='AdminRequest.html'">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         Requests
-        <span class="nav-badge">8</span>
       </div>
-      <div class="nav-item">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Chat
-        <span class="nav-badge">3</span>
-      </div>
+      
+    
     </div>
     <div class="nav-section">
-      <div class="nav-label">Analytics</div>
-      <div class="nav-item">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        Reports
-      </div>
-      <div class="nav-item">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Analytics
-      </div>
+  
     </div>
-    <div class="nav-section">
-      <div class="nav-label">Settings</div>
-      <div class="nav-item">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M20 12h2M2 12h2M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 20v2M12 2v2"/></svg>
-        Settings
-      </div>
-    </div>
+ 
   </aside>
 
   <!-- MAIN -->
@@ -236,11 +217,7 @@
             <div>
               <div class="card-title">Website Analytics</div>
             </div>
-            <select class="dropdown-sel">
-              <option>Last 30 Days</option>
-              <option>Last 7 Days</option>
-              <option>Last 90 Days</option>
-            </select>
+          
           </div>
           <div class="analytics-stats">
             <div class="anal-stat">
@@ -302,9 +279,7 @@
           <div class="card-header">
             <div style="display:flex;align-items:center;gap:6px;">
               <span class="card-title">Project Requests</span>
-              <span class="requests-new-badge">8 New</span>
             </div>
-            <span class="link-sm">View All</span>
           </div>
           <table class="tbl">
             <thead><tr>
@@ -355,155 +330,7 @@
         </div>
 
         <!-- CHAT ACTIVITY -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">Chat Activity</div>
-            <span class="link-sm">View All</span>
-          </div>
-          <div class="chat-nums">
-            <div>
-              <div class="chat-num-label">Total Chats</div>
-              <div class="chat-num-val">512</div>
-              <div class="chat-num-change up">▲ 20.4%</div>
-            </div>
-            <div>
-              <div class="chat-num-label">Active Now</div>
-              <div class="chat-num-val">14</div>
-              <div style="font-size:11px;color:var(--muted)">live</div>
-            </div>
-            <div>
-              <div class="chat-num-label">Resolved</div>
-              <div class="chat-num-val">398</div>
-              <div class="chat-num-change up">▲ 16.1%</div>
-            </div>
-            <div>
-              <div class="chat-num-label">Avg. Response</div>
-              <div class="chat-num-val-sm" style="margin-top:6px">2m 34s</div>
-            </div>
-          </div>
-
-          <!-- Chat Trend Chart -->
-          <div style="padding:0 18px 12px;">
-            <div style="font-size:12px;font-weight:600;margin-bottom:8px;">Chat Trend (Last 7 Days)</div>
-            <svg class="chart-svg" height="80" viewBox="0 0 260 80">
-              <defs>
-                <linearGradient id="gc1" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stop-color="#6c63ff" stop-opacity=".4"/>
-                  <stop offset="100%" stop-color="#6c63ff" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <line x1="0" y1="10" x2="260" y2="10" stroke="#252a3d" stroke-width="1"/>
-              <line x1="0" y1="30" x2="260" y2="30" stroke="#252a3d" stroke-width="1"/>
-              <line x1="0" y1="50" x2="260" y2="50" stroke="#252a3d" stroke-width="1"/>
-              <text x="0" y="9" fill="#6b7280" font-size="8">100</text>
-              <text x="0" y="29" fill="#6b7280" font-size="8">75</text>
-              <text x="0" y="49" fill="#6b7280" font-size="8">50</text>
-              <text x="0" y="69" fill="#6b7280" font-size="8">25</text>
-              <path d="M16,55 C40,50 60,60 80,48 C100,36 120,42 140,30 C155,22 175,28 195,18 C210,12 230,10 244,8" fill="none" stroke="#6c63ff" stroke-width="2"/>
-              <path d="M16,55 C40,50 60,60 80,48 C100,36 120,42 140,30 C155,22 175,28 195,18 C210,12 230,10 244,8 L244,70 L16,70 Z" fill="url(#gc1)"/>
-              <text x="10" y="78" fill="#6b7280" font-size="8">May 25</text>
-              <text x="46" y="78" fill="#6b7280" font-size="8">May 26</text>
-              <text x="82" y="78" fill="#6b7280" font-size="8">May 27</text>
-              <text x="118" y="78" fill="#6b7280" font-size="8">May 28</text>
-              <text x="154" y="78" fill="#6b7280" font-size="8">May 29</text>
-              <text x="190" y="78" fill="#6b7280" font-size="8">May 30</text>
-              <text x="222" y="78" fill="#6b7280" font-size="8">May 31</text>
-            </svg>
-          </div>
-
-          <!-- Top Intents -->
-          <div class="section-label" style="display:flex;justify-content:space-between;padding:0 18px 8px;"><span>Top Intents</span><span>Count</span></div>
-          <div class="intent-list">
-            <div class="intent-item">
-              <span>Project Inquiry</span>
-              <div class="intent-bar-wrap" style="width:80px"><div class="intent-bar" style="width:90%;background:#6c63ff"></div></div>
-              <span class="intent-pct">186 (36%)</span>
-            </div>
-            <div class="intent-item">
-              <span>Pricing &amp; Packages</span>
-              <div class="intent-bar-wrap" style="width:80px"><div class="intent-bar" style="width:64%;background:#8b5cf6"></div></div>
-              <span class="intent-pct">124 (24%)</span>
-            </div>
-            <div class="intent-item">
-              <span>General Question</span>
-              <div class="intent-bar-wrap" style="width:80px"><div class="intent-bar" style="width:50%;background:#3b82f6"></div></div>
-              <span class="intent-pct">98 (19%)</span>
-            </div>
-            <div class="intent-item">
-              <span>Request a Quote</span>
-              <div class="intent-bar-wrap" style="width:80px"><div class="intent-bar" style="width:32%;background:#14b8a6"></div></div>
-              <span class="intent-pct">64 (12%)</span>
-            </div>
-            <div class="intent-item">
-              <span>Other</span>
-              <div class="intent-bar-wrap" style="width:80px"><div class="intent-bar" style="width:22%;background:#f59e0b"></div></div>
-              <span class="intent-pct">40 (9%)</span>
-            </div>
-          </div>
-
-          <!-- Recent Chat Sessions -->
-          <div class="card-header" style="padding-bottom:8px;">
-            <div class="card-title" style="font-size:13px">Recent Chat Sessions</div>
-            <span class="link-sm">View All</span>
-          </div>
-          <div>
-            <div class="chat-session">
-              <div class="avatar" style="width:28px;height:28px;font-size:10px;background:linear-gradient(135deg,#4f46e5,#7c3aed)">A</div>
-              <div class="chat-session-info">
-                <div class="chat-session-name">Ahmed Khaled</div>
-                <div class="chat-session-msg">I need a website for my business</div>
-              </div>
-              <div class="chat-session-meta">
-                <div class="chat-session-time">10:24 AM</div>
-                <span class="chat-badge active">● Active</span>
-              </div>
-            </div>
-            <div class="chat-session">
-              <div class="avatar" style="width:28px;height:28px;font-size:10px;background:linear-gradient(135deg,#059669,#047857)">R</div>
-              <div class="chat-session-info">
-                <div class="chat-session-name">Rana Al-Masri</div>
-                <div class="chat-session-msg">How much does a mobile app cost?</div>
-              </div>
-              <div class="chat-session-meta">
-                <div class="chat-session-time">10:15 AM</div>
-                <span class="chat-badge resolved">Resolved</span>
-              </div>
-            </div>
-            <div class="chat-session">
-              <div class="avatar" style="width:28px;height:28px;font-size:10px;background:linear-gradient(135deg,#d97706,#b45309)">H</div>
-              <div class="chat-session-info">
-                <div class="chat-session-name">Hassan Ali</div>
-                <div class="chat-session-msg">Do you offer UI/UX services?</div>
-              </div>
-              <div class="chat-session-meta">
-                <div class="chat-session-time">09:47 AM</div>
-                <span class="chat-badge active">● Active</span>
-              </div>
-            </div>
-            <div class="chat-session">
-              <div class="avatar" style="width:28px;height:28px;font-size:10px;background:linear-gradient(135deg,#ec4899,#be185d)">M</div>
-              <div class="chat-session-info">
-                <div class="chat-session-name">Maya Saeed</div>
-                <div class="chat-session-msg">I want to request a quote</div>
-              </div>
-              <div class="chat-session-meta">
-                <div class="chat-session-time">09:30 AM</div>
-                <span class="chat-badge resolved">Resolved</span>
-              </div>
-            </div>
-            <div class="chat-session">
-              <div class="avatar" style="width:28px;height:28px;font-size:10px;background:linear-gradient(135deg,#2563eb,#1d4ed8)">F</div>
-              <div class="chat-session-info">
-                <div class="chat-session-name">Fadi Zaid</div>
-                <div class="chat-session-msg">What is the delivery time?</div>
-              </div>
-              <div class="chat-session-meta">
-                <div class="chat-session-time">09:12 AM</div>
-                <span class="chat-badge resolved">Resolved</span>
-              </div>
-            </div>
-          </div>
-        </div>
+   
 
       </div><!-- /three-col -->
 
@@ -514,7 +341,6 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">Users</div>
-            <span class="link-sm">View All</span>
           </div>
           <table class="tbl">
             <thead><tr>
@@ -522,8 +348,6 @@
               <th>Email</th>
               <th>Role</th>
               <th>Joined</th>
-              <th>Status</th>
-              <th></th>
             </tr></thead>
             <tbody>
               <tr>
@@ -531,7 +355,6 @@
                 <td style="color:var(--muted);font-size:12px">yousef@example.com</td>
                 <td><span class="role-chip">Client</span></td>
                 <td style="color:var(--muted);font-size:11px">May 10, 2024</td>
-                <td><span class="badge active">Active</span></td>
                 <td><button class="dots-btn">⋮</button></td>
               </tr>
               <tr>
@@ -539,7 +362,6 @@
                 <td style="color:var(--muted);font-size:12px">sarah@example.com</td>
                 <td><span class="role-chip">Client</span></td>
                 <td style="color:var(--muted);font-size:11px">May 8, 2024</td>
-                <td><span class="badge active">Active</span></td>
                 <td><button class="dots-btn">⋮</button></td>
               </tr>
               <tr>
@@ -547,7 +369,6 @@
                 <td style="color:var(--muted);font-size:12px">omar@example.com</td>
                 <td><span class="role-chip">Client</span></td>
                 <td style="color:var(--muted);font-size:11px">May 5, 2024</td>
-                <td><span class="badge active">Active</span></td>
                 <td><button class="dots-btn">⋮</button></td>
               </tr>
               <tr>
@@ -555,7 +376,6 @@
                 <td style="color:var(--muted);font-size:12px">lina@example.com</td>
                 <td><span class="role-chip">Client</span></td>
                 <td style="color:var(--muted);font-size:11px">Apr 28, 2024</td>
-                <td><span class="badge active">Active</span></td>
                 <td><button class="dots-btn">⋮</button></td>
               </tr>
               <tr>
@@ -563,7 +383,6 @@
                 <td style="color:var(--muted);font-size:12px">mohammad@example.com</td>
                 <td><span class="role-chip admin">Admin</span></td>
                 <td style="color:var(--muted);font-size:11px">Apr 20, 2024</td>
-                <td><span class="badge active">Active</span></td>
                 <td><button class="dots-btn">⋮</button></td>
               </tr>
             </tbody>
@@ -574,7 +393,6 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">Recent Projects</div>
-            <span class="link-sm">View All</span>
           </div>
           <div class="project-grid">
 

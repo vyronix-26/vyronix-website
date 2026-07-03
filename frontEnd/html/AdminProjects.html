@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Projects | VYRONIX</title>
+  <link rel="stylesheet" href="../css/AdminHomePage.css">
+  <link rel="stylesheet" href="../css/AdminProjects.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="dot">⚡</span>
+      AdminPro
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Main</div>
+      <div class="nav-item active" onclick="window.location.href='AdminHomePage.html'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-item" onclick="window.location.href='AdminUsers.html'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Users
+      </div>
+      <div class="nav-item" onclick="window.location.href='AdminProjects.html'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Projects
+      </div>
+      <div class="nav-item" onclick="window.location.href='AdminRequest.html'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Requests
+      </div>
+    </div>
+    <div class="nav-section"></div>
+  </aside>
+
+    <div class="main" id="Projects">
+      <header class="topbar">
+        <div class="search-box">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Search projects..." id="projectSearch">
+        </div>
+        <div class="topbar-right">
+          <div class="icon-btn">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <div class="badge-dot">2</div>
+          </div>
+          <div class="user-chip">
+            <div class="avatar" onclick="window.location.href='profile.html'">A</div>
+            <div class="user-info">
+              <div class="user-name">Admin</div>
+              <div class="user-role">Project Manager</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-header">
+          <div>
+            <h1>Projects</h1>
+            <p>Manage all projects with edit, delete, and create tools.</p>
+          </div>
+          <button class="btn-primary" id="openCreateBtn">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Create New Project
+          </button>
+        </div>
+
+        <div class="project-toolbar">
+          <div class="project-stats" id="projectStats">Showing 0 projects</div>
+          <div class="filter-group"></div>
+        </div>
+
+        <div class="project-table-wrap">
+<table class="project-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Slug</th>
+      <th>Description</th>
+      <th>Image</th>
+      <th>GitHub URL</th>
+      <th>Live URL</th>
+      <th>Type</th>
+      <th>Category</th>
+      <th>Featured</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody id="projectsTableBody"></tbody>
+</table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modalTitle">Create Project</h2>
+        <button class="modal-close" id="closeModal">&times;</button>
+      </div>
+  <form class="modal-form" id="projectForm" enctype="multipart/form-data">
+    <div class="modal-form-scroll">
+      <input type="hidden" id="formProjectId">
+
+      <label>Title</label>
+      <input type="text" id="formProjectTitle" required>
+
+      <label>Slug</label>
+      <input type="text" id="formProjectSlug" placeholder="project-url-slug" required>
+
+      <label>Description</label>
+      <textarea id="formProjectDescription" rows="3" required></textarea>
+
+      <label>Image</label>
+      <input type="file" id="formProjectImage" accept="image/*">
+      <img id="formProjectImagePreview" src="" alt="" style="display:none;max-width:120px;max-height:120px;border-radius:8px;margin-top:6px;object-fit:cover;">
+
+      <label>GitHub URL</label>
+      <input type="text" id="formProjectGithub">
+
+      <label>Live URL</label>
+      <input type="text" id="formProjectLive">
+
+      <label>Project Type</label>
+      <select id="formProjectType">
+        <option value="SOFTWARE">Software</option>
+        <option value="UI_DESIGN">UI/UX Design</option>
+      </select>
+
+      <label>Category</label>
+      <select id="formProjectCategory">
+        <option value="GENERAL">General</option>
+        <option value="WEB_APP">Web App</option>
+        <option value="E_COMMERCE">E-Commerce</option>
+        <option value="DASHBOARD">Dashboard</option>
+        <option value="LANDING_PAGE">Landing Page</option>
+        <option value="PORTFOLIO">Portfolio</option>
+        <option value="MOBILE_APP_UI">Mobile App UI</option>
+        <option value="WEBSITE_UI">Website UI</option>
+        <option value="DASHBOARD_UI">Dashboard UI</option>
+        <option value="BRANDING">Branding</option>
+      </select>
+
+      <label>Featured</label>
+      <select id="formProjectFeatured">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" id="cancelModal">Cancel</button>
+      <button type="submit" class="btn-primary" id="saveProjectBtn">Save Project</button>
+    </div>
+  </form>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Config ----------
+    const SERVER_BASE_URL = "http://localhost:5000";
+    const API_BASE = `${SERVER_BASE_URL}/api/projects`;
+    const token = localStorage.getItem("accessToken");
+
+    // imageUrl from the API is a relative path like "/uploads/projects/xyz.png".
+    // Resolve it against the server's origin, but leave already-absolute URLs
+    // (http://..., https://..., data:...) untouched.
+    function resolveImageUrl(imageUrl) {
+      if (!imageUrl) return '';
+      if (/^(https?:)?\/\//i.test(imageUrl) || imageUrl.startsWith('data:')) {
+        return imageUrl;
+      }
+      return `${SERVER_BASE_URL}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
+    }
+
+    // ---------- Elements ----------
+    const openCreateBtn = document.getElementById('openCreateBtn');
+    const projectModal = document.getElementById('projectModal');
+    const closeModal = document.getElementById('closeModal');
+    const cancelModal = document.getElementById('cancelModal');
+    const projectForm = document.getElementById('projectForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const saveProjectBtn = document.getElementById('saveProjectBtn');
+
+    const formProjectId = document.getElementById('formProjectId');
+    const formProjectTitle = document.getElementById('formProjectTitle');
+    const formProjectSlug = document.getElementById('formProjectSlug');
+    const formProjectDescription = document.getElementById('formProjectDescription');
+    const formProjectImage = document.getElementById('formProjectImage');
+    const formProjectImagePreview = document.getElementById('formProjectImagePreview');
+    const formProjectGithub = document.getElementById('formProjectGithub');
+    const formProjectLive = document.getElementById('formProjectLive');
+    const formProjectType = document.getElementById('formProjectType');
+    const formProjectCategory = document.getElementById('formProjectCategory');
+    const formProjectFeatured = document.getElementById('formProjectFeatured');
+
+    const projectsTableBody = document.getElementById("projectsTableBody");
+    const projectStats = document.getElementById("projectStats");
+    const projectSearch = document.getElementById("projectSearch");
+
+    let allProjects = [];
+    let editingProjectId = null; // null => create mode, otherwise the id being edited
+
+    // ---------- Helpers ----------
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      if (isNaN(date)) return '-';
+      return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+    }
+
+    function escapeAttr(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function toggleModal(open) {
+      projectModal.classList.toggle('visible', open);
+    }
+
+    function resetForm() {
+      projectForm.reset();
+      formProjectId.value = '';
+      formProjectImagePreview.style.display = 'none';
+      formProjectImagePreview.src = '';
+      editingProjectId = null;
+    }
+
+    function updateProjectStats(count = null) {
+      if (projectStats) {
+        const projectCount = count !== null ? count : projectsTableBody.querySelectorAll('tr[data-project]').length;
+        projectStats.textContent = `Showing ${projectCount} project${projectCount === 1 ? '' : 's'}`;
+      }
+    }
+
+    // ---------- Row rendering ----------
+    function projectRowHTML(project) {
+      const projectJSON = escapeAttr(JSON.stringify(project));
+
+      return `
+            <tr data-project='${projectJSON}'>
+              <td>${project.id}</td>
+              <td>${project.title || ''}</td>
+              <td>${project.slug || ''}</td>
+              <td>${project.description || ''}</td>
+
+              <td>
+                ${
+                  project.imageUrl
+                    ? `<img
+                        src="${resolveImageUrl(project.imageUrl)}"
+                        alt="${project.title || ''}"
+                        width="60"
+                        height="60"
+                        style="object-fit:cover;border-radius:8px;"
+                      />`
+                    : "-"
+                }
+              </td>
+
+              <td>
+                ${
+                  project.githubUrl
+                    ? `<a href="${project.githubUrl}" target="_blank">GitHub</a>`
+                    : "-"
+                }
+              </td>
+
+              <td>
+                ${
+                  project.liveUrl
+                    ? `<a href="${project.liveUrl}" target="_blank">Live</a>`
+                    : "-"
+                }
+              </td>
+
+              <td>${project.type || '-'}</td>
+              <td>${project.category || "-"}</td>
+              <td>${project.isFeatured ? "Yes" : "No"}</td>
+
+              <td>${formatDate(project.createdAt)}</td>
+              <td>${formatDate(project.updatedAt)}</td>
+
+              <td class="action-cell">
+                <div class="kebab-wrap">
+                  <button type="button" class="kebab-btn" data-id="${project.id}" aria-haspopup="true" aria-expanded="false" title="Actions">
+                    <svg width="4" height="18" viewBox="0 0 4 18" fill="currentColor">
+                      <circle cx="2" cy="3" r="2"/>
+                      <circle cx="2" cy="15" r="2"/>
+                    </svg>
+                  </button>
+                  <div class="kebab-menu">
+                    <button type="button" class="kebab-menu-item edit-btn" data-id="${project.id}">
+                      <span class="action-icon">✏️</span> Edit
+                    </button>
+                    <button type="button" class="kebab-menu-item delete-btn danger" data-id="${project.id}">
+                      <span class="action-icon">🗑️</span> Delete
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          `;
+    }
+
+    // ---------- Load ----------
+    function filterProjects(query) {
+      if (!query) {
+        return allProjects;
+      }
+
+      const normalized = query.trim().toLowerCase();
+      return allProjects.filter((project) => {
+        return [
+          project.title,
+          project.slug,
+          project.description,
+          project.type,
+          project.category,
+          project.githubUrl,
+          project.liveUrl,
+        ]
+          .filter(Boolean)
+          .some((value) => value.toString().toLowerCase().includes(normalized));
+      });
+    }
+
+    function renderProjects(projects) {
+      projectsTableBody.innerHTML = projects.map(projectRowHTML).join("");
+      updateProjectStats(projects.length);
+    }
+
+    async function loadProjects() {
+      try {
+        const response = await fetch(API_BASE);
+        const result = await response.json();
+        allProjects = result.data.projects;
+
+        renderProjects(allProjects);
+      } catch (error) {
+        console.error("Error loading projects:", error);
+        projectsTableBody.innerHTML = `
+          <tr>
+            <td colspan="13">Failed to load projects</td>
+          </tr>
+        `;
+      }
+    }
+
+    // ---------- Modal open/close ----------
+    function openCreateModal() {
+      resetForm();
+      modalTitle.textContent = 'Create Project';
+      saveProjectBtn.textContent = 'Save Project';
+      toggleModal(true);
+    }
+
+    function openEditModal(row) {
+      let project = {};
+      try {
+        project = JSON.parse(row.dataset.project || '{}');
+      } catch (e) {
+        project = {};
+      }
+
+      editingProjectId = project.id;
+      formProjectId.value = project.id ?? '';
+      formProjectTitle.value = project.title || '';
+      formProjectSlug.value = project.slug || '';
+      formProjectDescription.value = project.description || '';
+      formProjectGithub.value = project.githubUrl || '';
+      formProjectLive.value = project.liveUrl || '';
+      if (project.type) formProjectType.value = project.type;
+      if (project.category) formProjectCategory.value = project.category;
+      formProjectFeatured.value = project.isFeatured ? '1' : '0';
+
+      // File inputs can't be set programmatically — show current image as a preview instead.
+      formProjectImage.value = '';
+      if (project.imageUrl) {
+        formProjectImagePreview.src = resolveImageUrl(project.imageUrl);
+        formProjectImagePreview.style.display = 'block';
+      } else {
+        formProjectImagePreview.style.display = 'none';
+      }
+
+      modalTitle.textContent = 'Edit Project';
+      saveProjectBtn.textContent = 'Save Changes';
+      toggleModal(true);
+    }
+
+    openCreateBtn?.addEventListener('click', openCreateModal);
+    closeModal?.addEventListener('click', () => toggleModal(false));
+    cancelModal?.addEventListener('click', () => toggleModal(false));
+    projectModal?.addEventListener('click', (event) => {
+      if (event.target === projectModal) toggleModal(false);
+    });
+
+    projectSearch?.addEventListener('input', (event) => {
+      const filtered = filterProjects(event.target.value);
+      renderProjects(filtered);
+    });
+
+    // ---------- API calls ----------
+    async function createProject(formData) {
+      const response = await fetch(API_BASE, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result.data.project;
+    }
+
+    // NOTE: assumes PUT /api/projects/:id — update the URL/method here if your
+    // backend exposes update differently (e.g. PATCH).
+    async function updateProject(id, formData) {
+      const response = await fetch(`${API_BASE}/${id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result.data.project;
+    }
+
+    async function deleteProject(id) {
+      const response = await fetch(`${API_BASE}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    }
+
+    // ---------- Single form submit handler (create OR update) ----------
+    projectForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append("title", formProjectTitle.value.trim());
+      formData.append("slug", formProjectSlug.value.trim());
+      formData.append("description", formProjectDescription.value.trim());
+      formData.append("githubUrl", formProjectGithub.value.trim());
+      formData.append("liveUrl", formProjectLive.value.trim());
+      formData.append("type", formProjectType.value);
+      formData.append("category", formProjectCategory.value);
+      formData.append("isFeatured", formProjectFeatured.value === "1");
+
+      const file = formProjectImage.files[0];
+      if (file) {
+        formData.append("image", file); // must match multer: single("image")
+      }
+
+      saveProjectBtn.disabled = true;
+      const originalBtnText = saveProjectBtn.textContent;
+      saveProjectBtn.textContent = 'Saving...';
+
+      try {
+        if (editingProjectId) {
+          await updateProject(editingProjectId, formData);
+          alert("Project updated successfully");
+        } else {
+          await createProject(formData);
+          alert("Project created successfully");
+        }
+
+        toggleModal(false);
+        resetForm();
+        loadProjects();
+      } catch (err) {
+        console.error(err);
+        alert(err.message || "Failed to save project");
+      } finally {
+        saveProjectBtn.disabled = false;
+        saveProjectBtn.textContent = originalBtnText;
+      }
+    });
+
+    // ---------- Kebab menu (edit / delete) ----------
+    function closeAllKebabMenus(except) {
+      document.querySelectorAll('.kebab-menu.open').forEach((menu) => {
+        if (menu !== except) {
+          menu.classList.remove('open');
+          const btn = menu.previousElementSibling;
+          if (btn) btn.classList.remove('active');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    function positionKebabMenu(kebabBtn, menu) {
+      const rect = kebabBtn.getBoundingClientRect();
+      const menuWidth = menu.offsetWidth || 150;
+      let left = rect.right - menuWidth;
+      let top = rect.bottom + 6;
+
+      if (left < 8) left = 8;
+      if (left + menuWidth > window.innerWidth - 8) left = window.innerWidth - menuWidth - 8;
+      if (top + menu.offsetHeight > window.innerHeight - 8) top = rect.top - menu.offsetHeight - 6;
+
+      menu.style.left = left + 'px';
+      menu.style.top = top + 'px';
+    }
+
+    document.addEventListener('click', (event) => {
+      const kebabBtn = event.target.closest('.kebab-btn');
+      if (kebabBtn) {
+        event.stopPropagation();
+        const menu = kebabBtn.nextElementSibling;
+        const isOpen = menu.classList.contains('open');
+        closeAllKebabMenus();
+        if (!isOpen) {
+          menu.classList.add('open');
+          kebabBtn.classList.add('active');
+          kebabBtn.setAttribute('aria-expanded', 'true');
+          positionKebabMenu(kebabBtn, menu);
+        } else {
+          kebabBtn.classList.remove('active');
+          kebabBtn.setAttribute('aria-expanded', 'false');
+        }
+        return;
+      }
+
+      const editItem = event.target.closest('.kebab-menu-item.edit-btn');
+      if (editItem) {
+        closeAllKebabMenus();
+        const row = editItem.closest('tr');
+        if (row) openEditModal(row);
+        return;
+      }
+
+      const deleteItem = event.target.closest('.kebab-menu-item.delete-btn');
+      if (deleteItem) {
+        closeAllKebabMenus();
+        const row = deleteItem.closest('tr');
+        const id = deleteItem.dataset.id;
+        if (row && id && confirm('Delete this project?')) {
+          deleteProject(id)
+            .then(() => {
+              row.remove();
+              updateProjectStats();
+            })
+            .catch((err) => {
+              console.error(err);
+              alert(err.message || 'Failed to delete project');
+            });
+        }
+        return;
+      }
+
+      closeAllKebabMenus();
+    });
+
+    window.addEventListener('scroll', () => closeAllKebabMenus(), true);
+    window.addEventListener('resize', () => closeAllKebabMenus());
+
+    // ---------- Init ----------
+    document.addEventListener("DOMContentLoaded", loadProjects);
+  </script>
+</body>
+</html>

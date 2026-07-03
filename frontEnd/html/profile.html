@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="../css/profile.css">
         <link rel="stylesheet" href="../css/style.css">
 
-
 </head>
 <body>
     <div class="page-loader" id="pageLoader">
@@ -35,33 +34,42 @@
     </nav>
 
     <div class="header-actions">
-        <div class="search-box">
-            <i class="bi bi-search"></i>
-            <input type="text" placeholder="Search">
-        </div>
+          <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
+            <i class="bi bi-envelope"></i>
+        </a>
+         <div class="notif-menu" id="notifMenu" style="display:none;">
+        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
+            <i class="bi bi-bell"></i>
+            <span class="notif-dot" id="notifDot"></span>
+        </button>
 
-        <div class="header-action-icons">
-            <button class="header-icon-btn" aria-label="Messages">
-                <i class="bi bi-envelope"></i>
-            </button>
+     <div class="notif-dropdown" id="notifDropdown">
+    <div class="notif-header">
+        <h4>Notifications</h4>
+        <a href="#" class="notif-clear" id="notifClear">Mark all read</a>
+    </div>
 
-            <button class="header-icon-btn" aria-label="Notifications">
-                <i class="bi bi-bell"></i>
-            </button>
-        </div>
+    <div class="notif-list" id="notifList">
+        <!-- JS will render notifications here -->
+    </div>
+
+</div>
+    </div>
 
         <div class="header-divider"></div>
 
         <div class="profile-menu">
 <button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
-  <span id="avatarContent"></span>
+  <span id="avatarContent"><img src="../assets/images/unknown.png" alt="Default Avatar"
+     style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;"></span>
 </button>
             <div class="profile-dropdown" id="profileDropdown">
                 <div class="profile-head">
-                    <img src="../assets/images/user.jpg" alt="User Profile">
+                    <div id="profileDropdownAvatar" class="profile-dropdown-avatar"><img src="../assets/images/unknown.png" alt="Default Avatar"
+     style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;"></div>
                     <div>
-                        <h4>VYRONIX User</h4>
-                        <p>user@vyronix.com</p>
+                        <h4 id="dropdownName">VYRONIX User</h4>
+                        <p id="dropdownEmail">user@vyronix.com</p>
                     </div>
                 </div>
                 <!-- if the user is logged in go to their profile  and if not logged in go to login page -->
@@ -104,24 +112,45 @@
             <div class="profile-grid">
                 <div class="profile-card profile-overview">
                     <div class="profile-top">
-                        <div class="profile-avatar">R</div>
+                        <div class="profile-avatar-wrap">
+                            <div class="profile-avatar" id="profileAvatarPic">R</div>
+                            <label for="avatarUpload" class="avatar-upload-btn" aria-label="Upload profile photo">
+                                <i class="bi bi-camera-fill"></i>
+                            </label>
+                            <input type="file" id="avatarUpload" accept="image/*" hidden>
+                        </div>
                         <div class="profile-info">
-                            <h4>Ruba Al Rayes</h4>
-                            <p>ruba@example.com</p>
+                            <h4 id="overviewName">Ruba Al Rayes</h4>
+                            <p id="overviewEmail">ruba@example.com</p>
                         </div>
                     </div>
 
                     <div class="profile-stats">
                         <div class="profile-stat">
-                            <h4>12</h4>
+                            <h4 id="myprojects"></h4>
                             <p>Projects</p>
                         </div>
-                        <div class="profile-stat">
-                            <h4>8</h4>
-                            <p>Active Services</p>
+                         <div class="profile-stat">
+                            <h4 id="myservices"></h4>
+                            <p>Services</p>
                         </div>
                     </div>
-
+                    <table class="profile-table">
+                          <caption>My Requests</caption>
+                          <thead>
+                           <tr>
+                           <th>Project Type</th>
+                           <th>Description</th>
+                           <th>Status</th>
+                           <th>Admin Note</th>
+                           </tr>
+                          </thead>
+                          <tbody id="requestsTableBody">
+                            <tr>
+                              <td colspan="4">Loading requests...</td>
+                            </tr>
+                          </tbody>
+                          </table>
                     <div class="profile-actions">
                     </div>
                 </div>
@@ -129,18 +158,24 @@
                 <div class="profile-card profile-details">
                     <h3>Profile Details</h3>
                     <div class="profile-detail-row">
-                        <label>Full Name</label>
-                        <p>Ruba Al Rayes</p>
+                        <label>First Name</label>
+                        <p id="firstNameDisplay">Ruba</p>
+                    </div>
+                    <div class="profile-detail-row">
+                        <label>Last Name</label>
+                        <p id="lastNameDisplay">Al Rayes</p>
                     </div>
                     <div class="profile-detail-row">
                         <label>Email</label>
-                        <p>ruba@example.com</p>
+                        <p id="emailDisplay">ruba@example.com</p>
                     </div>
 
-                    <form class="profile-form">
-                        <input type="text" placeholder="Update full name">
-                        <input type="email" placeholder="Update email address">
-                        <button type="submit" class="btn primary-btn">Save Changes</button>
+                    <form class="profile-form" id="profileForm">
+                        <input type="text" id="firstNameInput" placeholder="Update first name">
+                        <input type="text" id="lastNameInput" placeholder="Update last name">
+                        <input type="email" id="emailInput" placeholder="Update email address">
+                        <button type="submit" class="btn primary-btn" id="saveChangesBtn">Save Changes</button>
+                        <p id="formMessage" class="form-message"></p>
                     </form>
                 </div>
             </div>
@@ -194,43 +229,444 @@
     </a>
 
     <script src="../js/main.js"></script>
+
+    <!--
+        NOTE: All page-specific logic below is wrapped in a single IIFE
+        (function(){ ... })();
+        This avoids "Identifier has already been declared" SyntaxErrors that
+        happen when top-level `const`/`let` from multiple <script> tags
+        (or from main.js) collide in the shared global lexical scope.
+        If main.js ALSO declares top-level const/let with the exact same
+        names used below (token, notifMenu, notifClear, notifList, notifDot...),
+        rename them there too — wrapping only this block protects this file,
+        it can't rewrite main.js for you.
+    -->
     <script>
-    const avatar = document.getElementById("avatarContent");
+    (function () {
+        "use strict";
 
-//const user = JSON.parse(localStorage.getItem("user")); 
-const user = {};
+        // ---- Config ----
+        const API_BASE = "http://localhost:5000/api";
+        const SERVER_ORIGIN = "http://localhost:5000"; // used to resolve relative profileImage paths
 
-function setAvatar() {
-  if (user && user.name) {
-    avatar.textContent = user.name.charAt(0).toUpperCase();
-  } else {
-    avatar.textContent = "👤"; 
-  }
+        function getAccessToken() {
+            return localStorage.getItem("accessToken");
+        }
+
+        // ---- Header / dropdown avatar refs ----
+        const avatar = document.getElementById("avatarContent");
+        const dropdownAvatar = document.getElementById("profileDropdownAvatar");
+        const dropdownName = document.getElementById("dropdownName");
+        const dropdownEmail = document.getElementById("dropdownEmail");
+
+        function renderAvatarElement(element, profile, fallbackText) {
+            fallbackText = fallbackText || "👤";
+            if (!element) return;
+
+            if (profile && profile.profileImage) {
+                const url = profile.profileImage.startsWith("http")
+                    ? profile.profileImage
+                    : `${SERVER_ORIGIN}${profile.profileImage}`;
+                element.innerHTML = `<img src="${url}" alt="avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;">`;
+            } else if (profile && profile.firstName) {
+                element.textContent = profile.firstName.charAt(0).toUpperCase();
+            } else {
+                element.textContent = fallbackText;
+            }
+        }
+
+        function renderHeaderAvatar(profile) {
+            renderAvatarElement(avatar, profile);
+        }
+
+        function renderDropdownProfile(profile) {
+            if (dropdownName) {
+                dropdownName.textContent = profile && (profile.firstName || profile.lastName)
+                    ? `${profile.firstName || ""} ${profile.lastName || ""}`.trim() || "VYRONIX User"
+                    : "VYRONIX User";
+            }
+
+            if (dropdownEmail) {
+                dropdownEmail.textContent = profile && profile.email ? profile.email : "user@vyronix.com";
+            }
+
+            renderAvatarElement(dropdownAvatar, profile, "👤");
+        }
+
+        renderHeaderAvatar(null);
+        renderDropdownProfile(null);
+
+        // ---- Profile page element refs ----
+        const avatarUploadInput = document.getElementById("avatarUpload");
+        const profileAvatarPic = document.getElementById("profileAvatarPic");
+        const overviewName = document.getElementById("overviewName");
+        const overviewEmail = document.getElementById("overviewEmail");
+        const firstNameDisplay = document.getElementById("firstNameDisplay");
+        const lastNameDisplay = document.getElementById("lastNameDisplay");
+        const emailDisplay = document.getElementById("emailDisplay");
+        const firstNameInput = document.getElementById("firstNameInput");
+        const lastNameInput = document.getElementById("lastNameInput");
+        const emailInput = document.getElementById("emailInput");
+        const profileForm = document.getElementById("profileForm");
+        const saveChangesBtn = document.getElementById("saveChangesBtn");
+        const formMessage = document.getElementById("formMessage");
+        const myprojects = document.getElementById("myprojects");
+        const myservices = document.getElementById("myservices");
+        const profileLink = document.getElementById("profileLink");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const notifMenu = document.getElementById("notifMenu");
+        const notifClear = document.getElementById("notifClear");
+
+        let selectedImageFile = null; // holds the picked file until Save Changes is clicked
+
+        function showFormMessage(text, isError) {
+            formMessage.textContent = text;
+            formMessage.classList.remove("success", "error");
+            formMessage.classList.add(isError ? "error" : "success");
+        }
+
+        function renderAvatarImage(url) {
+            profileAvatarPic.style.backgroundImage = `url(${url})`;
+            profileAvatarPic.style.backgroundSize = "cover";
+            profileAvatarPic.style.backgroundPosition = "center";
+            profileAvatarPic.textContent = "";
+        }
+
+        function renderAvatarInitial(letter) {
+            profileAvatarPic.style.backgroundImage = "";
+            profileAvatarPic.textContent = (letter || "?").toUpperCase();
+        }
+
+        function populateProfile(profile) {
+            const fullName = `${profile.firstName || ""} ${profile.lastName || ""}`.trim();
+
+            overviewName.textContent = fullName || "—";
+            overviewEmail.textContent = profile.email || "";
+            firstNameDisplay.textContent = profile.firstName || "—";
+            lastNameDisplay.textContent = profile.lastName || "—";
+            emailDisplay.textContent = profile.email || "—";
+
+            // Clear inputs so placeholders show current-ish state without overwriting on accidental resubmit
+            firstNameInput.value = "";
+            lastNameInput.value = "";
+            emailInput.value = "";
+
+            if (profile.profileImage) {
+                const imageUrl = profile.profileImage.startsWith("http")
+                    ? profile.profileImage
+                    : `${SERVER_ORIGIN}${profile.profileImage}`;
+                renderAvatarImage(imageUrl);
+            } else {
+                renderAvatarInitial(profile.firstName ? profile.firstName.charAt(0) : "?");
+            }
+
+            // Keep the header avatar/dropdown in sync too (now correctly shows the image)
+            renderHeaderAvatar(profile);
+        }
+
+        async function loadMyRequestsCount(token) {
+            try {
+                const res = await fetch(`${API_BASE}/project-requests/my-requests`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                const data = await res.json();
+
+                if (!res.ok || !data.success) {
+                    throw new Error("Failed to load requests");
+                }
+
+                const requests = data.data.requests;
+                const countA = requests.filter(r =>
+                    r.projectType === "UI/UX Design" || r.projectType === "Digital Platform").length;
+                const countB = requests.filter(r =>
+                    r.projectType === "Web Development" || r.projectType === "Mobile Development" || r.projectType === "Dashboard & Systems").length;
+
+                if (myprojects) myprojects.textContent = countA;
+                if (myservices) myservices.textContent = countB;
+            } catch (err) {
+                console.error("Error loading requests count:", err);
+                if (myprojects) myprojects.textContent = "0";
+                if (myservices) myservices.textContent = "0";
+            }
+        }
+
+        async function fetchProfile() {
+            const token = getAccessToken();
+            if (!token) {
+                showFormMessage("You're not logged in.", true);
+                renderHeaderAvatar(null);
+                return;
+            }
+            try {
+                const res = await fetch(`${API_BASE}/profile`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || "Failed to load profile.");
+                }
+                populateProfile(data.data.profile);
+                renderDropdownProfile(data.data.profile);
+                await loadMyRequestsCount(token);
+            } catch (err) {
+                console.error("Failed to load profile:", err);
+                showFormMessage("Couldn't load your profile. Please try again.", true);
+            }
+        }
+
+        // Avatar picker: just preview locally, actual upload happens on Save Changes
+        if (avatarUploadInput) {
+            avatarUploadInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                if (!file.type.startsWith("image/")) {
+                    showFormMessage("Please choose an image file.", true);
+                    avatarUploadInput.value = "";
+                    return;
+                }
+
+                selectedImageFile = file;
+
+                const reader = new FileReader();
+                reader.onload = () => renderAvatarImage(reader.result);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        if (profileForm) {
+            profileForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const token = getAccessToken();
+                if (!token) {
+                    showFormMessage("You're not logged in.", true);
+                    return;
+                }
+
+                const formData = new FormData();
+                if (firstNameInput.value.trim()) formData.append("firstName", firstNameInput.value.trim());
+                if (lastNameInput.value.trim()) formData.append("lastName", lastNameInput.value.trim());
+                if (emailInput.value.trim()) formData.append("email", emailInput.value.trim());
+                if (selectedImageFile) formData.append("image", selectedImageFile);
+
+                saveChangesBtn.disabled = true;
+                saveChangesBtn.textContent = "Saving...";
+
+                try {
+                    const res = await fetch(`${API_BASE}/profile`, {
+                        method: "PATCH",
+                        headers: { Authorization: `Bearer ${token}` }, // don't set Content-Type: FormData sets its own boundary
+                        body: formData
+                    });
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        throw new Error(data.message || "Update failed.");
+                    }
+                    populateProfile(data.data.profile);
+                    selectedImageFile = null;
+                    avatarUploadInput.value = "";
+                    showFormMessage("Profile updated successfully.", false);
+                } catch (err) {
+                    console.error("Failed to update profile:", err);
+                    showFormMessage(err.message || "Something went wrong.", true);
+                } finally {
+                    saveChangesBtn.disabled = false;
+                    saveChangesBtn.textContent = "Save Changes";
+                }
+            });
+        }
+
+        // if the user is logged in go to their profile, if not go to sign up
+        if (profileLink) {
+            profileLink.href = getAccessToken() ? "profile.html" : "SignUp.html";
+        }
+
+        // logout button visible only when logged in
+        if (logoutBtn) {
+            logoutBtn.style.display = getAccessToken() ? "block" : "none";
+        }
+
+        // ---- Notifications ----
+        if (notifMenu) {
+            notifMenu.style.display = getAccessToken() ? "flex" : "none";
+        }
+
+        async function fetchNotifications(token) {
+            try {
+                const res = await fetch(`${API_BASE}/notifications`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+                if (!res.ok) throw new Error("Failed to fetch notifications");
+                const data = await res.json();
+                renderNotifications(data?.data?.notifications || [], data?.unreadCount || 0);
+            } catch (err) {
+                console.error("Notifications error:", err);
+            }
+        }
+
+        function renderNotifications(notifications, unreadCount) {
+            const notifList = document.getElementById("notifList");
+            const notifDot = document.getElementById("notifDot");
+
+            if (!notifList) return;
+
+            if (notifDot) {
+                notifDot.style.display = unreadCount > 0 ? "inline-block" : "none";
+            }
+
+            if (!notifications || notifications.length === 0) {
+                notifList.innerHTML = `<p class="notif-empty">No notifications yet.</p>`;
+                return;
+            }
+
+            notifList.innerHTML = notifications.map(n => `
+                <a href="#" class="notif-item ${n.isRead ? "read" : "unread"}">
+                    <span class="notif-icon">
+                        <i class="bi bi-bell"></i>
+                    </span>
+                    <div>
+                        <p>${n.message}</p>
+                        <span class="notif-time">${timeAgo(n.createdAt)}</span>
+                    </div>
+                </a>
+            `).join("");
+        }
+
+        function timeAgo(dateString) {
+            const diffMs = Date.now() - new Date(dateString).getTime();
+            const mins = Math.floor(diffMs / 60000);
+
+            if (mins < 1) return "just now";
+            if (mins < 60) return `${mins} min ago`;
+
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return `${hrs} hour${hrs > 1 ? "s" : ""} ago`;
+
+            const days = Math.floor(hrs / 24);
+            return `${days} day${days > 1 ? "s" : ""} ago`;
+        }
+
+        if (notifClear) {
+            notifClear.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const token = getAccessToken();
+                if (!token) return;
+                try {
+                    const res = await fetch(`${API_BASE}/notifications/read-all`, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+                    if (!res.ok) throw new Error("Failed to mark all as read");
+                    const notifDot = document.getElementById("notifDot");
+                    if (notifDot) notifDot.style.display = "none";
+                    fetchNotifications(token);
+                } catch (err) {
+                    console.error("Mark all as read error:", err);
+                }
+            });
+        }
+
+        // ---- Init ----
+        const activeToken = getAccessToken();
+        if (activeToken) {
+            fetchNotifications(activeToken);
+        }
+        fetchProfile();
+
+    })();
+    </script>
+    <script>
+        //Add a function to get the requests of the user and display them in the table
+async function loadUserRequests() {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return;
+
+    try {
+        const res = await fetch("http://localhost:5000/api/project-requests/my-requests", {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) throw new Error(`Failed (status ${res.status})`);
+
+        const data = await res.json();
+        const requests = data.data.requests;
+
+        const tbody = document.getElementById("requestsTableBody");
+        tbody.innerHTML = "";
+
+        if (requests.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="4">No requests found</td>
+                </tr>
+            `;
+            return;
+        }
+
+        requests.forEach(req => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${req.projectType || "N/A"}</td>
+                <td>${req.description || "N/A"}</td>
+                <td>${req.status || "N/A"}</td>
+                <td>${req.adminNote || "N/A"}</td>
+            `;
+
+            tbody.appendChild(row);
+        });
+
+    } catch (err) {
+        console.error(err);
+    }
 }
 
-setAvatar();
-</script>
-<script>
-    //if the user is logged in go to their profile  and if not logged in go to login page
-    const token = localStorage.getItem("token");
-const profileLink = document.getElementById("profileLink");
+window.addEventListener("DOMContentLoaded", loadUserRequests);
+    </script>
+    <script>
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+    const token = localStorage.getItem("accessToken");
 
-if (token) {
-    profileLink.href = "profile.html";
-} else {
-    profileLink.href = "SignUp.html";
-}
-</script>
-<script>
-    //the logout button will be shown if the user is logged in and hidden if not logged in
-    const tokenlogin = localStorage.getItem("token");
-const logoutBtn = document.getElementById("logoutBtn");
+    if (!token) {
+        window.location.href = "LogIn.html";
+        return;
+    }
 
-if (tokenlogin) {
-    logoutBtn.style.display = "block";
-} else {
-    logoutBtn.style.display = "none";
-}
-</script>
+    try {
+        const res = await fetch("http://localhost:5000/api/auth/logout", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+
+        if (res.ok) {
+            window.location.href = "LogIn.html";
+        } else {
+            console.warn("Logout request failed, but client cleared session.");
+            window.location.href = "LogIn.html";
+        }
+
+    } catch (err) {
+        console.error("Logout error:", err);
+
+     
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        window.location.href = "LogIn.html";
+    }
+});
+    </script>
 </body>
-</html> 
+</html>

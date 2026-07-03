@@ -21,25 +21,27 @@
 
         <h1 class="card-title">Sign Up</h1>
 
-        <form>
-            <div class="form-group">
-                <input type="text" class="form-input" placeholder="First Name" required>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-input" placeholder="Last Name" required>
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-input" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-input" placeholder="Password" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-input" placeholder="Confirm Password" required>
-            </div>
+   <form id="signupForm">
+    <div class="form-group">
+        <input type="text" id="firstName" class="form-input" placeholder="First Name" required>
+    </div>
+    <div class="form-group">
+        <input type="text" id="lastName" class="form-input" placeholder="Last Name" required>
+    </div>
+    <div class="form-group">
+        <input type="email" id="email" class="form-input" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+        <input type="password" id="password" class="form-input" placeholder="Password" required>
+    </div>
+    <div class="form-group">
+        <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm Password" required>
+    </div>
 
-            <button type="submit" class="btn-login">Sign Up</button>
-        </form>
+    <p id="errorMsg" style="color: red; display: none;"></p>
+
+    <button type="submit" class="btn-login">Sign Up</button>
+</form>
 
        
 
@@ -50,6 +52,63 @@
     </div>
 
 </div>
+<script>
+const form = document.getElementById("signupForm");
+const errorMsg = document.getElementById("errorMsg");
+
+const API_BASE = "http://localhost:5000/api/auth"; // adjust to your actual base path
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault(); // stop normal form submission/page reload
+
+    errorMsg.style.display = "none";
+
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+        errorMsg.textContent = "Passwords do not match";
+        errorMsg.style.display = "block";
+        return;
+    }
+
+    const submitBtn = form.querySelector(".btn-login");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Signing up...";
+
+    try {
+        const res = await fetch(`${API_BASE}/signup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ firstName, lastName, email, password , confirmPassword}),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+            throw new Error(data.message || "Signup failed");
+        }
+
+        // Store tokens
+        localStorage.setItem("accessToken", data.data.tokens.accessToken);
+        localStorage.setItem("refreshToken", data.data.tokens.refreshToken);
+        localStorage.setItem("user", JSON.stringify(data.data.user));
+         alert("Signup successful! Redirecting to dashboard...");
+        // Redirect to dashboard/home page
+        window.location.href = "index.html";
+
+    } catch (err) {
+        errorMsg.textContent = err.message;
+        errorMsg.style.display = "block";
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Sign Up";
+    }
+});
+</script>
 
 </body>
 </html>
