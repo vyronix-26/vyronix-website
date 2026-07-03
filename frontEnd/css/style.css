@@ -300,20 +300,29 @@ footer {
   font-size: 18px;
    overflow: hidden;
 }
-#avatarContent {
-    display: block;
+.user-avatar #avatarContent {
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border-radius: 50%;
+    overflow: hidden; /* clip the img itself */
+    padding: 0;
 }
 .profile-dropdown-avatar {
-    width: 42px;
-    height: 42px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255,255,255,.05);
+    background: linear-gradient(135deg, var(--cyan), #137eaa);
+    color: #fff;
+    font-size: 21px;
+    font-weight: 900;
 }
 .profile-dropdown-avatar img {
     width: 100%;
@@ -425,13 +434,16 @@ footer {
     border-radius: 50%;
     background: linear-gradient(135deg, var(--cyan), #137eaa);
     color: #fff;
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 21px;
     font-weight: 900;
     box-shadow: 0 0 24px rgba(34,199,232,.35);
     cursor: pointer;
     transition: .3s ease;
+    overflow: hidden;
+    padding: 0;
 }
 
 .user-avatar:hover {
