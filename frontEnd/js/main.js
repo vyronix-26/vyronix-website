@@ -211,14 +211,19 @@ if (chatBtn) {
 
 /* Search functionality (fix: guard for pages without #searchInput) */
 const searchInput = document.getElementById("searchInput");
-const cards = document.querySelectorAll(".digital-card");
 
-if (searchInput && cards.length) {
+if (searchInput) {
     const filterCards = (value) => {
+        const cards = document.querySelectorAll(".digital-card, .service-card, .project-category-card");
+
+        if (!cards.length) return;
+
         cards.forEach(card => {
-            const title = card.querySelector("h3").textContent.toLowerCase();
-            const match = title.includes(value);
-            card.style.display = match ? "flex" : "none";
+            const title = card.querySelector("h3")?.textContent.toLowerCase() || "";
+            const description = card.querySelector("p")?.textContent.toLowerCase() || "";
+            const altText = card.querySelector("img")?.alt?.toLowerCase() || "";
+            const match = title.includes(value) || description.includes(value) || altText.includes(value);
+            card.style.display = match ? "" : "none";
         });
     };
 
