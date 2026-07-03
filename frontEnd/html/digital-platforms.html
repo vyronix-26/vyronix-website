@@ -122,6 +122,7 @@
         });
     </script>
   <script>
+    
     async function fetchDigitalPlatforms() {
         try {
             const response = await fetch(
@@ -145,6 +146,8 @@
     }
 
     function displayPlatforms(platforms) {
+        const SERVER_URL = "http://localhost:5000";
+
         const grid = document.getElementById('digitalGrid');
 
         if (!platforms || platforms.length === 0) {
@@ -159,10 +162,15 @@
             const platformCard = document.createElement('article');
 
             platformCard.classList.add('digital-card');
-
+//Getting the image from /upload/projects/ folder and if the image is not available then show a default image
             platformCard.innerHTML = `
-                <img src="${platform.imageUrl}" alt="${platform.title}">
-
+               <img src="${
+        platform.imageUrl
+            ? (platform.imageUrl.startsWith("http")
+                ? platform.imageUrl
+                : SERVER_URL + platform.imageUrl)
+            : '../assets/images/default-project.png'
+    }" alt="${platform.title}">
                 <h3>${platform.title}</h3>
 
                 <p class="card-desc">

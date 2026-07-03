@@ -127,6 +127,13 @@ document.querySelectorAll("a").forEach(link => {
             return;
         }
 
+        // Skip links meant to open in a new tab (e.g. Watch Intro Video)
+        // so the browser's native new-tab behavior isn't hijacked by
+        // the same-tab navigation below.
+        if (this.target === "_blank") {
+            return;
+        }
+
         if (href.includes("#") && href.includes("index.html") && window.location.pathname.includes("index.html")) {
             return;
         }

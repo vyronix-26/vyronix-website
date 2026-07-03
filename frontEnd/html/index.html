@@ -115,22 +115,10 @@
         </p>
 
         <div class="hero-buttons">
-           <a href="#" class="btn primary-btn" id="openVideo">
+           <a href="../video/intro_video.mp4" class="btn primary-btn" id="openVideo" target="_blank" rel="noopener noreferrer">
     <i class="fa-solid fa-play"></i>
     Watch Intro Video
 </a>
-
-<!-- Modal -->
-<div class="video-modal" id="videoModal">
-    <div class="video-content">
-        <span class="close-btn" id="closeVideo">&times;</span>
-
-        <video id="introVideo" controls>
-            <source src="../video/test.mp4" type="video/mp4">
-            Your browser does not support video tag.
-        </video>
-    </div>
-</div>
             <a href="contact.html" class="btn secondary-btn">Book Consultation</a>
         </div>
 
@@ -762,32 +750,6 @@ setAvatar(profile);
 </script>
 
 
-<script>
-const openBtn = document.getElementById("openVideo");
-const modal = document.getElementById("videoModal");
-const closeBtn = document.getElementById("closeVideo");
-const video = document.getElementById("introVideo");
-
-openBtn.addEventListener("click", function(e){
-    e.preventDefault();
-    modal.style.display = "flex";
-    video.play();
-});
-
-closeBtn.addEventListener("click", function(){
-    modal.style.display = "none";
-    video.pause();
-    video.currentTime = 0;
-});
-
-window.addEventListener("click", function(e){
-    if(e.target === modal){
-        modal.style.display = "none";
-        video.pause();
-        video.currentTime = 0;
-    }
-});
-</script>
 
 
 </body>

@@ -126,6 +126,8 @@
 }
 
        function displayDesigns(projects) {
+        const SERVER_URL = "http://localhost:5000";
+
     const digitalGrid = document.getElementById('digitalGrid');
 
     if (!projects || projects.length === 0) {
@@ -141,7 +143,13 @@
         card.classList.add('digital-card');
 
         card.innerHTML = `
-            <img src="${project.imageUrl}" alt="${project.title}">
+           <img src="${
+        project.imageUrl
+            ? (project.imageUrl.startsWith("http")
+                ? project.imageUrl
+                : SERVER_URL + project.imageUrl)
+            : '../assets/images/default-project.png'
+    }" alt="${project.title}">
 
             <h3>${project.title}</h3>
 
