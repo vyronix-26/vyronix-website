@@ -231,6 +231,61 @@
     opacity: 0.9;
 }
 
+
+/* User Requests */
+.profile-table {
+  width: 100%;
+  margin-top: 30px;
+
+  border-collapse: collapse;
+
+  background: rgba(8, 18, 28, 0.55);
+  border: 1px solid rgba(34, 199, 232, 0.18);
+  border-radius: 18px;
+
+  overflow: hidden;
+  color: #fff;
+}
+
+/* headers */
+.profile-table th {
+  padding: 16px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  color: #c7d8e6;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(34, 199, 232, 0.12);
+}
+
+/* cells */
+.profile-table td {
+  padding: 14px 16px;
+  text-align: center;
+
+  font-size: 14px;
+  color: #137eaa;
+  line-height: 1.6;
+}
+
+/* separation line */
+.profile-table tr:last-child td {
+  border-top: 1px solid rgba(34, 199, 232, 0.12);
+}
+
+/* hover (خفيف جدًا) */
+.profile-table tr:last-child td:hover {
+  background: rgba(255,255,255,0.03);
+}
+.profile-table caption {
+  caption-side: top;
+  padding: 12px;
+  font-size: 18px;
+  color: #c7d8e6;
+  text-align: left;
+  margin-bottom: 10px;
+}
 /* RESPONSIVE */
 @media (max-width: 960px) {
     .profile-grid {

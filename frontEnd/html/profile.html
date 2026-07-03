@@ -137,7 +137,22 @@
                             <p>Services</p>
                         </div>
                     </div>
-
+                    <table class="profile-table">
+                          <caption>My Requests</caption>
+                          <thead>
+                           <tr>
+                           <th>Project Type</th>
+                           <th>Description</th>
+                           <th>Status</th>
+                           <th>Admin Note</th>
+                           </tr>
+                          </thead>
+                          <tbody id="requestsTableBody">
+                            <tr>
+                              <td colspan="4">Loading requests...</td>
+                            </tr>
+                          </tbody>
+                          </table>
                     <div class="profile-actions">
                     </div>
                 </div>
@@ -568,6 +583,92 @@
         fetchProfile();
 
     })();
+    </script>
+    <script>
+        //Add a function to get the requests of the user and display them in the table
+async function loadUserRequests() {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return;
+
+    try {
+        const res = await fetch("http://localhost:5000/api/project-requests/my-requests", {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) throw new Error(`Failed (status ${res.status})`);
+
+        const data = await res.json();
+        const requests = data.data.requests;
+
+        const tbody = document.getElementById("requestsTableBody");
+        tbody.innerHTML = "";
+
+        if (requests.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="4">No requests found</td>
+                </tr>
+            `;
+            return;
+        }
+
+        requests.forEach(req => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${req.projectType || "N/A"}</td>
+                <td>${req.description || "N/A"}</td>
+                <td>${req.status || "N/A"}</td>
+                <td>${req.adminNote || "N/A"}</td>
+            `;
+
+            tbody.appendChild(row);
+        });
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+window.addEventListener("DOMContentLoaded", loadUserRequests);
+    </script>
+    <script>
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        window.location.href = "LogIn.html";
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:5000/api/auth/logout", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+
+        if (res.ok) {
+            window.location.href = "LogIn.html";
+        } else {
+            console.warn("Logout request failed, but client cleared session.");
+            window.location.href = "LogIn.html";
+        }
+
+    } catch (err) {
+        console.error("Logout error:", err);
+
+     
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        window.location.href = "LogIn.html";
+    }
+});
     </script>
 </body>
 </html>

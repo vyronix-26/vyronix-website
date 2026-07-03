@@ -518,5 +518,43 @@ setAvatar(profile);
     });
   })();
 </script>
+ <script>
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        window.location.href = "LogIn.html";
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:5000/api/auth/logout", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+
+        if (res.ok) {
+            window.location.href = "LogIn.html";
+        } else {
+            console.warn("Logout request failed, but client cleared session.");
+            window.location.href = "LogIn.html";
+        }
+
+    } catch (err) {
+        console.error("Logout error:", err);
+
+     
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        window.location.href = "LogIn.html";
+    }
+});
+    </script>
 </body>
 </html>
