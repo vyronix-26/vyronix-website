@@ -1,579 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VYRONIX | Smart Assistant</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VYRONIX | Smart Assistant</title>
 
-<style>
-/* Chatbot page compact fix */
-.chatbot-page {
-    min-height: auto !important;
-    padding-top: 120px !important;
-    padding-bottom: 70px !important;
-}
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
-.chatbot-layout {
-    margin-top: 0 !important;
-    min-height: 560px !important;
-    max-width: 1180px !important;
-}
-
-.chat-window {
-    min-height: 560px !important;
-    height: 560px !important;
-}
-
-.chatbot-sidebar {
-    min-height: 560px !important;
-}
-
-.chat-messages,
-#chatMessages,
-.messages,
-.chat-body {
-    min-height: 390px !important;
-    max-height: 390px !important;
-    overflow-y: auto !important;
-}
-
-.chat-input-area {
-    margin-top: auto !important;
-}
-
-@media (max-width: 900px) {
+  <style>
     .chatbot-page {
+      min-height: auto !important;
+      padding-top: 120px !important;
+      padding-bottom: 70px !important;
+    }
+
+    .chatbot-layout {
+      margin-top: 0 !important;
+      min-height: 560px !important;
+      max-width: 1180px !important;
+    }
+
+    .chat-window {
+      min-height: 560px !important;
+      height: 560px !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    .chatbot-sidebar {
+      min-height: 560px !important;
+    }
+
+    .chat-messages {
+      min-height: 390px !important;
+      max-height: 390px !important;
+      overflow-y: auto !important;
+      flex: 1 !important;
+    }
+
+    .chat-input-area {
+      margin-top: auto !important;
+    }
+
+    @media (max-width: 900px) {
+      .chatbot-page {
         padding-top: 100px !important;
         padding-bottom: 45px !important;
-    }
+      }
 
-    .chatbot-layout,
-    .chat-window,
-    .chatbot-sidebar {
+      .chatbot-layout,
+      .chat-window,
+      .chatbot-sidebar {
         min-height: auto !important;
         height: auto !important;
+      }
     }
-}
-</style>
-
+  </style>
 </head>
 
 <body>
 <div id="cursor-glow"></div>
 
-<!-- header -->
-  <header class="header">
-    <a href="index.html" class="header-logo">
-        <img src="../assets/images/logo.png" alt="VYRONIX Logo">
-        <span>VYRONIX</span>
+<header class="header">
+  <a href="index.html" class="header-logo">
+    <img src="../assets/images/logo.png" alt="VYRONIX Logo" />
+    <span>VYRONIX</span>
+  </a>
+
+  <nav class="navbar" id="navbar">
+    <a href="index.html#home">Home</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="ourteam.html">Our Team</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <div class="header-actions">
+    <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
+      <i class="bi bi-envelope"></i>
     </a>
 
-    <nav class="navbar" id="navbar">
-        <a href="index.html#home">Home</a>
-        <a href="index.html#services">Services</a>
-        <a href="index.html#projects">Projects</a>
-        <a href="ourteam.html">Our Team</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+    <div class="notif-menu" id="notifMenu" style="display:none;">
+      <button type="button" class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
+        <i class="bi bi-bell"></i>
+        <span class="notif-dot" id="notifDot"></span>
+      </button>
 
-    <div class="header-actions">
-        <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
-    <i class="bi bi-envelope"></i>
-</a>
-         <div class="notif-menu" id="notifMenu" style="display:none;">
-        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
-            <i class="bi bi-bell"></i>
-            <span class="notif-dot" id="notifDot"></span>
-        </button>
-
-     <div class="notif-dropdown" id="notifDropdown">
-    <div class="notif-header">
-        <h4>Notifications</h4>
-        <a href="#" class="notif-clear" id="notifClear">Mark all read</a>
-    </div>
-
-    <div class="notif-list" id="notifList">
-        <!-- JS will render notifications here -->
-    </div>
-
-</div>
-    </div>
-
-        <div class="header-divider"></div>
-
-        <div class="profile-menu">
-<button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
-  <span id="avatarContent"><img src="../assets/images/unknown.png" alt="Default Avatar"
-     style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;"></span>
-</button>
-            <div class="profile-dropdown" id="profileDropdown">
-                <div class="profile-head">
-                    <div id="profileDropdownAvatar" class="profile-dropdown-avatar"><img src="../assets/images/unknown.png" alt="Default Avatar"></div>
-                    <div>
-                        <h4 id="dropdownName">VYRONIX User</h4>
-                        <p id="dropdownEmail">user@vyronix.com</p>
-                    </div>
-                </div>
-                <!-- if the user is logged in go to their profile  and if not logged in go to login page -->
-               <a href="#" id="profileLink">
-    <span>
-        <i class="bi bi-person"></i> Profile
-    </span>
-</a>
-
-                <a href="rating.html">
-                    <span><i class="bi bi-star"></i> Ratings & Feedback</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-
-                <a href="SignUp.html">
-                    <span><i class="bi bi-person-plus"></i> Add Account</span>
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-
-                <button class="logout-btn" id="logoutBtn" style="display:none;">
-    <span><i class="bi bi-box-arrow-right"></i> Log Out</span>
-</button>
-            </div>
+      <div class="notif-dropdown" id="notifDropdown">
+        <div class="notif-header">
+          <h4>Notifications</h4>
+          <a href="#" class="notif-clear" id="notifClear">Mark all read</a>
         </div>
+
+        <div class="notif-list" id="notifList">
+          <p class="notif-empty">No notifications yet.</p>
+        </div>
+      </div>
     </div>
 
-    <button class="menu-btn" id="menuBtn" aria-label="Open Menu">
-        <i class="bi bi-list"></i>
-    </button>
+    <div class="header-divider"></div>
+
+    <div class="profile-menu">
+      <button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
+        <span id="avatarContent">
+          <img src="../assets/images/unknown.png" alt="Default Avatar"
+               style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;">
+        </span>
+      </button>
+
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="profile-head">
+          <div id="profileDropdownAvatar" class="profile-dropdown-avatar">
+            <img src="../assets/images/unknown.png" alt="Default Avatar" />
+          </div>
+          <div>
+            <h4 id="dropdownName">VYRONIX User</h4>
+            <p id="dropdownEmail">user@vyronix.com</p>
+          </div>
+        </div>
+
+        <a href="LogIn.html" id="profileLink">
+          <span><i class="bi bi-person"></i> Profile</span>
+        </a>
+
+        <a href="rating.html">
+          <span><i class="bi bi-star"></i> Ratings & Feedback</span>
+          <i class="bi bi-chevron-right"></i>
+        </a>
+
+        <a href="SignUp.html" id="addAccountLink">
+          <span><i class="bi bi-person-plus"></i> Add Account</span>
+          <i class="bi bi-chevron-right"></i>
+        </a>
+
+        <button class="logout-btn" id="logoutBtn" style="display:none;">
+          <span><i class="bi bi-box-arrow-right"></i> Log Out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <button class="menu-btn" id="menuBtn" aria-label="Open Menu">
+    <i class="bi bi-list"></i>
+  </button>
 </header>
+
 <main>
-    <section class="chatbot-page">
-        <div class="chat-orb orb-one"></div>
-        <div class="chat-orb orb-two"></div>
-        <div class="hero-bg-grid"></div>
+  <section class="chatbot-page">
+    <div class="chat-orb orb-one"></div>
+    <div class="chat-orb orb-two"></div>
+    <div class="hero-bg-grid"></div>
 
-        <div class="chatbot-layout reveal">
-            <aside class="chatbot-sidebar">
-                <div class="assistant-profile">
-                    <div class="assistant-avatar">
-                        <i class="bi bi-robot"></i>
-                    </div>
-                    <div>
-                        <h3>VYRONIX Assistant</h3>
-                        <p><span></span> Online now</p>
-                    </div>
-                </div>
+    <div class="chatbot-layout reveal">
+      <aside class="chatbot-sidebar">
+        <div class="assistant-profile">
+          <div class="assistant-avatar">
+            <i class="bi bi-robot"></i>
+          </div>
+          <div>
+            <h3>VYRONIX Assistant</h3>
+            <p><span></span> Online now</p>
+          </div>
+        </div>
 
-                <h4>Suggested Questions</h4>
+        <h4>Suggested Questions</h4>
 
-                <button class="suggestion-btn">What services does VYRONIX provide?</button>
-                <button class="suggestion-btn">I need a company website.</button>
-                <button class="suggestion-btn">Can you build a dashboard system?</button>
-                <button class="suggestion-btn">How much does a mobile app cost?</button>
-                <button class="suggestion-btn">How can I contact the team?</button>
+        <button class="suggestion-btn">What services does VYRONIX provide?</button>
+        <button class="suggestion-btn">I need a company website.</button>
+        <button class="suggestion-btn">Can you build a dashboard system?</button>
+        <button class="suggestion-btn">How much does a mobile app cost?</button>
+        <button class="suggestion-btn">How can I contact the team?</button>
 
-                <div class="chat-mini-card">
-                    <i class="bi bi-stars"></i>
-                    <h4>Need a custom solution?</h4>
-                    <p>Tell us your idea and we will guide you to the best digital product.</p>
-                </div>
-            </aside>
+        <div class="chat-mini-card">
+          <i class="bi bi-stars"></i>
+          <h4>Need a custom solution?</h4>
+          <p>Tell us your idea and we will guide you to the best digital product.</p>
+        </div>
+      </aside>
 
-          <section class="chat-window">
-
-    <div class="chat-header">
-        <div class="chat-header-left">
+      <section class="chat-window">
+        <div class="chat-header">
+          <div class="chat-header-left">
             <div class="assistant-avatar small">
-                <i class="bi bi-robot"></i>
+              <i class="bi bi-robot"></i>
             </div>
 
             <div>
-                <h3>VYRONIX Assistant</h3>
-                <p>Smart support for digital solutions</p>
+              <h3>VYRONIX Assistant</h3>
+              <p>Smart support for digital solutions</p>
             </div>
-        </div>
+          </div>
 
-        <div class="chat-header-actions">
+          <div class="chat-header-actions">
             <button type="button" id="clearChat" aria-label="Clear Chat">
-                <i class="bi bi-trash3"></i>
+              <i class="bi bi-trash3"></i>
             </button>
+          </div>
         </div>
-    </div>
 
-    <!-- Chat Messages -->
-    <div class="chat-messages" id="chatMessages">
+        <div class="chat-messages" id="chatMessages"></div>
 
-    </div>
-
-    <!-- Chat Input -->
-    <form class="chat-input-area" id="chatForm">
-        <input
+        <form class="chat-input-area" id="chatForm">
+          <input
             type="text"
             id="chatInput"
             placeholder="Write your message..."
             autocomplete="off"
             required
-        >
+          />
 
-        <button type="submit" aria-label="Send Message">
+          <button type="submit" aria-label="Send Message">
             <i class="bi bi-send"></i>
-        </button>
-    </form>
-
-</section>
-
-                    <div class="chat-header-actions">
-                        <button type="button" id="clearChat" aria-label="Clear Chat">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <form class="chat-input-area" id="chatForm">
-                    <input type="text" id="chatInput" placeholder="Write your message..." autocomplete="off" required>
-                    <button type="submit" aria-label="Send Message">
-                        <i class="bi bi-send"></i>
-                    </button>
-                </form>
-            </section>
-        </div>
-    </section>
+          </button>
+        </form>
+      </section>
+    </div>
+  </section>
 </main>
 
 <script src="../js/api.js"></script>
 <script src="../js/main.js"></script>
 <script src="../js/chatbot.js"></script>
 
-
 <script>
-    const avatar = document.getElementById("avatarContent");
-    const avatarIcon = document.getElementById("avatarIcon");
-    const profileLink = document.getElementById("profileLink");
-    const addAccountLink = document.querySelector('.profile-dropdown a[href="SignUp.html"]');
-    const logoutBtn = document.getElementById("logoutBtn");
-    const profileHead = document.getElementById("profileHead");
-    const userNameEl = document.getElementById("userName");
-    const userEmailEl = document.getElementById("userEmail");
+(function () {
+  "use strict";
 
-    const rawToken = localStorage.getItem("accessToken");
-    const token = rawToken && rawToken !== "null" && rawToken !== "undefined" ? rawToken : null;
-    const storedUser = localStorage.getItem("user") || localStorage.getItem("vyronixUser");
-    let user = null;
+  const API_BASE = "http://localhost:5000/api";
+  const SERVER_ORIGIN = "http://localhost:5000";
 
-    try {
-        user = storedUser ? JSON.parse(storedUser) : null;
-    } catch (error) {
-        console.warn("Unable to parse stored user", error);
-        user = null;
-    }
+  const avatar = document.getElementById("avatarContent");
+  const dropdownAvatar = document.getElementById("profileDropdownAvatar");
+  const dropdownName = document.getElementById("dropdownName");
+  const dropdownEmail = document.getElementById("dropdownEmail");
+  const profileLink = document.getElementById("profileLink");
+  const addAccountLink = document.getElementById("addAccountLink");
+  const logoutBtn = document.getElementById("logoutBtn");
 
-    const isLoggedIn = Boolean(token || (user && (user.name || user.email)));
-    const notifMenu = document.getElementById("notifMenu");
-    if (notifMenu) {
-        notifMenu.style.display = isLoggedIn ? "flex" : "none";
-    }
-  function setAvatar(profile) {
-    if (!avatar) return;
+  const notifMenu = document.getElementById("notifMenu");
+  const notifBtn = document.getElementById("notifBtn");
+  const notifDropdown = document.getElementById("notifDropdown");
+  const notifDot = document.getElementById("notifDot");
+  const notifList = document.getElementById("notifList");
+  const notifClear = document.getElementById("notifClear");
+
+  function getToken() {
+    const token = localStorage.getItem("accessToken") || localStorage.getItem("token");
+    return token && token !== "null" && token !== "undefined" ? token : null;
+  }
+
+  function getInitial(profile) {
+    if (profile?.firstName) return profile.firstName.charAt(0).toUpperCase();
+    if (profile?.email) return profile.email.charAt(0).toUpperCase();
+    return "👤";
+  }
+
+  function renderAvatar(el, profile) {
+    if (!el) return;
 
     if (profile?.profileImage) {
-        const url = profile.profileImage.startsWith("http")
-            ? profile.profileImage
-            : `http://localhost:5000${profile.profileImage}`;
+      const url = profile.profileImage.startsWith("http")
+        ? profile.profileImage
+        : `${SERVER_ORIGIN}${profile.profileImage}`;
 
-        avatar.innerHTML = `<img src="${url}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
-    } else if (profile?.firstName) {
-        avatar.textContent = profile.firstName.charAt(0).toUpperCase();
+      el.innerHTML = `<img src="${url}" alt="avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;">`;
     } else {
-        avatar.textContent = "👤";
+      el.textContent = getInitial(profile);
     }
+  }
 
-}
+  function renderDropdown(profile) {
+    const fullName = `${profile?.firstName || ""} ${profile?.lastName || ""}`.trim();
 
-    if (profileLink) {
-        profileLink.href = isLoggedIn ? "profile.html" : "LogIn.html";
-    }
+    if (dropdownName) dropdownName.textContent = fullName || "VYRONIX User";
+    if (dropdownEmail) dropdownEmail.textContent = profile?.email || "user@vyronix.com";
 
-    if (addAccountLink) {
-addAccountLink.hidden = isLoggedIn;
-    }
+    renderAvatar(dropdownAvatar, profile);
+  }
 
-    if (logoutBtn) {
-        logoutBtn.style.display = isLoggedIn ? "flex" : "none";
+  async function loadProfile() {
+    const token = getToken();
+    const isLoggedIn = Boolean(token);
 
-        if (isLoggedIn && !logoutBtn.dataset.logoutAttached) {
-            logoutBtn.dataset.logoutAttached = "true";
-            logoutBtn.addEventListener("click", () => {
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("user");
-                localStorage.removeItem("vyronixUser");
-                window.location.href = "LogIn.html";
-            });
-        }
-    }
+    if (profileLink) profileLink.href = isLoggedIn ? "profile.html" : "LogIn.html";
+    if (addAccountLink) addAccountLink.hidden = isLoggedIn;
+    if (logoutBtn) logoutBtn.style.display = isLoggedIn ? "flex" : "none";
+    if (notifMenu) notifMenu.style.display = isLoggedIn ? "flex" : "none";
 
-    if (profileHead) {
-        const showProfile = Boolean(isLoggedIn);
-        profileHead.classList.toggle("hidden", !showProfile);
-        profileHead.style.display = showProfile ? "flex" : "none";
-
-        if (showProfile && user) {
-            if (userNameEl) userNameEl.textContent = user.name || userNameEl.textContent;
-            if (userEmailEl) userEmailEl.textContent = user.email || userEmailEl.textContent;
-        }
-    }
-</script>
-<script>
-    //connect to the API to get the notifications from the database
-    // ---- NEW: fetch notifications when logged in ----
-   document.addEventListener("DOMContentLoaded", () => {
-    const rawToken = localStorage.getItem("accessToken");
-
-    if (!rawToken) return;
-              console.log("Notifications fetch response:");
-
-    fetchNotifications(rawToken);
-});
-   async function fetchNotifications(token) {
-             console.log("Notifications fetch response:");
+    if (!token) return;
 
     try {
-        const res = await fetch("http://localhost:5000/api/notifications", {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
-         console.log("Notifications fetch response:");
-        if (!res.ok) throw new Error("Failed to fetch notifications");
+      const res = await fetch(`${API_BASE}/profile`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-        const data = await res.json();
+      const data = await res.json();
+      if (!res.ok || !data.success) return;
 
-        renderNotifications(
-            data?.data?.notifications || [],
-            data?.unreadCount || 0
-        );
+      const profile = data.data.profile;
 
+      renderAvatar(avatar, profile);
+      renderDropdown(profile);
     } catch (err) {
-        console.error("Notifications error:", err);
+      console.error("Profile fetch error:", err);
     }
-}
- function renderNotifications(notifications, unreadCount) {
-    const notifList = document.getElementById("notifList");
-    const notifDot = document.getElementById("notifDot");
+  }
 
+  function timeAgo(dateString) {
+    if (!dateString) return "";
+    const diffMs = Date.now() - new Date(dateString).getTime();
+    const mins = Math.floor(diffMs / 60000);
+
+    if (mins < 1) return "just now";
+    if (mins < 60) return `${mins} min ago`;
+
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs} hour${hrs > 1 ? "s" : ""} ago`;
+
+    const days = Math.floor(hrs / 24);
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  }
+
+  function renderNotifications(notifications, unreadCount) {
     if (!notifList) return;
 
-    // red dot
     if (notifDot) {
-        notifDot.style.display = unreadCount > 0 ? "inline-block" : "none";
+      notifDot.style.display = unreadCount > 0 ? "inline-block" : "none";
     }
 
-    // empty state
     if (!notifications || notifications.length === 0) {
-        notifList.innerHTML = `<p class="notif-empty">No notifications yet.</p>`;
-        return;
+      notifList.innerHTML = `<p class="notif-empty">No notifications yet.</p>`;
+      return;
     }
 
-    // render list
     notifList.innerHTML = notifications.map(n => `
-        <a href="#" class="notif-item ${n.isRead ? "read" : "unread"}">
-            <span class="notif-icon">
-                <i class="bi bi-bell"></i>
-            </span>
-            <div>
-                <p>${n.message}</p>
-                <span class="notif-time">${timeAgo(n.createdAt)}</span>
-            </div>
-        </a>
+      <a href="#" class="notif-item ${n.isRead ? "read" : "unread"}">
+        <span class="notif-icon">
+          <i class="bi bi-bell"></i>
+        </span>
+        <div>
+          <p>${n.message || "New notification"}</p>
+          <span class="notif-time">${timeAgo(n.createdAt)}</span>
+        </div>
+      </a>
     `).join("");
-}
-    function timeAgo(dateString) {
-        const diffMs = Date.now() - new Date(dateString).getTime();
-        const mins = Math.floor(diffMs / 60000);
-        if (mins < 1) return "just now";
-        if (mins < 60) return `${mins} min ago`;
-        const hrs = Math.floor(mins / 60);
-        if (hrs < 24) return `${hrs} hour${hrs > 1 ? "s" : ""} ago`;
-        const days = Math.floor(hrs / 24);
-        return `${days} day${days > 1 ? "s" : ""} ago`;
-    }
+  }
 
-//Mark all notifications as read
- (function () {
-       const notifClear = document.getElementById("notifClear");
-if (notifClear) {
-    notifClear.addEventListener("click", async (e) => {
-        e.preventDefault();
-
-        const token = localStorage.getItem("accessToken");
-        if (!token) return;
-
-        try {
-            const res = await fetch("http://localhost:5000/api/notifications/read-all", {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-
-            if (!res.ok) throw new Error("Failed to mark all as read");
-
-            const notifDot = document.getElementById("notifDot");
-            if (notifDot) notifDot.style.display = "none";
-
-           
-            fetchNotifications(token);
-
-        } catch (err) {
-            console.error("Mark all as read error:", err);
-        }
-    });
-}
-
-
-   })();
-
-
-</script>
-<script>
-    (function () {
-    "use strict";
-
-    const API_BASE = "http://localhost:5000/api";
-    const SERVER_ORIGIN = "http://localhost:5000";
-
-    const avatar = document.getElementById("avatarContent");
-    const dropdownAvatar = document.getElementById("profileDropdownAvatar");
-    const dropdownName = document.getElementById("dropdownName");
-    const dropdownEmail = document.getElementById("dropdownEmail");
-
-    const profileLink = document.getElementById("profileLink");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    function getToken() {
-        return localStorage.getItem("accessToken");
-    }
-
-    // ---------- helper: initials ----------
-    function getInitial(profile) {
-        if (profile?.firstName) return profile.firstName.charAt(0).toUpperCase();
-        if (profile?.email) return profile.email.charAt(0).toUpperCase();
-        return "👤";
-    }
-
-    // ---------- avatar renderer ----------
-    function renderAvatar(el, profile) {
-        if (!el) return;
-
-        if (profile?.profileImage) {
-            const url = profile.profileImage.startsWith("http")
-                ? profile.profileImage
-                : `${SERVER_ORIGIN}${profile.profileImage}`;
-
-            el.innerHTML = `<img src="${url}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
-        } else {
-            el.textContent = getInitial(profile);
-        }
-    }
-
-    // ---------- dropdown ----------
-    function renderDropdown(profile) {
-        if (dropdownName) {
-            dropdownName.textContent =
-                `${profile?.firstName || ""} ${profile?.lastName || ""}`.trim() ||
-                "VYRONIX User";
-        }
-
-        if (dropdownEmail) {
-            dropdownEmail.textContent = profile?.email || "user@vyronix.com";
-        }
-
-        renderAvatar(dropdownAvatar, profile);
-    }
-
-    // ---------- fetch profile ----------
-    async function fetchProfile() {
-        const token = getToken();
-        if (!token) return;
-
-        try {
-            const res = await fetch(`${API_BASE}/profile`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-           const data = await res.json();
-
-if (!res.ok || !data.success) return;
-
-const profile = data.data.profile;
-
-// header avatar (IMPORTANT FIX)
-setAvatar(profile);
-
-            // dropdown
-            renderDropdown(profile);
-
-            // profile page link
-            if (profileLink) profileLink.href = "profile.html";
-
-            // logout
-            if (logoutBtn) {
-                logoutBtn.style.display = "block";
-
-                logoutBtn.onclick = () => {
-                    localStorage.removeItem("accessToken");
-                    localStorage.removeItem("user");
-                    localStorage.removeItem("vyronixUser");
-                    window.location.href = "LogIn.html";
-                };
-            }
-
-        } catch (err) {
-            console.error("Profile fetch error:", err);
-        }
-    }
-
-    fetchProfile();
-})();
-</script>
- <script>
-        document.getElementById("logoutBtn").addEventListener("click", async () => {
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) {
-        window.location.href = "LogIn.html";
-        return;
-    }
+  async function loadNotifications() {
+    const token = getToken();
+    if (!token) return;
 
     try {
-        const res = await fetch("http://localhost:5000/api/auth/logout", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+      const res = await fetch(`${API_BASE}/notifications`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error("Failed to fetch notifications");
+
+      const notifications = data?.data?.notifications || data?.notifications || [];
+      const unreadCount = data?.data?.unreadCount || data?.unreadCount || 0;
+
+      renderNotifications(notifications, unreadCount);
+    } catch (err) {
+      console.error("Notifications error:", err);
+      if (notifList) {
+        notifList.innerHTML = `<p class="notif-empty">Failed to load notifications.</p>`;
+      }
+    }
+  }
+
+  if (notifBtn && notifDropdown) {
+    notifBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      notifDropdown.classList.toggle("show");
+    });
+
+    notifDropdown.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+      notifDropdown.classList.remove("show");
+    });
+  }
+
+  if (notifClear) {
+    notifClear.addEventListener("click", async function (e) {
+      e.preventDefault();
+
+      const token = getToken();
+      if (!token) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/notifications/read-all`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
         });
 
+        if (!res.ok) throw new Error("Failed to mark all as read");
 
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        if (notifDot) notifDot.style.display = "none";
+        loadNotifications();
+      } catch (err) {
+        console.error("Mark all as read error:", err);
+      }
+    });
+  }
 
-        if (res.ok) {
-            window.location.href = "LogIn.html";
-        } else {
-            console.warn("Logout request failed, but client cleared session.");
-            window.location.href = "LogIn.html";
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async function () {
+      const token = getToken();
+
+      try {
+        if (token) {
+          await fetch(`${API_BASE}/auth/logout`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` }
+          });
         }
-
-    } catch (err) {
+      } catch (err) {
         console.error("Logout error:", err);
-
-     
+      } finally {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("vyronixUser");
         window.location.href = "LogIn.html";
-    }
-});
-    </script>
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    loadProfile();
+    loadNotifications();
+  });
+})();
+</script>
 </body>
 </html>
