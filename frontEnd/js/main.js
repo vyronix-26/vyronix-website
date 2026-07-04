@@ -238,38 +238,6 @@ if (searchInput) {
     searchInput.addEventListener("input", handleSearch);
 }
 
-/* Notification dropdown */
-const notifBtn = document.getElementById("notifBtn");
-const notifDropdown = document.getElementById("notifDropdown");
-const notifDot = document.getElementById("notifDot");
-const notifClear = document.getElementById("notifClear");
-
-if (notifBtn && notifDropdown) {
-    notifBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        notifDropdown.classList.toggle("show");
-           console.log(document.querySelectorAll(".notif-item.unread").length);
-        // close profile dropdown if open
-        const profileDropdownEl = document.getElementById("profileDropdown");
-        if (profileDropdownEl) profileDropdownEl.classList.remove("show");
-    });
-
-    document.addEventListener("click", (e) => {
-        if (!notifDropdown.contains(e.target) && !notifBtn.contains(e.target)) {
-            notifDropdown.classList.remove("show");
-        }
-    });
-}
-
-if (notifClear && notifDot) {
-    notifClear.addEventListener("click", (e) => {
-        e.preventDefault();
-        document.querySelectorAll(".notif-item.unread").forEach(item => {
-            item.classList.remove("unread");
-        });
-        notifDot.classList.add("hidden");
-    });
-}
 /* ===========================
    Mobile Bottom Navigation
 =========================== */

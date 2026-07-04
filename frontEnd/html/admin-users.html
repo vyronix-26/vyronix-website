@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin | Users</title>
+
   <link rel="stylesheet" href="../css/AdminHomePage.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -14,18 +15,16 @@
   <aside class="sidebar">
     <div class="sidebar-logo">
       <span class="dot">⚡</span>
-      VYRONIX Admin
+      AdminPro
     </div>
 
     <div class="nav-section">
       <div class="nav-label">Main</div>
 
-      <a class="nav-item" href="AdminHomePage.html">Dashboard</a>
-      <a class="nav-item active" href="admin-users.html">Users</a>
-      <a class="nav-item" href="admin-projects.html">Projects</a>
-      <a class="nav-item" href="admin-requests.html">Requests</a>
-      <a class="nav-item" href="admin-feedback.html">Feedback</a>
-      <a class="nav-item" href="admin-reports.html">Reports</a>
+      <div class="nav-item" onclick="window.location.href='AdminHomePage.html'">Dashboard</div>
+      <div class="nav-item active" onclick="window.location.href='admin-users.html'">Users</div>
+      <div class="nav-item" onclick="window.location.href='AdminProjects.html'">Projects</div>
+      <div class="nav-item" onclick="window.location.href='AdminRequest.html'">Requests</div>
     </div>
   </aside>
 
@@ -33,44 +32,40 @@
 
     <header class="topbar">
       <div class="search-box">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
         <input type="text" id="userSearch" placeholder="Search users..." />
       </div>
 
-<div class="topbar-right">
-  <div class="profile-menu">
-    <button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
-      <span id="avatarContent">A</span>
-    </button>
+      <div class="topbar-right">
+        <div class="notif-menu" id="notifMenu" style="display:none;">
+          <button type="button" class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
+            <i class="bi bi-bell"></i>
+            <span class="notif-dot" id="notifDot"></span>
+          </button>
 
-    <div class="profile-dropdown" id="profileDropdown">
-      <div class="profile-head">
-        <div id="profileDropdownAvatar" class="profile-dropdown-avatar">A</div>
-        <div>
-          <h4 id="dropdownName">Admin</h4>
-          <p id="dropdownEmail">admin@vyronix.com</p>
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-header">
+              <h4>Notifications</h4>
+              <a href="#" class="notif-clear" id="notifClear">Mark all read</a>
+            </div>
+            <div class="notif-list" id="notifList"></div>
+          </div>
+        </div>
+
+        <div class="user-chip">
+          <div class="avatar" id="topbarAvatar" onclick="window.location.href='AdminProfilePage.html'">A</div>
+          <div class="user-info">
+            <div class="user-name" id="topbarName">Admin</div>
+            <div class="user-role" id="topbarRole">Users Manager</div>
+          </div>
         </div>
       </div>
-
-      <a href="profile.html" id="profileLink">
-        <span><i class="bi bi-person"></i> Profile</span>
-        <i class="bi bi-chevron-right"></i>
-      </a>
-
-      <a href="rating.html">
-        <span><i class="bi bi-star"></i> Ratings & Feedback</span>
-        <i class="bi bi-chevron-right"></i>
-      </a>
-
-      <button class="logout-btn" id="logoutBtn">
-        <span><i class="bi bi-box-arrow-right"></i> Log Out</span>
-      </button>
-    </div>
-  </div>
-</div>
     </header>
 
     <main class="content">
-
       <div class="page-header">
         <div>
           <h1>Users Management</h1>
@@ -102,12 +97,13 @@
           </tbody>
         </table>
       </div>
-
     </main>
+
   </div>
 </div>
 
 <script src="../js/api.js"></script>
 <script src="../js/admin-users.js"></script>
+<script src="../js/admin-topbar.js"></script>
 </body>
 </html>
