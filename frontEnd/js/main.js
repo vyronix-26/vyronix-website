@@ -202,12 +202,7 @@ if (profileBtn && profileDropdown) {
 /* Chat button (fix: select by class since no #chatBtn id exists in markup) */
 const chatBtn = document.querySelector(".chat-btn");
 
-if (chatBtn) {
-    chatBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        alert("Hello! I am VYRONIX smart assistant.");
-    });
-}
+
 
 /* Search functionality (fix: guard for pages without #searchInput) */
 const searchInput = document.getElementById("searchInput");
