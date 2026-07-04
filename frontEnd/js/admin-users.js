@@ -157,3 +157,57 @@ if (userSearch) {
 }
 
 loadUsers();
+const profileBtn = document.getElementById("profileBtn");
+const profileDropdown = document.getElementById("profileDropdown");
+const avatarContent = document.getElementById("avatarContent");
+const profileDropdownAvatar = document.getElementById("profileDropdownAvatar");
+const dropdownName = document.getElementById("dropdownName");
+const dropdownEmail = document.getElementById("dropdownEmail");
+const logoutBtn = document.getElementById("logoutBtn");
+
+function setupAdminProfileMenu() {
+  const storedUser = localStorage.getItem("vyronixUser") || localStorage.getItem("user");
+  let user = null;
+
+  try {
+    user = storedUser ? JSON.parse(storedUser) : null;
+  } catch {
+    user = null;
+  }
+
+  const name =
+    user?.name ||
+    user?.fullName ||
+    `${user?.firstName || ""} ${user?.lastName || ""}`.trim() ||
+    "Admin";
+
+  const email = user?.email || "admin@vyronix.com";
+  const initial = name.charAt(0).toUpperCase();
+
+  if (avatarContent) avatarContent.textContent = initial;
+  if (profileDropdownAvatar) profileDropdownAvatar.textContent = initial;
+  if (dropdownName) dropdownName.textContent = name;
+  if (dropdownEmail) dropdownEmail.textContent = email;
+
+  profileBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    profileDropdown?.classList.toggle("show");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".profile-menu")) {
+      profileDropdown?.classList.remove("show");
+    }
+  });
+
+  logoutBtn?.addEventListener("click", () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("vyronixUser");
+    window.location.href = "LogIn.html";
+  });
+}
+
+setupAdminProfileMenu();

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin | Users</title>
   <link rel="stylesheet" href="../css/AdminHomePage.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -35,15 +36,37 @@
         <input type="text" id="userSearch" placeholder="Search users..." />
       </div>
 
-      <div class="topbar-right">
-        <div class="user-chip">
-          <div class="avatar">A</div>
-          <div class="user-info">
-            <div class="user-name">Admin</div>
-            <div class="user-role">Super Admin</div>
-          </div>
+<div class="topbar-right">
+  <div class="profile-menu">
+    <button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
+      <span id="avatarContent">A</span>
+    </button>
+
+    <div class="profile-dropdown" id="profileDropdown">
+      <div class="profile-head">
+        <div id="profileDropdownAvatar" class="profile-dropdown-avatar">A</div>
+        <div>
+          <h4 id="dropdownName">Admin</h4>
+          <p id="dropdownEmail">admin@vyronix.com</p>
         </div>
       </div>
+
+      <a href="profile.html" id="profileLink">
+        <span><i class="bi bi-person"></i> Profile</span>
+        <i class="bi bi-chevron-right"></i>
+      </a>
+
+      <a href="rating.html">
+        <span><i class="bi bi-star"></i> Ratings & Feedback</span>
+        <i class="bi bi-chevron-right"></i>
+      </a>
+
+      <button class="logout-btn" id="logoutBtn">
+        <span><i class="bi bi-box-arrow-right"></i> Log Out</span>
+      </button>
+    </div>
+  </div>
+</div>
     </header>
 
     <main class="content">
