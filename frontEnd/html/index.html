@@ -395,6 +395,11 @@
         <i class="bi bi-chat-dots-fill"></i>
         <span>Contact</span>
     </a>
+
+    <a href="#" id="mobileProfileLink">
+        <i class="bi bi-person-badge"></i>
+        <span>Profile</span>
+    </a>
 </div>
 <script src="../js/api.js"></script>
 <script src="../js/main.js"></script>
@@ -466,6 +471,7 @@
     const profileHead = document.getElementById("profileHead");
     const userNameEl = document.getElementById("userName");
     const userEmailEl = document.getElementById("userEmail");
+    const mobileProfileLink = document.getElementById("mobileProfileLink");
 
     const rawToken = localStorage.getItem("accessToken");
     const token = rawToken && rawToken !== "null" && rawToken !== "undefined" ? rawToken : null;
@@ -503,6 +509,10 @@
 
     if (profileLink) {
         profileLink.href = isLoggedIn ? "profile.html" : "LogIn.html";
+    }
+
+    if (mobileProfileLink) {
+        mobileProfileLink.href = isLoggedIn ? "profile.html" : "LogIn.html";
     }
 
     if (addAccountLink) {
@@ -662,6 +672,7 @@ if (notifClear) {
 
     const profileLink = document.getElementById("profileLink");
     const logoutBtn = document.getElementById("logoutBtn");
+    const mobileProfileLink = document.getElementById("mobileProfileLink");
 
     function getToken() {
         return localStorage.getItem("accessToken");
@@ -730,6 +741,7 @@ setAvatar(profile);
 
             // profile page link
             if (profileLink) profileLink.href = "profile.html";
+            if (mobileProfileLink) mobileProfileLink.href = "profile.html";
 
             // logout
             if (logoutBtn) {
