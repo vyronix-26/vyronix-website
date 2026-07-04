@@ -1,113 +1,159 @@
 const usersTableBody = document.getElementById("usersTableBody");
 const userSearch = document.getElementById("userSearch");
 
+const USERS_ENDPOINT = "/admin/users";
+const LOGIN_PAGE = "LogIn.html";
+
 let allUsers = [];
 
-async function loadUsers() {
-  try {
-    const response = await apiRequest("/admin/users", "GET");
+function requireAdminLogin() {
+  const token = localStorage.getItem("accessToken") || localStorage.getItem("token");
 
-    allUsers = response.data || response.users || response;
-
-    renderUsers(allUsers);
-  } catch (error) {
-    console.error(error);
-
-    usersTableBody.innerHTML = `
-      <tr>
-        <td colspan="6">
-          Failed to load users. Make sure you are logged in as ADMIN.
-        </td>
-      </tr>
-    `;
+  if (!token) {
+    window.location.href = LOGIN_PAGE;
+    return false;
   }
+
+  return true;
+}
+
+function getUsersArray(response) {
+  return response?.data?.users || response?.data || response?.users || response || [];
+}
+
+function getUserId(user) {
+  return user.id || user._id;
+}
+
+function getUserName(user) {
+  return (
+    user.name ||
+    user.fullName ||
+    `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
+    "Unknown User"
+  );
 }
 
 function renderUsers(users) {
   if (!users || users.length === 0) {
-    usersTableBody.innerHTML = `
-      <tr>
-        <td colspan="6">No users found.</td>
-      </tr>
-    `;
+    usersTableBody.innerHTML = `<tr><td colspan="6">No users found.</td></tr>`;
     return;
   }
 
-  usersTableBody.innerHTML = users.map(user => `
-    <tr>
-      <td>
-        <div class="user-row">
-          <div class="user-av">${(user.name || user.fullName || "U").charAt(0).toUpperCase()}</div>
-          <div class="user-row-name">${user.name || user.fullName || "Unknown User"}</div>
-        </div>
-      </td>
+  usersTableBody.innerHTML = users.map((user) => {
+    const id = getUserId(user);
+    const name = getUserName(user);
+    const email = user.email || "No email";
+    const role = user.role || "CLIENT";
+    const isActive = user.isActive !== false;
 
-      <td>${user.email || "No email"}</td>
+    return `
+      <tr>
+        <td>
+          <div class="user-row">
+            <div class="user-av">${name.charAt(0).toUpperCase()}</div>
+            <div class="user-row-name">${name}</div>
+          </div>
+        </td>
+        <td>${email}</td>
+        <td><span class="role-chip ${role === "ADMIN" ? "admin" : ""}">${role}</span></td>
+        <td><span class="req-badge ${isActive ? "new" : "review"}">${isActive ? "Active" : "Inactive"}</span></td>
+        <td>
+          <select onchange="updateUserRole('${id}', this.value)">
+            <option value="CLIENT" ${role === "CLIENT" ? "selected" : ""}>CLIENT</option>
+            <option value="ADMIN" ${role === "ADMIN" ? "selected" : ""}>ADMIN</option>
+          </select>
+        </td>
+        <td>
+          <button class="dots-btn" onclick="toggleUserStatus('${id}', ${isActive})">
+            ${isActive ? "Deactivate" : "Activate"}
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
 
-      <td>
-        <span class="role-chip ${user.role === "ADMIN" ? "admin" : ""}">
-          ${user.role || "CLIENT"}
-        </span>
-      </td>
+async function loadUsers() {
+  if (!requireAdminLogin()) return;
 
-      <td>
-        <span class="badge ${user.isActive === false ? "" : "active"}">
-          ${user.isActive === false ? "Inactive" : "Active"}
-        </span>
-      </td>
+  try {
+    usersTableBody.innerHTML = `<tr><td colspan="6">Loading users...</td></tr>`;
 
-      <td>
-        <select onchange="updateUserRole(${user.id}, this.value)">
-          <option value="CLIENT" ${user.role === "CLIENT" ? "selected" : ""}>CLIENT</option>
-          <option value="ADMIN" ${user.role === "ADMIN" ? "selected" : ""}>ADMIN</option>
-        </select>
-      </td>
+    const response = await apiRequest(USERS_ENDPOINT, "GET");
 
-      <td>
-        <button class="dots-btn" onclick="toggleUserStatus(${user.id}, ${user.isActive !== false})">
-          ${user.isActive === false ? "Activate" : "Deactivate"}
-        </button>
-      </td>
-    </tr>
-  `).join("");
+    allUsers = getUsersArray(response);
+    renderUsers(allUsers);
+
+  } catch (error) {
+    console.error(error);
+
+    if (
+      error.message.includes("Unauthorized") ||
+      error.message.includes("Invalid token") ||
+      error.message.includes("Access denied") ||
+      error.message.includes("Forbidden")
+    ) {
+      usersTableBody.innerHTML = `
+        <tr>
+          <td colspan="6">
+            You must login as ADMIN to access this page.
+            <br><br>
+            <button class="btn-primary" onclick="window.location.href='${LOGIN_PAGE}'">
+              Go to Login
+            </button>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    usersTableBody.innerHTML = `
+      <tr>
+        <td colspan="6">Failed to load users. Check backend server and API.</td>
+      </tr>
+    `;
+  }
 }
 
 async function updateUserRole(userId, role) {
   try {
-    await apiRequest(`/admin/users/${userId}/role`, "PATCH", { role });
-    alert("User role updated successfully");
-    loadUsers();
+    await apiRequest(`${USERS_ENDPOINT}/${userId}/role`, "PATCH", { role });
+    await loadUsers();
   } catch (error) {
-    alert("Failed to update role");
     console.error(error);
+    alert(error.message || "Failed to update role");
+    await loadUsers();
   }
 }
 
 async function toggleUserStatus(userId, currentStatus) {
   try {
-    await apiRequest(`/admin/users/${userId}/status`, "PATCH", {
+    await apiRequest(`${USERS_ENDPOINT}/${userId}/status`, "PATCH", {
       isActive: !currentStatus
     });
 
-    alert("User status updated successfully");
-    loadUsers();
+    await loadUsers();
   } catch (error) {
-    alert("Failed to update status");
     console.error(error);
+    alert(error.message || "Failed to update status");
   }
 }
 
-userSearch.addEventListener("input", () => {
-  const value = userSearch.value.toLowerCase();
+if (userSearch) {
+  userSearch.addEventListener("input", () => {
+    const value = userSearch.value.trim().toLowerCase();
 
-  const filtered = allUsers.filter(user =>
-    (user.name || "").toLowerCase().includes(value) ||
-    (user.fullName || "").toLowerCase().includes(value) ||
-    (user.email || "").toLowerCase().includes(value) ||
-    (user.role || "").toLowerCase().includes(value)
-  );
+    const filtered = allUsers.filter((user) => {
+      const name = getUserName(user).toLowerCase();
+      const email = (user.email || "").toLowerCase();
+      const role = (user.role || "").toLowerCase();
 
-  renderUsers(filtered);
-});
+      return name.includes(value) || email.includes(value) || role.includes(value);
+    });
+
+    renderUsers(filtered);
+  });
+}
 
 loadUsers();
