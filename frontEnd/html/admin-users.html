@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Users</title>
+  <link rel="stylesheet" href="../css/AdminHomePage.css" />
+</head>
+
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="dot">⚡</span>
+      VYRONIX Admin
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Main</div>
+
+      <a class="nav-item" href="AdminHomePage.html">Dashboard</a>
+      <a class="nav-item active" href="admin-users.html">Users</a>
+      <a class="nav-item" href="admin-projects.html">Projects</a>
+      <a class="nav-item" href="admin-requests.html">Requests</a>
+      <a class="nav-item" href="admin-feedback.html">Feedback</a>
+      <a class="nav-item" href="admin-reports.html">Reports</a>
+    </div>
+  </aside>
+
+  <div class="main">
+
+    <header class="topbar">
+      <div class="search-box">
+        <input type="text" id="userSearch" placeholder="Search users..." />
+      </div>
+
+      <div class="topbar-right">
+        <div class="user-chip">
+          <div class="avatar">A</div>
+          <div class="user-info">
+            <div class="user-name">Admin</div>
+            <div class="user-role">Super Admin</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <div class="page-header">
+        <div>
+          <h1>Users Management</h1>
+          <p>View users, update roles, and manage account status.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">All Users</div>
+        </div>
+
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Change Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="usersTableBody">
+            <tr>
+              <td colspan="6">Loading users...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/admin-users.js"></script>
+</body>
+</html>

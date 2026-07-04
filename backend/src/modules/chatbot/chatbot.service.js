@@ -40,8 +40,10 @@ const sendMessage = async ({ userId = null, message }) => {
         ? response.text.trim()
         : "I could not process your request right now.";
   } catch (error) {
-    console.error("========== GEMINI ERROR ==========");
-    console.error(error);
+  console.error("========== GEMINI ERROR ==========");
+  console.error(error);
+  console.error(error.message);
+  console.error(error.stack);
 
     if (error.status === 403) {
       botMessage =
