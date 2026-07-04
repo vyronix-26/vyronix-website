@@ -42,8 +42,7 @@
               <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
     <i class="bi bi-envelope"></i>
 </a>
-         <div class="notif-menu" id="notifMenu" style="display:none;">
-        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
+<div class="notif-menu" id="notifMenu">        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
             <i class="bi bi-bell"></i>
             <span class="notif-dot" id="notifDot"></span>
         </button>
@@ -403,6 +402,7 @@
 </div>
 <script src="../js/api.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/client-topbar.js"></script>
 <script src="../js/Site search.js"></script>
 <script>
     // Fetch stats from the database
@@ -544,120 +544,7 @@ addAccountLink.hidden = isLoggedIn;
         }
     }
 </script>
-<script>
-    //connect to the API to get the notifications from the database
-    // ---- NEW: fetch notifications when logged in ----
-   document.addEventListener("DOMContentLoaded", () => {
-    const rawToken = localStorage.getItem("accessToken");
 
-    if (!rawToken) return;
-              console.log("Notifications fetch response:");
-
-    fetchNotifications(rawToken);
-});
-   async function fetchNotifications(token) {
-             console.log("Notifications fetch response:");
-
-    try {
-        const res = await fetch("http://localhost:5000/api/notifications", {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
-         console.log("Notifications fetch response:");
-        if (!res.ok) throw new Error("Failed to fetch notifications");
-
-        const data = await res.json();
-
-        renderNotifications(
-            data?.data?.notifications || [],
-            data?.unreadCount || 0
-        );
-
-    } catch (err) {
-        console.error("Notifications error:", err);
-    }
-}
- function renderNotifications(notifications, unreadCount) {
-    const notifList = document.getElementById("notifList");
-    const notifDot = document.getElementById("notifDot");
-
-    if (!notifList) return;
-
-    // red dot
-    if (notifDot) {
-        notifDot.style.display = unreadCount > 0 ? "inline-block" : "none";
-    }
-
-    // empty state
-    if (!notifications || notifications.length === 0) {
-        notifList.innerHTML = `<p class="notif-empty">No notifications yet.</p>`;
-        return;
-    }
-
-    // render list
-    notifList.innerHTML = notifications.map(n => `
-        <a href="#" class="notif-item ${n.isRead ? "read" : "unread"}">
-            <span class="notif-icon">
-                <i class="bi bi-bell"></i>
-            </span>
-            <div>
-                <p>${n.message}</p>
-                <span class="notif-time">${timeAgo(n.createdAt)}</span>
-            </div>
-        </a>
-    `).join("");
-}
-    function timeAgo(dateString) {
-        const diffMs = Date.now() - new Date(dateString).getTime();
-        const mins = Math.floor(diffMs / 60000);
-        if (mins < 1) return "just now";
-        if (mins < 60) return `${mins} min ago`;
-        const hrs = Math.floor(mins / 60);
-        if (hrs < 24) return `${hrs} hour${hrs > 1 ? "s" : ""} ago`;
-        const days = Math.floor(hrs / 24);
-        return `${days} day${days > 1 ? "s" : ""} ago`;
-    }
-
-//Mark all notifications as read
- (function () {
-       const notifClear = document.getElementById("notifClear");
-if (notifClear) {
-    notifClear.addEventListener("click", async (e) => {
-        e.preventDefault();
-
-        const token = localStorage.getItem("accessToken");
-        if (!token) return;
-
-        try {
-            const res = await fetch("http://localhost:5000/api/notifications/read-all", {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-
-            if (!res.ok) throw new Error("Failed to mark all as read");
-
-            const notifDot = document.getElementById("notifDot");
-            if (notifDot) notifDot.style.display = "none";
-
-           
-            fetchNotifications(token);
-
-        } catch (err) {
-            console.error("Mark all as read error:", err);
-        }
-    });
-}
-
-
-   })();
-
-
-</script>
 <script>
     (function () {
     "use strict";
@@ -803,6 +690,5 @@ setAvatar(profile);
 });
     </script>
 
-<script></script>
 </body>
 </html>
