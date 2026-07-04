@@ -10,31 +10,36 @@
 </head>
 <body>
   <div class="shell">
-    <aside class="sidebar">
-    <div class="sidebar-logo">
-      <span class="dot">⚡</span>
-      AdminPro
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="dot">⚡</span>
+    AdminPro
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Main</div>
+
+    <div class="nav-item" onclick="window.location.href='AdminHomePage.html'">
+      <i class="bi bi-grid-1x2-fill"></i>
+      Dashboard
     </div>
-    <div class="nav-section">
-      <div class="nav-label">Main</div>
-      <div class="nav-item active" onclick="window.location.href='AdminHomePage.html'">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Dashboard
-      </div>
-      <div class="nav-item" onclick="window.location.href='AdminUsers.html'">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Users
-      </div>
-      <div class="nav-item" onclick="window.location.href='AdminProjects.html'">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-        Projects
-      </div>
-      <div class="nav-item" onclick="window.location.href='AdminRequest.html'">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Requests
-      </div>
+
+    <div class="nav-item" onclick="window.location.href='admin-users.html'">
+      <i class="bi bi-people-fill"></i>
+      Users
     </div>
-    <div class="nav-section"></div>
+
+    <div class="nav-item active" onclick="window.location.href='AdminProjects.html'">
+      <i class="bi bi-folder-fill"></i>
+      Projects
+    </div>
+
+    <div class="nav-item" onclick="window.location.href='AdminRequest.html'">
+      <i class="bi bi-file-earmark-text-fill"></i>
+      Requests
+    </div>
+  </div>
+</aside>
   </aside>
 
     <div class="main" id="Projects">

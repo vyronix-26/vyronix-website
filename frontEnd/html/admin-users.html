@@ -12,20 +12,36 @@
 <body>
 <div class="shell">
 
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <span class="dot">⚡</span>
-      AdminPro
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="dot">⚡</span>
+    AdminPro
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Main</div>
+
+    <div class="nav-item" onclick="window.location.href='AdminHomePage.html'">
+      <i class="bi bi-grid-1x2-fill"></i>
+      Dashboard
     </div>
 
-    <div class="nav-section">
-      <div class="nav-label">Main</div>
-
-      <div class="nav-item" onclick="window.location.href='AdminHomePage.html'">Dashboard</div>
-      <div class="nav-item active" onclick="window.location.href='admin-users.html'">Users</div>
-      <div class="nav-item" onclick="window.location.href='AdminProjects.html'">Projects</div>
-      <div class="nav-item" onclick="window.location.href='AdminRequest.html'">Requests</div>
+    <div class="nav-item active" onclick="window.location.href='admin-users.html'">
+      <i class="bi bi-people-fill"></i>
+      Users
     </div>
+
+    <div class="nav-item" onclick="window.location.href='AdminProjects.html'">
+      <i class="bi bi-folder-fill"></i>
+      Projects
+    </div>
+
+    <div class="nav-item" onclick="window.location.href='AdminRequest.html'">
+      <i class="bi bi-file-earmark-text-fill"></i>
+      Requests
+    </div>
+  </div>
+</aside>
   </aside>
 
   <div class="main">
