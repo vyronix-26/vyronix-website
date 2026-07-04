@@ -202,12 +202,7 @@ if (profileBtn && profileDropdown) {
 /* Chat button (fix: select by class since no #chatBtn id exists in markup) */
 const chatBtn = document.querySelector(".chat-btn");
 
-if (chatBtn) {
-    chatBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        alert("Hello! I am VYRONIX smart assistant.");
-    });
-}
+
 
 /* Search functionality (fix: guard for pages without #searchInput) */
 const searchInput = document.getElementById("searchInput");
@@ -253,7 +248,7 @@ if (notifBtn && notifDropdown) {
     notifBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         notifDropdown.classList.toggle("show");
-
+           console.log(document.querySelectorAll(".notif-item.unread").length);
         // close profile dropdown if open
         const profileDropdownEl = document.getElementById("profileDropdown");
         if (profileDropdownEl) profileDropdownEl.classList.remove("show");
