@@ -12,19 +12,15 @@ document.addEventListener("DOMContentLoaded", function () {
     return localStorage.getItem("accessToken") || localStorage.getItem("token");
   }
 
-  if (!notifMenu || !notifBtn || !notifDropdown) return;
+  if (!notifMenu || !notifBtn || !notifDropdown || !notifList) return;
 
   notifMenu.style.display = getToken() ? "inline-flex" : "none";
 
-notifBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  e.stopImmediatePropagation();
-
-  console.log("Notification button clicked");
-
-  notifDropdown.classList.toggle("show");
-}, true);
+  notifBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    notifDropdown.classList.toggle("show");
+  });
 
   notifDropdown.addEventListener("click", function (e) {
     e.stopPropagation();
@@ -33,6 +29,18 @@ notifBtn.addEventListener("click", function (e) {
   document.addEventListener("click", function () {
     notifDropdown.classList.remove("show");
   });
+
+  function timeAgo(dateString) {
+    if (!dateString) return "";
+    const diffMs = Date.now() - new Date(dateString).getTime();
+    const mins = Math.floor(diffMs / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return `${mins} min ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs} hour${hrs > 1 ? "s" : ""} ago`;
+    const days = Math.floor(hrs / 24);
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  }
 
   async function loadNotifications() {
     const token = getToken();
@@ -43,7 +51,7 @@ notifBtn.addEventListener("click", function (e) {
     }
 
     try {
-      const res = await fetch(`${API_BASE}/admin/notifications`, {
+      const res = await fetch(`${API_BASE}/notifications`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +62,6 @@ notifBtn.addEventListener("click", function (e) {
       const data = await res.json().catch(() => null);
 
       if (!res.ok) {
-        console.error("Notifications failed:", res.status, data);
         notifList.innerHTML = `<p class="notif-empty">Failed to load notifications.</p>`;
         return;
       }
@@ -72,7 +79,7 @@ notifBtn.addEventListener("click", function (e) {
             <span class="notif-icon"><i class="bi bi-bell"></i></span>
             <div>
               <p>${n.message || "New notification"}</p>
-              <span class="notif-time">${n.createdAt ? new Date(n.createdAt).toLocaleString() : ""}</span>
+              <span class="notif-time">${timeAgo(n.createdAt)}</span>
             </div>
           </a>
         `).join("")
@@ -91,7 +98,7 @@ notifBtn.addEventListener("click", function (e) {
     if (!token) return;
 
     try {
-      await fetch(`${API_BASE}/admin/notifications/read-all`, {
+      await fetch(`${API_BASE}/notifications/read-all`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

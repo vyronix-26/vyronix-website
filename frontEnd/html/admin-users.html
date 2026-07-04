@@ -42,7 +42,7 @@
     </div>
   </div>
 </aside>
-  </aside>
+
 
   <div class="main">
 
@@ -117,9 +117,70 @@
 
   </div>
 </div>
-
+<script src="../js/main.js"></script>
+<script src="../js/admin-topbar.js"></script>
 <script src="../js/api.js"></script>
 <script src="../js/admin-users.js"></script>
-<script src="../js/admin-topbar.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const API_BASE = "http://localhost:5000/api";
+  const SERVER_ORIGIN = "http://localhost:5000";
+
+  function getAccessToken() {
+    return localStorage.getItem("accessToken") || localStorage.getItem("token");
+  }
+
+  function renderAvatarElement(element, profile, fallbackText) {
+    if (!element) return;
+
+    if (profile && profile.profileImage) {
+      const url = profile.profileImage.startsWith("http")
+        ? profile.profileImage
+        : `${SERVER_ORIGIN}${profile.profileImage}`;
+
+      element.innerHTML = `
+        <img src="${url}" alt="avatar"
+        style="width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;">
+      `;
+    } else if (profile && profile.firstName) {
+      element.textContent = profile.firstName.charAt(0).toUpperCase();
+    } else {
+      element.textContent = fallbackText || "A";
+    }
+  }
+
+  async function loadTopbarProfile() {
+    const token = getAccessToken();
+    if (!token) return;
+
+    try {
+      const res = await fetch(`${API_BASE}/profile`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) return;
+
+      const profile = data.data.profile;
+      const fullName = `${profile.firstName || ""} ${profile.lastName || ""}`.trim();
+
+      const topbarAvatar = document.getElementById("topbarAvatar");
+      const topbarName = document.getElementById("topbarName");
+      const topbarRole = document.getElementById("topbarRole");
+
+      if (topbarName) topbarName.textContent = fullName || "Admin";
+      if (topbarRole) topbarRole.textContent = profile.role || "Users Manager";
+
+      renderAvatarElement(topbarAvatar, profile, "A");
+    } catch (err) {
+      console.error("Failed to load topbar profile:", err);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loadTopbarProfile);
+})();
+</script>
 </body>
 </html>
