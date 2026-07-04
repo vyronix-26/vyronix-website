@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VYRONIX Company | Home</title>
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/stylebackground.css">
     <link rel="stylesheet" href="../css/stylevideo.css">
     <link rel="stylesheet" href="../css/Site search.css">
@@ -405,62 +406,51 @@
 <script src="../js/client-topbar.js"></script>
 <script src="../js/Site search.js"></script>
 <script>
-    // Fetch stats from the database
-    const fakeResponse = new Response(JSON.stringify({
-        completedProjects: 42,
-        happyClients: 18,
-        digitalServices: 7,
-        qualityScore: 95
-    }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
-    });
+async function fetchStats() {
+    const statsGrid = document.getElementById("statsGrid");
+    if (!statsGrid) return;
 
-    async function fetchStats() {
-        try {
-            const response = await fetch('http://localhost:5000/api/projects'); // Simulating a fetch request
-           if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            displayStats(data);
-        } catch (error) {
-            console.error('Error fetching stats:', error);
-        }
+    try {
+        const response = await fetch("http://localhost:5000/api/projects");
+        const data = await response.json();
+
+        const projects =
+            data?.data?.projects ||
+            data?.projects ||
+            data?.data ||
+            [];
+
+        const completedProjects = Array.isArray(projects) ? projects.length : 0;
+
+        displayStats(completedProjects);
+    } catch (error) {
+        console.error("Error fetching stats:", error);
+        displayStats(0);
     }
+}
 
-    function displayStats(data) {
-        const statsGrid = document.getElementById('statsGrid');
+function displayStats(completedProjects) {
+    const statsGrid = document.getElementById("statsGrid");
 
-        if (!data) {
-            statsGrid.innerHTML = '<p>No stats available at the moment.</p>';
-            return;
-        }
+    statsGrid.innerHTML = `
+        <div class="stat-box reveal active">
+            <h3>${completedProjects}</h3>
+            <p>Completed Projects</p>
+        </div>
 
-        statsGrid.innerHTML = `
-            <div class="stat-box reveal">
-                <h3>${data.results}</h3>
-                <p>Completed Projects</p>
-            </div>
-            <div class="stat-box reveal">
-                <h3>4</h3>
-                <p>Digital Services</p>
-            </div>
-            <div class="stat-box reveal">
-                <h3>95</h3>
-                <p>Quality Score</p>
-            </div>
-        `;
+        <div class="stat-box reveal active">
+            <h3>4</h3>
+            <p>Digital Services</p>
+        </div>
 
-        // Trigger the fade-in transition on the next frame
-        requestAnimationFrame(() => {
-            statsGrid.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-        });
-    }
+        <div class="stat-box reveal active">
+            <h3>95</h3>
+            <p>Quality Score</p>
+        </div>
+    `;
+}
 
-    // Call the function to fetch and display stats on page load
-    fetchStats();
-    
+fetchStats();
 </script>
 <script>
     const avatar = document.getElementById("avatarContent");

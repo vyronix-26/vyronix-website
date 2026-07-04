@@ -2428,3 +2428,38 @@ footer {
         bottom: 95px;
     }
 }
+/* Fix Home Stats Section */
+.stats-section {
+  padding: 70px 7% 95px !important;
+}
+
+.stats-grid {
+  max-width: 1250px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
+  gap: 34px;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-box {
+  min-height: 190px;
+  padding: 42px 28px !important;
+  border-radius: 28px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-box h3 {
+  font-size: 58px !important;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.stat-box p {
+  font-size: 19px !important;
+  font-weight: 600;
+}
