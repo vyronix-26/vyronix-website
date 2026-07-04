@@ -253,7 +253,7 @@ if (notifBtn && notifDropdown) {
     notifBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         notifDropdown.classList.toggle("show");
-
+           console.log(document.querySelectorAll(".notif-item.unread").length);
         // close profile dropdown if open
         const profileDropdownEl = document.getElementById("profileDropdown");
         if (profileDropdownEl) profileDropdownEl.classList.remove("show");
