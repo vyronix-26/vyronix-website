@@ -21,20 +21,20 @@ const staticTeamMembers = [
     },
      {
         name: "Ruba Abu Samra",
+        role: "Frontend Developer",
+        description: "Builds modern, responsive, and user-friendly web interfaces.",
+        icon: "bi bi-person-circle"
+    },
+    {
+        name: "Eman Subhi",
         role: "Backend Developer",
         description: "Develops APIs, database structure, authentication, and server-side logic.",
         icon: "bi bi-person-circle"
     },
     {
-        name: "Eman Subhi",
-        role: "Frontend Developer",
-        description: "Develops responsive and interactive user interfaces.",
-        icon: "bi bi-person-circle"
-    },
-    {
         name: "Aish Ryad",
-        role: "Frontend Developer",
-        description: "Creates engaging and user-friendly web experiences.",
+        role: "Backend Developer",
+        description: "Develops APIs, database structure, authentication, and server-side logic.",
         icon: "bi bi-person-circle"
     },
    
