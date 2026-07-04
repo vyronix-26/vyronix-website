@@ -22,8 +22,8 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
         Dashboard
       </div>
-      <div class="nav-item">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+<div class="nav-item" onclick="window.location.href='admin-users.html'">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Users
       </div>
       <div class="nav-item" onclick="window.location.href='AdminProjects.html'">
@@ -50,10 +50,10 @@
     <header class="topbar">
       <div class="search-box">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Search..." id="dashboardSearch">
       </div>
       <div class="topbar-right">
-        <div class="icon-btn">
+        <div class="icon-btn" id="logoutBtn" title="Logout">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           <div class="badge-dot">2</div>
         </div>
@@ -77,7 +77,7 @@
           <h1>Welcome back, Admin 👋</h1>
           <p>Here's what's happening with your platform today.</p>
         </div>
-        <button class="btn-primary">
+        <button class="btn-primary" id="addProjectBtn" type="button">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add New Project
         </button>
@@ -94,7 +94,7 @@
             </div>
             <div>
               <div class="stat-label">Total Users</div>
-              <div class="stat-value">1,245</div>
+              <div class="stat-value" id="totalUsers">0</div>
               <div class="stat-footer">
                 <span class="stat-change up">▲ 12.5%</span>
                 <span class="stat-vs">vs last month</span>
@@ -118,7 +118,7 @@
             </div>
             <div>
               <div class="stat-label">Total Visitors</div>
-              <div class="stat-value">8,532</div>
+              <div class="stat-value" id="totalVisitors">0</div>
               <div class="stat-footer">
                 <span class="stat-change up">▲ 18.6%</span>
                 <span class="stat-vs">vs last month</span>
@@ -142,7 +142,7 @@
             </div>
             <div>
               <div class="stat-label">Total Projects</div>
-              <div class="stat-value">320</div>
+              <div class="stat-value" id="totalProjects">0</div>
               <div class="stat-footer">
                 <span class="stat-change up">▲ 8.3%</span>
                 <span class="stat-vs">vs last month</span>
@@ -166,7 +166,7 @@
             </div>
             <div>
               <div class="stat-label">Project Requests</div>
-              <div class="stat-value">156</div>
+              <div class="stat-value" id="totalRequests">0</div>
               <div class="stat-footer">
                 <span class="stat-change up">▲ 3.1%</span>
                 <span class="stat-vs">vs last month</span>
@@ -190,7 +190,7 @@
             </div>
             <div>
               <div class="stat-label">Feedbacks</div>
-              <div class="stat-value">278</div>
+              <div class="stat-value" id="totalFeedbacks">0</div>
               <div class="stat-footer">
                 <span class="stat-change up">▲ 15.7%</span>
                 <span class="stat-vs">vs last month</span>
@@ -222,22 +222,22 @@
           <div class="analytics-stats">
             <div class="anal-stat">
               <div class="anal-stat-label">Visitors</div>
-              <div class="anal-stat-val">8,532</div>
+              <div class="anal-stat-val" id="analyticsVisitors">0</div>
               <div class="anal-stat-change up">▲ 18.6%</div>
             </div>
             <div class="anal-stat">
               <div class="anal-stat-label">Page Views</div>
-              <div class="anal-stat-val">21,328</div>
+              <div class="anal-stat-val" id="analyticsPageViews">0</div>
               <div class="anal-stat-change up">▲ 22.4%</div>
             </div>
             <div class="anal-stat">
               <div class="anal-stat-label">Sessions</div>
-              <div class="anal-stat-val">12,478</div>
+              <div class="anal-stat-val" id="analyticsSessions">0</div>
               <div class="anal-stat-change up">▲ 16.2%</div>
             </div>
             <div class="anal-stat">
               <div class="anal-stat-label">Bounce Rate</div>
-              <div class="anal-stat-val">42.5%</div>
+              <div class="anal-stat-val" id="analyticsBounceRate">0%</div>
               <div class="anal-stat-change up" style="color:var(--yellow)">▲ 4.5%</div>
             </div>
           </div>
@@ -289,43 +289,7 @@
               <th>Status</th>
               <th>Actions</th>
             </tr></thead>
-            <tbody>
-              <tr>
-                <td><div class="req-row"><div class="req-av" style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">J</div><div><div style="font-weight:600;font-size:12px">John Doe</div><div style="font-size:11px;color:var(--muted)">john@example.com</div></div></div></td>
-                <td style="font-size:12px">Web Development</td>
-                <td style="font-size:11px;color:var(--muted)">May 31, 2024</td>
-                <td><span class="req-badge new">New</span></td>
-                <td><div class="actions-cell"><div class="icon-act"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div></div></td>
-              </tr>
-              <tr>
-                <td><div class="req-row"><div class="req-av" style="background:linear-gradient(135deg,#ec4899,#be185d)">S</div><div><div style="font-weight:600;font-size:12px">Sara Ahmed</div><div style="font-size:11px;color:var(--muted)">sara@example.com</div></div></div></td>
-                <td style="font-size:12px">Mobile App</td>
-                <td style="font-size:11px;color:var(--muted)">May 30, 2024</td>
-                <td><span class="req-badge review">In Review</span></td>
-                <td><div class="actions-cell"><div class="icon-act"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div></div></td>
-              </tr>
-              <tr>
-                <td><div class="req-row"><div class="req-av" style="background:linear-gradient(135deg,#059669,#047857)">O</div><div><div style="font-weight:600;font-size:12px">Omar Hassan</div><div style="font-size:11px;color:var(--muted)">omar@example.com</div></div></div></td>
-                <td style="font-size:12px">UI/UX Design</td>
-                <td style="font-size:11px;color:var(--muted)">May 29, 2024</td>
-                <td><span class="req-badge new">New</span></td>
-                <td><div class="actions-cell"><div class="icon-act"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div></div></td>
-              </tr>
-              <tr>
-                <td><div class="req-row"><div class="req-av" style="background:linear-gradient(135deg,#d97706,#b45309)">L</div><div><div style="font-weight:600;font-size:12px">Lina Qasim</div><div style="font-size:11px;color:var(--muted)">lina@example.com</div></div></div></td>
-                <td style="font-size:12px">Web Development</td>
-                <td style="font-size:11px;color:var(--muted)">May 28, 2024</td>
-                <td><span class="req-badge review">In Review</span></td>
-                <td><div class="actions-cell"><div class="icon-act"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div></div></td>
-              </tr>
-              <tr>
-                <td><div class="req-row"><div class="req-av" style="background:linear-gradient(135deg,#2563eb,#1d4ed8)">M</div><div><div style="font-weight:600;font-size:12px">Mohammad Ali</div><div style="font-size:11px;color:var(--muted)">ali@example.com</div></div></div></td>
-                <td style="font-size:12px">Mobile App</td>
-                <td style="font-size:11px;color:var(--muted)">May 28, 2024</td>
-                <td><span class="req-badge new">New</span></td>
-                <td><div class="actions-cell"><div class="icon-act"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div></div></td>
-              </tr>
-            </tbody>
+            <tbody id="recentRequestsBody"></tbody>
           </table>
         </div>
 
@@ -349,43 +313,7 @@
               <th>Role</th>
               <th>Joined</th>
             </tr></thead>
-            <tbody>
-              <tr>
-                <td><div class="user-row"><div class="user-av" style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">Y</div><div class="user-row-name">Yousef Atyoud</div></div></td>
-                <td style="color:var(--muted);font-size:12px">yousef@example.com</td>
-                <td><span class="role-chip">Client</span></td>
-                <td style="color:var(--muted);font-size:11px">May 10, 2024</td>
-                <td><button class="dots-btn">⋮</button></td>
-              </tr>
-              <tr>
-                <td><div class="user-row"><div class="user-av" style="background:linear-gradient(135deg,#ec4899,#be185d)">S</div><div class="user-row-name">Sarah Ahmad</div></div></td>
-                <td style="color:var(--muted);font-size:12px">sarah@example.com</td>
-                <td><span class="role-chip">Client</span></td>
-                <td style="color:var(--muted);font-size:11px">May 8, 2024</td>
-                <td><button class="dots-btn">⋮</button></td>
-              </tr>
-              <tr>
-                <td><div class="user-row"><div class="user-av" style="background:linear-gradient(135deg,#059669,#047857)">O</div><div class="user-row-name">Omar Hassan</div></div></td>
-                <td style="color:var(--muted);font-size:12px">omar@example.com</td>
-                <td><span class="role-chip">Client</span></td>
-                <td style="color:var(--muted);font-size:11px">May 5, 2024</td>
-                <td><button class="dots-btn">⋮</button></td>
-              </tr>
-              <tr>
-                <td><div class="user-row"><div class="user-av" style="background:linear-gradient(135deg,#d97706,#b45309)">L</div><div class="user-row-name">Lina Qasim</div></div></td>
-                <td style="color:var(--muted);font-size:12px">lina@example.com</td>
-                <td><span class="role-chip">Client</span></td>
-                <td style="color:var(--muted);font-size:11px">Apr 28, 2024</td>
-                <td><button class="dots-btn">⋮</button></td>
-              </tr>
-              <tr>
-                <td><div class="user-row"><div class="user-av" style="background:linear-gradient(135deg,#2563eb,#1d4ed8)">M</div><div class="user-row-name">Mohammad K.</div></div></td>
-                <td style="color:var(--muted);font-size:12px">mohammad@example.com</td>
-                <td><span class="role-chip admin">Admin</span></td>
-                <td style="color:var(--muted);font-size:11px">Apr 20, 2024</td>
-                <td><button class="dots-btn">⋮</button></td>
-              </tr>
-            </tbody>
+            <tbody id="recentUsersBody"></tbody>
           </table>
         </div>
 
@@ -394,88 +322,7 @@
           <div class="card-header">
             <div class="card-title">Recent Projects</div>
           </div>
-          <div class="project-grid">
-
-            <div class="project-card">
-              <div class="project-thumb" style="background:linear-gradient(135deg,#0d1830,#1a1040)">
-                <div class="project-thumb-inner">
-                  <div class="mock-line accent"></div>
-                  <div class="mock-line w80"></div>
-                  <div class="mock-line w60"></div>
-                  <div style="display:flex;gap:4px;margin:6px 8px"><div style="height:20px;width:40%;background:rgba(108,99,255,.2);border-radius:3px"></div><div style="height:20px;width:40%;background:rgba(108,99,255,.1);border-radius:3px"></div></div>
-                </div>
-              </div>
-              <div class="project-info">
-                <div class="project-name">E-Commerce Platform</div>
-                <div class="project-type">Web Development</div>
-              </div>
-              <div class="project-footer">
-                <span class="proj-date">May 25, 2024</span>
-                <span class="pub-badge">Published</span>
-              </div>
-            </div>
-
-            <div class="project-card">
-              <div class="project-thumb" style="background:linear-gradient(135deg,#0d1a18,#0a2018)">
-                <div class="project-thumb-inner">
-                  <div class="mock-line" style="background:rgba(16,185,129,.3)"></div>
-                  <div class="mock-line w60"></div>
-                  <div style="display:flex;gap:4px;margin:6px 8px"><div style="height:16px;width:45%;background:rgba(16,185,129,.15);border-radius:3px"></div></div>
-                  <div class="mock-line w40"></div>
-                </div>
-              </div>
-              <div class="project-info">
-                <div class="project-name">Delivery App System</div>
-                <div class="project-type">Mobile App</div>
-              </div>
-              <div class="project-footer">
-                <span class="proj-date">May 20, 2024</span>
-                <span class="pub-badge">Published</span>
-              </div>
-            </div>
-
-            <div class="project-card">
-              <div class="project-thumb" style="background:linear-gradient(135deg,#101828,#0a1020)">
-                <div class="project-thumb-inner">
-                  <div style="display:flex;gap:3px;padding:5px 6px;flex-wrap:wrap">
-                    <div style="height:10px;width:30%;background:rgba(59,130,246,.25);border-radius:2px"></div>
-                    <div style="height:10px;width:55%;background:rgba(59,130,246,.15);border-radius:2px"></div>
-                    <div style="height:10px;width:45%;background:rgba(59,130,246,.1);border-radius:2px;margin-top:3px"></div>
-                    <div style="height:10px;width:70%;background:rgba(59,130,246,.1);border-radius:2px;margin-top:3px"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="project-info">
-                <div class="project-name">Project Management System</div>
-                <div class="project-type">UI/UX Design</div>
-              </div>
-              <div class="project-footer">
-                <span class="proj-date">May 15, 2024</span>
-                <span class="pub-badge">Published</span>
-              </div>
-            </div>
-
-            <div class="project-card">
-              <div class="project-thumb" style="background:linear-gradient(135deg,#18100a,#200a10)">
-                <div class="project-thumb-inner">
-                  <div class="mock-line" style="background:rgba(249,115,22,.3);width:50%"></div>
-                  <div style="margin:6px 8px;height:28px;background:rgba(249,115,22,.08);border-radius:3px;position:relative">
-                    <div style="position:absolute;top:6px;left:6px;width:60%;height:4px;background:rgba(249,115,22,.2);border-radius:2px"></div>
-                  </div>
-                  <div class="mock-line w40"></div>
-                </div>
-              </div>
-              <div class="project-info">
-                <div class="project-name">Corporate Website</div>
-                <div class="project-type">UI/UX Design</div>
-              </div>
-              <div class="project-footer">
-                <span class="proj-date">May 10, 2024</span>
-                <span class="pub-badge">Published</span>
-              </div>
-            </div>
-
-          </div>
+          <div class="project-grid" id="recentProjectsGrid"></div>
         </div>
 
       </div><!-- /two-col -->
@@ -483,5 +330,7 @@
     </main>
   </div><!-- /main -->
 </div><!-- /shell -->
+<script src="../js/api.js"></script>
+<script src="../js/AdminHomePage.js"></script>
 </body>
 </html>
