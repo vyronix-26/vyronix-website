@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VYRONIX Company | Our Team</title>
+    <link rel="stylesheet" href="../css/stylebackground.css">
+<link rel="stylesheet" href="../css/stylevideo.css">
+<link rel="stylesheet" href="../css/Site search.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -17,7 +22,7 @@
 
 <div id="cursor-glow"></div>
 
-  <header class="header">
+ <header class="header">
     <a href="index.html" class="header-logo">
         <img src="../assets/images/logo.png" alt="VYRONIX Logo">
         <span>VYRONIX</span>
@@ -32,11 +37,16 @@
     </nav>
 
     <div class="header-actions">
-            <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
+       <div class="search-box" id="searchBox">
+    <i class="bi bi-search"></i>
+    <input type="text" placeholder="Search" id="siteSearchInput" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+</div>
+ 
+              <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
     <i class="bi bi-envelope"></i>
 </a>
-         <div class="notif-menu" id="notifMenu" style="display:none;">
-        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
+<div class="notif-menu" id="notifMenu">        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
             <i class="bi bi-bell"></i>
             <span class="notif-dot" id="notifDot"></span>
         </button>
@@ -58,8 +68,7 @@
 
         <div class="profile-menu">
 <button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
-  <span id="avatarContent"><img src="../assets/images/unknown.png" alt="Default Avatar"
-     style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;"></span>
+  <span id="avatarContent"><img src="../assets/images/unknown.png" alt="Default Avatar"></span>
 </button>
             <div class="profile-dropdown" id="profileDropdown">
                 <div class="profile-head">
@@ -553,5 +562,6 @@ setAvatar(profile);
     }
 });
     </script>
+    <script src="../js/client-topbar.js"></script>
 </body>
 </html>

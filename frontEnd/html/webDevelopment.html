@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VYRONIX · Web Development</title>
 
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="../css/stylebackground.css">
+<link rel="stylesheet" href="../css/stylevideo.css">
+<link rel="stylesheet" href="../css/Site search.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -26,7 +29,7 @@
 <div class="glow-dot"></div>
 <div class="glow-dot-2"></div>
 
-  <header class="header">
+ <header class="header">
     <a href="index.html" class="header-logo">
         <img src="../assets/images/logo.png" alt="VYRONIX Logo">
         <span>VYRONIX</span>
@@ -41,11 +44,16 @@
     </nav>
 
     <div class="header-actions">
-  <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
+       <div class="search-box" id="searchBox">
+    <i class="bi bi-search"></i>
+    <input type="text" placeholder="Search" id="siteSearchInput" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+</div>
+ 
+              <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
     <i class="bi bi-envelope"></i>
 </a>
-         <div class="notif-menu" id="notifMenu" style="display:none;">
-        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
+<div class="notif-menu" id="notifMenu">        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
             <i class="bi bi-bell"></i>
             <span class="notif-dot" id="notifDot"></span>
         </button>
@@ -67,8 +75,7 @@
 
         <div class="profile-menu">
 <button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
-  <span id="avatarContent"><img src="../assets/images/unknown.png" alt="Default Avatar"
-     style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;"></span>
+  <span id="avatarContent"><img src="../assets/images/unknown.png" alt="Default Avatar"></span>
 </button>
             <div class="profile-dropdown" id="profileDropdown">
                 <div class="profile-head">
@@ -106,7 +113,6 @@
         <i class="bi bi-list"></i>
     </button>
 </header>
-
 <main>
 
   <section class="service-hero">
@@ -558,5 +564,6 @@ setAvatar(profile);
     }
 });
     </script>
+    <script src="../js/client-topbar.js"></script>
 </body>
 </html>

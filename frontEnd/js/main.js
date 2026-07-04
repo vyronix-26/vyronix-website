@@ -242,39 +242,22 @@ if (searchInput) {
    Mobile Bottom Navigation
 =========================== */
 document.addEventListener("DOMContentLoaded", () => {
-    const bottomNav = document.querySelector(".mobile-bottom-nav");
+  const rawToken =
+    localStorage.getItem("accessToken") ||
+    localStorage.getItem("token");
 
-    if (!bottomNav) return;
+  const token =
+    rawToken && rawToken !== "null" && rawToken !== "undefined"
+      ? rawToken
+      : null;
 
-    let lastScrollY = window.scrollY;
-    let hideNavTimer;
+  const notifMenu = document.getElementById("notifMenu");
 
-    function showBottomNav() {
-        if (window.innerWidth > 768) return;
+  if (!token) {
+    if (notifMenu) notifMenu.style.display = "none";
+    return;
+  }
 
-        bottomNav.classList.add("show");
-        document.body.classList.add("bottom-nav-visible");
-
-        clearTimeout(hideNavTimer);
-
-        hideNavTimer = setTimeout(() => {
-            bottomNav.classList.remove("show");
-            document.body.classList.remove("bottom-nav-visible");
-        }, 2500);
-    }
-
-    showBottomNav();
-
-    window.addEventListener("scroll", () => {
-        const currentScrollY = window.scrollY;
-
-        if (currentScrollY < lastScrollY) {
-            showBottomNav();
-        } else {
-            bottomNav.classList.remove("show");
-            document.body.classList.remove("bottom-nav-visible");
-        }
-
-        lastScrollY = currentScrollY;
-    });
+  if (notifMenu) notifMenu.style.display = "flex";
+  fetchNotifications(token);
 });

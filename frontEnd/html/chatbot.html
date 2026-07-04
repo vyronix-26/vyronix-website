@@ -4,7 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VYRONIX | Smart Assistant</title>
-
+<link rel="stylesheet" href="../css/stylebackground.css">
+<link rel="stylesheet" href="../css/stylevideo.css">
+<link rel="stylesheet" href="../css/Site search.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
@@ -62,88 +66,89 @@
 <body>
 <div id="cursor-glow"></div>
 
-<header class="header">
-  <a href="index.html" class="header-logo">
-    <img src="../assets/images/logo.png" alt="VYRONIX Logo" />
-    <span>VYRONIX</span>
-  </a>
-
-  <nav class="navbar" id="navbar">
-    <a href="index.html#home">Home</a>
-    <a href="index.html#services">Services</a>
-    <a href="index.html#projects">Projects</a>
-    <a href="ourteam.html">Our Team</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-
-  <div class="header-actions">
-    <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
-      <i class="bi bi-envelope"></i>
+ <header class="header">
+    <a href="index.html" class="header-logo">
+        <img src="../assets/images/logo.png" alt="VYRONIX Logo">
+        <span>VYRONIX</span>
     </a>
 
-    <div class="notif-menu" id="notifMenu" style="display:none;">
-      <button type="button" class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
-        <i class="bi bi-bell"></i>
-        <span class="notif-dot" id="notifDot"></span>
-      </button>
+    <nav class="navbar" id="navbar">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="ourteam.html">Our Team</a>
+        <a href="contact.html">Contact</a>
+    </nav>
 
-      <div class="notif-dropdown" id="notifDropdown">
-        <div class="notif-header">
-          <h4>Notifications</h4>
-          <a href="#" class="notif-clear" id="notifClear">Mark all read</a>
-        </div>
-
-        <div class="notif-list" id="notifList">
-          <p class="notif-empty">No notifications yet.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="header-divider"></div>
-
-    <div class="profile-menu">
-      <button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
-        <span id="avatarContent">
-          <img src="../assets/images/unknown.png" alt="Default Avatar"
-               style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;">
-        </span>
-      </button>
-
-      <div class="profile-dropdown" id="profileDropdown">
-        <div class="profile-head">
-          <div id="profileDropdownAvatar" class="profile-dropdown-avatar">
-            <img src="../assets/images/unknown.png" alt="Default Avatar" />
-          </div>
-          <div>
-            <h4 id="dropdownName">VYRONIX User</h4>
-            <p id="dropdownEmail">user@vyronix.com</p>
-          </div>
-        </div>
-
-        <a href="LogIn.html" id="profileLink">
-          <span><i class="bi bi-person"></i> Profile</span>
-        </a>
-
-        <a href="rating.html">
-          <span><i class="bi bi-star"></i> Ratings & Feedback</span>
-          <i class="bi bi-chevron-right"></i>
-        </a>
-
-        <a href="SignUp.html" id="addAccountLink">
-          <span><i class="bi bi-person-plus"></i> Add Account</span>
-          <i class="bi bi-chevron-right"></i>
-        </a>
-
-        <button class="logout-btn" id="logoutBtn" style="display:none;">
-          <span><i class="bi bi-box-arrow-right"></i> Log Out</span>
+    <div class="header-actions">
+       <div class="search-box" id="searchBox">
+    <i class="bi bi-search"></i>
+    <input type="text" placeholder="Search" id="siteSearchInput" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+</div>
+ 
+              <a href="mailto:info@vyronix-26.com" class="header-icon-btn" aria-label="Messages">
+    <i class="bi bi-envelope"></i>
+</a>
+<div class="notif-menu" id="notifMenu">        <button class="header-icon-btn" id="notifBtn" aria-label="Open Notifications">
+            <i class="bi bi-bell"></i>
+            <span class="notif-dot" id="notifDot"></span>
         </button>
-      </div>
-    </div>
-  </div>
 
-  <button class="menu-btn" id="menuBtn" aria-label="Open Menu">
-    <i class="bi bi-list"></i>
-  </button>
+     <div class="notif-dropdown" id="notifDropdown">
+    <div class="notif-header">
+        <h4>Notifications</h4>
+        <a href="#" class="notif-clear" id="notifClear">Mark all read</a>
+    </div>
+
+    <div class="notif-list" id="notifList">
+        <!-- JS will render notifications here -->
+    </div>
+
+</div>
+    </div>
+
+        <div class="header-divider"></div>
+
+        <div class="profile-menu">
+<button class="user-avatar" id="profileBtn" aria-label="Open Profile Menu">
+  <span id="avatarContent"><img src="../assets/images/unknown.png" alt="Default Avatar"></span>
+</button>
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-head">
+                    <div id="profileDropdownAvatar" class="profile-dropdown-avatar"><img src="../assets/images/unknown.png" alt="Default Avatar"></div>
+                    <div>
+                        <h4 id="dropdownName">VYRONIX User</h4>
+                        <p id="dropdownEmail">user@vyronix.com</p>
+                    </div>
+                </div>
+                <!-- if the user is logged in go to their profile  and if not logged in go to login page -->
+               <a href="#" id="profileLink">
+    <span>
+        <i class="bi bi-person"></i> Profile
+    </span>
+</a>
+
+                <a href="rating.html">
+                    <span><i class="bi bi-star"></i> Ratings & Feedback</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+
+                <a href="SignUp.html">
+                    <span><i class="bi bi-person-plus"></i> Add Account</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+
+                <button class="logout-btn" id="logoutBtn" style="display:none;">
+    <span><i class="bi bi-box-arrow-right"></i> Log Out</span>
+</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Open Menu">
+        <i class="bi bi-list"></i>
+    </button>
 </header>
 
 <main>
@@ -221,6 +226,7 @@
 
 <script src="../js/api.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/client-topbar.js"></script>
 <script src="../js/chatbot.js"></script>
 
 <script>
