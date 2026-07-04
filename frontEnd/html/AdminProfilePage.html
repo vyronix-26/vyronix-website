@@ -7,18 +7,11 @@
 
   <!-- SIDEBAR (copied from AdminHomePage.html) -->
   <aside class="sidebar">
-<<<<<<< HEAD
-    <div class="sidebar-logo">
-      <span class="dot">⚡</span>
-      AdminPro
-    </div>
-=======
   <div class="sidebar-logo">
     <span class="dot">⚡</span>
     AdminPro
   </div>
 
->>>>>>> 022c837695d046d7e0e1d8ef64b99ef5520e4b22
   <div class="nav-section">
     <div class="nav-label">Main</div>
 
@@ -43,6 +36,7 @@
     </div>
   </div>
 </aside>
+  </aside>
 
   <div class="main" id="Profile">
   <header class="topbar">
@@ -587,3 +581,122 @@
 </script>
 <script src="../js/admin-topbar.js"></script>
 <script src="../js/main.js"></script>
+<script>
+    // Getting the notification of the admin
+    (function () {
+        "use strict";
+
+        const API_BASE = "http://localhost:5000/api";
+
+        function getAccessToken() {
+            return localStorage.getItem("accessToken");
+        }
+
+        const notifMenu = document.getElementById("notifMenu");
+        const notifBtn = document.getElementById("notifBtn");
+        const notifDropdown = document.getElementById("notifDropdown");
+        const notifClear = document.getElementById("notifClear");
+
+        if (notifMenu) {
+            notifMenu.style.display = getAccessToken() ? "inline-flex" : "none";
+        }
+
+        if (notifDropdown) {
+            notifDropdown.classList.remove("show");
+        }
+
+        async function fetchNotifications(token) {
+            try {
+                const res = await fetch(`${API_BASE}/notifications`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+                if (!res.ok) throw new Error("Failed to fetch notifications");
+                const data = await res.json();
+                console.log("Notifications fetched:", data);
+                renderNotifications(data?.data?.notifications || [], data?.unreadCount || 0);
+            } catch (err) {
+                console.error("Notifications error:", err);
+            }
+        }
+
+        function renderNotifications(notifications, unreadCount) {
+            const notifList = document.getElementById("notifList");
+            const notifDot = document.getElementById("notifDot");
+            if (!notifList) return;
+
+            if (notifDot) {
+                notifDot.style.display = unreadCount > 0 ? "inline-block" : "none";
+            }
+
+            if (!notifications || notifications.length === 0) {
+                notifList.innerHTML = `<p class="notif-empty">No notifications yet.</p>`;
+                return;
+            }
+
+            notifList.innerHTML = notifications.map(n => `
+                <a href="#" class="notif-item ${n.isRead ? "read" : "unread"}">
+                    <span class="notif-icon"><i class="bi bi-bell"></i></span>
+                    <div>
+                        <p>${n.message}</p>
+                        <span class="notif-time">${timeAgo(n.createdAt)}</span>
+                    </div>
+                </a>
+            `).join("");
+        }
+
+        function timeAgo(dateString) {
+            const diffMs = Date.now() - new Date(dateString).getTime();
+            const mins = Math.floor(diffMs / 60000);
+            if (mins < 1) return "just now";
+            if (mins < 60) return `${mins} min ago`;
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return `${hrs} hour${hrs > 1 ? "s" : ""} ago`;
+            const days = Math.floor(hrs / 24);
+            return `${days} day${days > 1 ? "s" : ""} ago`;
+        }
+
+       console.log("notifBtn =", notifBtn);
+console.log("notifDropdown =", notifDropdown);
+
+
+
+        if (notifClear) {
+            notifClear.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const token = getAccessToken();
+                if (!token) return;
+                try {
+                    const res = await fetch(`${API_BASE}/notifications/read-all`, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+                    if (!res.ok) throw new Error("Failed to mark all as read");
+                      // Optimistically update the UI immediately so the list
+                      // shows as read without waiting for the refetch.
+                      document.querySelectorAll('.notif-item.unread').forEach(item => item.classList.remove('unread'));
+                      const notifDot = document.getElementById("notifDot");
+                      if (notifDot) {
+                        notifDot.style.display = "none";
+                        notifDot.classList.add('hidden');
+                      }
+
+                      // Refresh from the server to ensure state is authoritative.
+                      fetchNotifications(token);
+                    
+                } catch (err) {
+                    console.error("Mark all as read error:", err);
+                }
+            });
+        }
+
+        const activeToken = getAccessToken();
+        if (activeToken) fetchNotifications(activeToken);
+
+    })();
+</script>
