@@ -2156,7 +2156,31 @@ footer {
 
 @media (max-width: 1000px) {
     .header-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    /* Only search + notifications stay visible in the top header on mobile.
+       Mail icon, divider, and the profile dropdown move out of the header;
+       profile is reachable from the bottom nav instead. */
+    .header-actions .header-icon-btn,
+    .header-actions .header-divider,
+    .header-actions .profile-menu {
         display: none;
+    }
+
+    .header-actions .search-box {
+        width: 150px;
+        height: 42px;
+    }
+
+    .header-actions .search-box input::placeholder {
+        font-size: 13px;
+    }
+
+    .notif-menu {
+        display: flex;
     }
 
     .menu-btn {
@@ -2218,6 +2242,10 @@ footer {
 
     .header-logo span {
         font-size: 20px;
+    }
+
+    .header-actions .search-box {
+        width: 120px;
     }
 
     .section,
@@ -2402,7 +2430,7 @@ footer {
         height: 76px;
 
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(6, 1fr);
         align-items: center;
 
         background: rgba(3, 22, 36, 0.98);
