@@ -1,0 +1,563 @@
+<!-- Include admin shell styles first (provides layout, variables) -->
+<link rel="stylesheet" href="../css/AdminHomePage.css">
+<!-- Make sure this stylesheet is linked once in your app's main <head>
+  (e.g. index.html / layout template). It's referenced here too so this
+  fragment keeps working correctly if it's ever loaded standalone. -->
+<link rel="stylesheet" href="../css/AdminProfilePage.css">
+
+<div class="shell">
+
+  <!-- SIDEBAR (copied from AdminHomePage.html) -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="dot">⚡</span>
+      AdminPro
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Main</div>
+      <div class="nav-item active">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Users
+      </div>
+      <div class="nav-item" onclick="window.location.href='AdminProjects.html'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Projects
+      </div>
+      <div class="nav-item" onclick="window.location.href='AdminRequest.html'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Requests
+      </div>
+    </div>
+    <div class="nav-section"></div>
+  </aside>
+
+  <div class="main" id="Profile">
+  <header class="topbar">
+    <div class="topbar-right">
+      <div class="icon-btn">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <div class="badge-dot">3</div>
+      </div>
+      <div class="user-chip">
+        <div class="avatar" id="topbarAvatar">A</div>
+        <div class="user-info">
+          <div class="user-name" id="topbarName">Admin</div>
+          <div class="user-role" id="topbarRole">Request Manager</div>
+        </div>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="page-header">
+      <div>
+        <h1>Profile</h1>
+        <p>Manage your admin account details and security settings.</p>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <section class="profile-card">
+        <div class="profile-avatar-wrap">
+          <img id="profileAvatarImg" class="profile-avatar-img" alt="Avatar" style="display:none;">
+          <div class="profile-avatar" id="profileAvatar">A</div>
+          <span class="profile-status-dot" title="Online"></span>
+        </div>
+
+        <label for="avatarUpload" class="profile-avatar-upload-label">
+          Change photo
+          <input type="file" id="avatarUpload" accept="image/*" hidden>
+        </label>
+
+        <div class="profile-name" id="profileName">Loading...</div>
+        <div class="profile-email" id="profileEmail">-</div>
+        <span class="profile-role-badge" id="profileRoleBadge">Admin</span>
+
+        <div class="profile-meta-list">
+          <div class="profile-meta-item">
+            <span class="meta-label">Member since</span>
+            <span class="meta-value" id="profileCreatedAt">-</span>
+          </div>
+          <div class="profile-meta-item">
+            <span class="meta-label">Last updated</span>
+            <span class="meta-value" id="profileUpdatedAt">-</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-details">
+        <div class="card-block">
+          <div class="card-block-header">
+            <h2>Account Details</h2>
+            <p>Update your personal information.</p>
+          </div>
+          <form id="profileForm" class="profile-form">
+            <div class="form-row">
+              <div class="field">
+                <label for="formFirstName">First Name</label>
+                <input type="text" id="formFirstName" placeholder="First name">
+              </div>
+              <div class="field">
+                <label for="formLastName">Last Name</label>
+                <input type="text" id="formLastName" placeholder="Last name">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="formPhone">Phone Number</label>
+                <input type="text" id="formPhone" placeholder="+1 (000) 000-0000">
+              </div>
+              <div class="field">
+                <label for="formRole">Role</label>
+                <input type="text" id="formRole" disabled>
+              </div>
+            </div>
+            <div class="field">
+              <label for="formEmail">Email</label>
+              <input type="email" id="formEmail" disabled title="Email cannot be changed here">
+            </div>
+            <div class="form-actions">
+              <span class="save-status" id="profileSaveStatus"></span>
+              <button type="submit" class="btn-primary" id="saveProfileBtn">Save Changes</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card-block">
+          <div class="card-block-header">
+            <h2>Change Password</h2>
+            <p>Choose a strong password you don't use elsewhere.</p>
+          </div>
+          <form id="passwordForm" class="profile-form">
+            <div class="field">
+              <label for="formCurrentPassword">Current Password</label>
+              <input type="password" id="formCurrentPassword" autocomplete="current-password" required>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="formNewPassword">New Password</label>
+                <input type="password" id="formNewPassword" autocomplete="new-password" required minlength="8">
+              </div>
+              <div class="field">
+                <label for="formConfirmPassword">Confirm New Password</label>
+                <input type="password" id="formConfirmPassword" autocomplete="new-password" required minlength="8">
+              </div>
+            </div>
+            <div class="form-actions">
+              <span class="save-status" id="passwordSaveStatus"></span>
+              <button type="submit" class="btn-primary" id="savePasswordBtn">Update Password</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card-block danger-block">
+          <div class="card-block-header">
+            <h2>Sign Out</h2>
+            <p>End your current admin session on this device.</p>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary danger" id="logoutBtn">Log Out</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+    "use strict";
+    const API_BASE = "http://localhost:5000/api";
+    const AUTH_API_BASE = "http://localhost:5000/api/auth";
+    const SERVER_ORIGIN = "http://localhost:5000";
+
+    function getAccessToken() {
+        return localStorage.getItem("accessToken");
+    }
+
+    // Format various date inputs into a readable string, e.g. "July 4, 2026".
+    function formatDate(value) {
+      if (!value) return "-";
+      let d;
+      // If it's a number-like string or number, handle as timestamp (seconds or ms)
+      if (typeof value === 'number' || /^\d+$/.test(String(value))) {
+        const n = Number(value);
+        // If looks like seconds (10 digits), convert to ms
+        d = n > 1e12 ? new Date(n) : (n > 1e10 ? new Date(n) : new Date(n * 1000));
+      } else {
+        d = new Date(value);
+      }
+
+      if (Number.isNaN(d.getTime())) return "-";
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    const avatarUploadInput = document.getElementById("avatarUpload");
+    const profileAvatarDiv = document.getElementById("profileAvatar");
+    const profileAvatarImg = document.getElementById("profileAvatarImg");
+
+    const topbarAvatar = document.getElementById("topbarAvatar");
+    const topbarName = document.getElementById("topbarName");
+    const topbarRole = document.getElementById("topbarRole");
+
+    const profileName = document.getElementById("profileName");
+    const profileEmail = document.getElementById("profileEmail");
+    const profileRoleBadge = document.getElementById("profileRoleBadge");
+    const profileCreatedAt = document.getElementById("profileCreatedAt");
+    const profileUpdatedAt = document.getElementById("profileUpdatedAt");
+
+    const profileForm = document.getElementById("profileForm");
+    const formFirstName = document.getElementById("formFirstName");
+    const formLastName = document.getElementById("formLastName");
+    const formPhone = document.getElementById("formPhone");
+    const formRole = document.getElementById("formRole");
+    const formEmail = document.getElementById("formEmail");
+
+    const saveProfileBtn = document.getElementById("saveProfileBtn");
+    const profileSaveStatus = document.getElementById("profileSaveStatus");
+
+    // Change Password elements
+    const passwordForm = document.getElementById("passwordForm");
+    const formCurrentPassword = document.getElementById("formCurrentPassword");
+    const formNewPassword = document.getElementById("formNewPassword");
+    const formConfirmPassword = document.getElementById("formConfirmPassword");
+    const savePasswordBtn = document.getElementById("savePasswordBtn");
+    const passwordSaveStatus = document.getElementById("passwordSaveStatus");
+
+    // Logout element
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    let selectedImageFile = null;
+    // Keeps track of the logged-in user's email so the password flow
+    // (see passwordForm handler below) knows who to generate a reset
+    // token for. Populated once fetchProfile() resolves.
+    let currentUserEmail = "";
+
+    function showFormMessage(text, isError) {
+        if (!profileSaveStatus) return;
+        profileSaveStatus.textContent = text;
+        profileSaveStatus.style.color = isError ? "#ff4d4d" : "#2ecc71";
+    }
+
+    function showPasswordMessage(text, isError) {
+        if (!passwordSaveStatus) return;
+        passwordSaveStatus.textContent = text;
+        passwordSaveStatus.style.color = isError ? "#ff4d4d" : "#2ecc71";
+    }
+
+
+    function renderAvatarElement(element, profile, fallbackText) {
+        if (!element) return;
+        if (profile && profile.profileImage) {
+            const url = profile.profileImage.startsWith("http")
+                ? profile.profileImage
+                : `${SERVER_ORIGIN}${profile.profileImage}`;
+            element.innerHTML = `<img src="${url}" alt="avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;">`;
+        } else if (profile && profile.firstName) {
+            element.textContent = profile.firstName.charAt(0).toUpperCase();
+            element.style.display = "flex";
+        } else {
+            element.textContent = fallbackText || "👤";
+        }
+    }
+
+
+    function populateProfile(profile) {
+        const fullName = `${profile.firstName || ""} ${profile.lastName || ""}`.trim();
+
+        currentUserEmail = profile.email || "";
+
+        if (profileName) profileName.textContent = fullName || "Admin User";
+        if (profileEmail) profileEmail.textContent = profile.email || "-";
+        if (profileRoleBadge) profileRoleBadge.textContent = profile.role || "Admin";
+
+        if (topbarName) topbarName.textContent = fullName || "Admin";
+        if (topbarRole) topbarRole.textContent = profile.role || "Manager";
+
+        if (formFirstName) formFirstName.value = profile.firstName || "";
+        if (formLastName) formLastName.value = profile.lastName || "";
+        if (formPhone) formPhone.value = profile.phone || "";
+        if (formRole) formRole.value = profile.role || "Admin";
+        if (formEmail) formEmail.value = profile.email || "";
+
+        if (profileCreatedAt && profile.createdAt) profileCreatedAt.textContent = formatDate(profile.createdAt);
+        if (profileUpdatedAt && profile.updatedAt) profileUpdatedAt.textContent = formatDate(profile.updatedAt);
+
+
+        if (profile.profileImage) {
+            const imageUrl = profile.profileImage.startsWith("http")
+                ? profile.profileImage
+                : `${SERVER_ORIGIN}${profile.profileImage}`;
+            if (profileAvatarImg) {
+                profileAvatarImg.src = imageUrl;
+                profileAvatarImg.style.display = "block";
+            }
+            if (profileAvatarDiv) profileAvatarDiv.style.display = "none";
+        } else {
+            if (profileAvatarDiv) {
+                profileAvatarDiv.textContent = profile.firstName ? profile.firstName.charAt(0).toUpperCase() : "A";
+                profileAvatarDiv.style.display = "flex";
+            }
+            if (profileAvatarImg) profileAvatarImg.style.display = "none";
+        }
+
+
+        renderAvatarElement(topbarAvatar, profile, "A");
+    }
+
+
+    if (avatarUploadInput) {
+        avatarUploadInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith("image/")) {
+                showFormMessage("Please choose an image file.", true);
+                avatarUploadInput.value = "";
+                return;
+            }
+
+            selectedImageFile = file;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (profileAvatarImg) {
+                    profileAvatarImg.src = reader.result;
+                    profileAvatarImg.style.display = "block";
+                }
+                if (profileAvatarDiv) profileAvatarDiv.style.display = "none";
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+
+    if (profileForm) {
+        profileForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const token = getAccessToken();
+            if (!token) {
+                showFormMessage("You're not logged in.", true);
+                return;
+            }
+
+            const formData = new FormData();
+            if (formFirstName && formFirstName.value.trim()) formData.append("firstName", formFirstName.value.trim());
+            if (formLastName && formLastName.value.trim()) formData.append("lastName", formLastName.value.trim());
+            if (formPhone && formPhone.value.trim()) formData.append("phone", formPhone.value.trim());
+
+
+            if (selectedImageFile) {
+                formData.append("image", selectedImageFile);
+            }
+
+            if (saveProfileBtn) {
+                saveProfileBtn.disabled = true;
+                saveProfileBtn.textContent = "Saving...";
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/profile`, {
+                    method: "PATCH",
+                    headers: {
+
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || "Update failed.");
+                }
+
+
+                populateProfile(data.data.profile);
+
+                selectedImageFile = null;
+                avatarUploadInput.value = "";
+
+                showFormMessage("Profile updated successfully.", false);
+            } catch (err) {
+                console.error("Failed to update profile:", err);
+                showFormMessage(err.message || "Something went wrong.", true);
+            } finally {
+                if (saveProfileBtn) {
+                    saveProfileBtn.disabled = false;
+                    saveProfileBtn.textContent = "Save Changes";
+                }
+            }
+        });
+    }
+
+    // Change Password
+    // -----------------------------------------------------------------
+    // IMPORTANT: the backend's POST /api/auth/reset-password endpoint
+    // only accepts the random hex token that POST /api/auth/forgot-password
+    // generates and stores in `reset_password_token` — it will NEVER accept
+    // the JWT access token from localStorage (that was the original bug
+    // here: an access token was being sent as if it were a reset token,
+    // so the backend always responded "Invalid or expired reset token").
+    //
+    // Since the backend can't be changed, this handler chains the two
+    // existing endpoints instead:
+    //   1. POST /forgot-password with the logged-in user's own email
+    //      -> backend generates a real reset token and returns it
+    //         (authController.forgotPassword includes resetToken in
+    //         the response body)
+    //   2. POST /reset-password with that resetToken + the new password
+    //
+    // NOTE: because the backend's resetPassword() never checks a
+    // "current password", formCurrentPassword is validated for
+    // non-blank input on the frontend only, as a UX gate. It cannot be
+    // cryptographically verified without a backend change.
+    if (passwordForm) {
+        passwordForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const token = getAccessToken();
+            if (!token) {
+                showPasswordMessage("You're not logged in.", true);
+                return;
+            }
+
+            if (!currentUserEmail) {
+                showPasswordMessage("Couldn't determine your account email. Reload the page and try again.", true);
+                return;
+            }
+
+            const currentPassword = formCurrentPassword.value;
+            const password = formNewPassword.value;
+            const confirmPassword = formConfirmPassword.value;
+
+            showPasswordMessage("", false);
+
+            if (!currentPassword) {
+                showPasswordMessage("Enter your current password.", true);
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showPasswordMessage("Passwords do not match.", true);
+                return;
+            }
+
+            if (password.length < 8) {
+                showPasswordMessage("Password must be at least 8 characters.", true);
+                return;
+            }
+
+            if (savePasswordBtn) {
+                savePasswordBtn.disabled = true;
+                savePasswordBtn.textContent = "Updating...";
+            }
+
+            try {
+                // Step 1: generate a real reset token for this account
+                const forgotRes = await fetch(`${AUTH_API_BASE}/forgot-password`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: currentUserEmail })
+                });
+
+                const forgotData = await forgotRes.json();
+
+                if (!forgotRes.ok || !forgotData.success || !forgotData.data || !forgotData.data.resetToken) {
+                    throw new Error(forgotData.message || "Could not start password update.");
+                }
+
+                const resetToken = forgotData.data.resetToken;
+
+                // Step 2: use that token to actually set the new password
+                const resetRes = await fetch(`${AUTH_API_BASE}/reset-password`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        token: resetToken,
+                        password,
+                        confirmPassword: password
+                    })
+                });
+
+                const resetResult = await resetRes.json();
+
+                if (resetRes.ok && resetResult.success) {
+                    showPasswordMessage(resetResult.message || "Password updated successfully.", false);
+                    passwordForm.reset();
+                } else {
+                    showPasswordMessage(resetResult.message || "Invalid or expired reset token.", true);
+                }
+            } catch (err) {
+                console.error("Failed to update password:", err);
+                showPasswordMessage(err.message || "Server error. Please try again later.", true);
+            } finally {
+                if (savePasswordBtn) {
+                    savePasswordBtn.disabled = false;
+                    savePasswordBtn.textContent = "Update Password";
+                }
+            }
+        });
+    }
+
+    // Log Out
+    // -----------------------------------------------------------------
+    // This was completely missing before: the button existed in the
+    // HTML but had no event listener wired up anywhere, so clicking it
+    // did nothing. This calls the existing POST /auth/logout endpoint
+    // (which clears the refresh token server-side), then always clears
+    // the local access token and redirects to the login page.
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", async () => {
+            const token = getAccessToken();
+
+            logoutBtn.disabled = true;
+            logoutBtn.textContent = "Logging out...";
+
+            try {
+                if (token) {
+                    await fetch(`${AUTH_API_BASE}/logout`, {
+                        method: "POST",
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                }
+            } catch (err) {
+                console.error("Logout request failed:", err);
+                // fall through and clear local session regardless
+            } finally {
+                localStorage.removeItem("accessToken");
+                window.location.href = "LogIn.html"; // adjust to your actual login page path
+            }
+        });
+    }
+
+
+    async function fetchProfile() {
+        const token = getAccessToken();
+        if (!token) {
+            showFormMessage("You're not logged in.", true);
+            return;
+        }
+        try {
+            const res = await fetch(`${API_BASE}/profile`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const data = await res.json();
+            if (!res.ok || !data.success) {
+                throw new Error(data.message || "Failed to load profile.");
+            }
+            populateProfile(data.data.profile);
+        } catch (err) {
+            console.error("Failed to load profile:", err);
+            showFormMessage("Couldn't load your profile. Please try again.", true);
+        }
+    }
+
+    fetchProfile();
+
+  })();
+</script>
