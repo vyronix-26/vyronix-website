@@ -261,3 +261,60 @@ document.addEventListener("DOMContentLoaded", () => {
   if (notifMenu) notifMenu.style.display = "flex";
   fetchNotifications(token);
 });
+// Mobile Bottom Navigation Toggle
+document.addEventListener("DOMContentLoaded", function() {
+    const bottomNav = document.querySelector('.mobile-bottom-nav');
+    const menuBtn = document.getElementById('menuBtn');
+    const navbar = document.getElementById('navbar');
+
+    // Show bottom nav on mobile by default (it's already visible)
+    // But we need to ensure it's visible on page load for mobile
+    
+    // Check if we're on mobile
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    // Toggle bottom nav visibility when menu is toggled (optional)
+    if (menuBtn) {
+        menuBtn.addEventListener('click', function() {
+            // If on mobile, toggle bottom nav alongside navbar if needed
+            if (isMobile()) {
+                // The bottom nav is already visible on mobile
+                // You can add logic here if you want to hide it when menu is open
+            }
+        });
+    }
+
+    // Close bottom nav when a link is clicked (optional)
+    const navLinks = document.querySelectorAll('.mobile-bottom-nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // You can add any logic here
+        });
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (!isMobile()) {
+            // On desktop, hide bottom nav
+            if (bottomNav) {
+                bottomNav.style.display = 'none';
+            }
+        } else {
+            // On mobile, show bottom nav
+            if (bottomNav) {
+                bottomNav.style.display = 'grid';
+            }
+        }
+    });
+
+    // Initial check
+    if (bottomNav) {
+        if (!isMobile()) {
+            bottomNav.style.display = 'none';
+        } else {
+            bottomNav.style.display = 'grid';
+        }
+    }
+});

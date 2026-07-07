@@ -2430,7 +2430,7 @@ footer {
         height: 76px;
 
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         align-items: center;
 
         background: rgba(3, 22, 36, 0.98);
@@ -2663,4 +2663,1320 @@ footer {
 .header-actions .notif-dot {
   top: 9px !important;
   right: 9px !important;
+}
+/* =========================================================
+   VYRONIX - COMPLETE RESPONSIVE FIXES
+   Add this to your style.css or create a new responsive.css
+   ========================================================= */
+
+/* ===================== FIX: MOBILE BOTTOM NAV ===================== */
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 76px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        align-items: center;
+        background: rgba(3, 22, 36, 0.98);
+        border-top: 2px solid #22c7e8;
+        z-index: 999999;
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+        transition: transform .35s ease, opacity .35s ease;
+    }
+
+    .mobile-bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        color: #d8e8f2;
+        font-size: 10px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: .25s ease;
+    }
+
+    .mobile-bottom-nav a:hover,
+    .mobile-bottom-nav a.active {
+        color: #22c7e8;
+    }
+
+    .mobile-bottom-nav i {
+        font-size: 22px;
+    }
+
+    .bottom-logo img {
+        width: 52px;
+        height: 52px;
+        object-fit: contain;
+        margin-top: -24px;
+        border-radius: 50%;
+        background: #06131d;
+        border: 2px solid #22c7e8;
+        padding: 4px;
+    }
+
+    body.bottom-nav-visible .chat-btn {
+        bottom: 95px;
+    }
+
+    /* Hide bottom nav on pages where it might conflict */
+    .no-bottom-nav .mobile-bottom-nav {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-bottom-nav {
+        height: 68px;
+    }
+
+    .mobile-bottom-nav a {
+        font-size: 9px;
+    }
+
+    .mobile-bottom-nav i {
+        font-size: 19px;
+    }
+
+    .bottom-logo img {
+        width: 44px;
+        height: 44px;
+        margin-top: -20px;
+    }
+}
+
+/* ===================== FIX: HEADER ACTIONS ON MOBILE ===================== */
+@media (max-width: 1000px) {
+    .header-actions {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Keep search, notifications, and profile visible */
+    .header-actions .search-box {
+        width: 140px;
+        height: 40px;
+        padding: 0 12px;
+    }
+
+    .header-actions .search-box input {
+        font-size: 13px;
+    }
+
+    .header-actions .search-box input::placeholder {
+        font-size: 12px;
+    }
+
+    /* Hide divider and email icon on medium screens */
+    .header-actions .header-divider {
+        display: none !important;
+    }
+
+    .header-actions a.header-icon-btn[aria-label="Messages"] {
+        display: none !important;
+    }
+
+    /* Keep notification bell */
+    .header-actions .notif-menu {
+        display: flex !important;
+    }
+
+    .header-actions .notif-menu .header-icon-btn {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        font-size: 17px !important;
+        border-radius: 12px !important;
+    }
+
+    /* Keep profile avatar */
+    .header-actions .profile-menu {
+        display: flex !important;
+    }
+
+    .header-actions .profile-menu .user-avatar {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        font-size: 16px !important;
+    }
+
+    /* Menu button */
+    .menu-btn {
+        display: block !important;
+        font-size: 28px !important;
+        padding: 4px 8px;
+    }
+
+    .navbar {
+        position: fixed;
+        top: var(--header-h);
+        left: 0;
+        width: 100%;
+        padding: 20px 7% 30px;
+        background: rgba(8, 18, 28, 0.97);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        transform: translateY(-130%);
+        opacity: 0;
+        pointer-events: none;
+        transition: .35s ease;
+        z-index: 9998;
+    }
+
+    .navbar.show {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .navbar a {
+        font-size: 16px;
+        padding: 6px 0;
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .navbar a::after {
+        bottom: -4px;
+    }
+}
+
+@media (max-width: 650px) {
+    .header-actions .search-box {
+        width: 100px !important;
+        height: 36px !important;
+        padding: 0 10px !important;
+    }
+
+    .header-actions .search-box i {
+        font-size: 13px !important;
+    }
+
+    .header-actions .search-box input {
+        font-size: 12px !important;
+    }
+
+    .header-actions .search-box input::placeholder {
+        font-size: 11px !important;
+    }
+
+    .header-actions .notif-menu .header-icon-btn {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        font-size: 15px !important;
+        border-radius: 10px !important;
+    }
+
+    .header-actions .profile-menu .user-avatar {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        font-size: 14px !important;
+    }
+
+    .notif-dot {
+        top: 6px !important;
+        right: 6px !important;
+        width: 7px !important;
+        height: 7px !important;
+    }
+
+    .menu-btn {
+        font-size: 24px !important;
+        padding: 2px 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-actions .search-box {
+        width: 80px !important;
+        height: 32px !important;
+        padding: 0 8px !important;
+        border-radius: 30px !important;
+    }
+
+    .header-actions .search-box i {
+        font-size: 11px !important;
+    }
+
+    .header-actions .search-box input {
+        font-size: 11px !important;
+    }
+
+    .header-actions .search-box input::placeholder {
+        font-size: 10px !important;
+    }
+
+    .header-actions .notif-menu .header-icon-btn {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        font-size: 13px !important;
+        border-radius: 8px !important;
+    }
+
+    .header-actions .profile-menu .user-avatar {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        font-size: 12px !important;
+    }
+
+    .notif-dot {
+        top: 4px !important;
+        right: 4px !important;
+        width: 6px !important;
+        height: 6px !important;
+    }
+}
+
+/* ===================== FIX: NOTIFICATION DROPDOWN ===================== */
+.notif-dropdown {
+    position: absolute;
+    top: 58px;
+    right: 0;
+    width: 320px;
+    max-height: 400px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(12, 24, 39, 0.96), rgba(8, 18, 28, 0.94));
+    border: 1px solid rgba(34, 199, 232, 0.28);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), 0 0 35px rgba(34, 199, 232, 0.18);
+    backdrop-filter: blur(18px);
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+    pointer-events: none;
+    transition: .28s ease;
+    z-index: 3000;
+    overflow: hidden;
+}
+
+.notif-dropdown.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.notif-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 18px;
+    width: 16px;
+    height: 16px;
+    background: rgba(12, 24, 39, 0.96);
+    border-left: 1px solid rgba(34, 199, 232, 0.22);
+    border-top: 1px solid rgba(34, 199, 232, 0.22);
+    transform: rotate(45deg);
+}
+
+@media (max-width: 650px) {
+    .notif-dropdown {
+        width: 290px;
+        right: -70px;
+        top: 50px;
+        max-height: 350px;
+    }
+
+    .notif-dropdown::before {
+        right: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .notif-dropdown {
+        width: 260px;
+        right: -50px;
+        top: 44px;
+        max-height: 300px;
+        border-radius: 14px;
+    }
+
+    .notif-dropdown::before {
+        right: 40px;
+        width: 14px;
+        height: 14px;
+        top: -7px;
+    }
+
+    .notif-header {
+        padding: 12px 14px;
+    }
+
+    .notif-header h4 {
+        font-size: 13px;
+    }
+
+    .notif-item {
+        padding: 10px 14px;
+        gap: 10px;
+    }
+
+    .notif-icon {
+        min-width: 30px;
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
+    .notif-item p {
+        font-size: 12px;
+    }
+
+    .notif-time {
+        font-size: 10px;
+    }
+}
+
+/* ===================== FIX: PROFILE DROPDOWN ===================== */
+@media (max-width: 650px) {
+    .profile-dropdown {
+        width: 240px;
+        right: -10px;
+        top: 58px;
+        padding: 12px;
+    }
+
+    .profile-dropdown::before {
+        right: 14px;
+    }
+
+    .profile-head {
+        padding: 4px 4px 10px;
+        gap: 10px;
+    }
+
+    .profile-head img {
+        width: 44px;
+        height: 44px;
+    }
+
+    .profile-head h4 {
+        font-size: 13px;
+    }
+
+    .profile-head p {
+        font-size: 11px;
+    }
+
+    .profile-dropdown a,
+    .profile-dropdown button {
+        min-height: 38px;
+        font-size: 13px;
+        padding: 0 6px;
+    }
+
+    .profile-dropdown i {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-dropdown {
+        width: 210px;
+        right: -20px;
+        top: 50px;
+        padding: 10px;
+        border-radius: 14px;
+    }
+
+    .profile-dropdown::before {
+        right: 26px;
+        width: 12px;
+        height: 12px;
+        top: -6px;
+    }
+
+    .profile-head img {
+        width: 38px;
+        height: 38px;
+    }
+
+    .profile-head h4 {
+        font-size: 12px;
+    }
+
+    .profile-head p {
+        font-size: 10px;
+    }
+
+    .profile-dropdown a,
+    .profile-dropdown button {
+        min-height: 34px;
+        font-size: 12px;
+        border-radius: 8px;
+    }
+
+    .profile-dropdown i {
+        font-size: 13px;
+    }
+}
+
+/* ===================== FIX: SEARCH RESULTS ===================== */
+.search-box {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(12, 24, 39, 0.96);
+    border: 1px solid rgba(34, 199, 232, 0.25);
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 99999;
+    display: none;
+    padding: 6px 0;
+}
+
+.search-results.show {
+    display: block;
+}
+
+.search-results a {
+    display: block;
+    padding: 10px 16px;
+    color: #d8e8f2;
+    font-size: 14px;
+    text-decoration: none;
+    transition: .2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.search-results a:last-child {
+    border-bottom: none;
+}
+
+.search-results a:hover {
+    background: rgba(34, 199, 232, 0.10);
+    color: #22c7e8;
+}
+
+.search-results .no-results {
+    padding: 16px;
+    color: #8ea7b8;
+    text-align: center;
+    font-size: 13px;
+}
+
+@media (max-width: 650px) {
+    .search-results {
+        max-height: 200px;
+        border-radius: 12px;
+        top: calc(100% + 6px);
+    }
+
+    .search-results a {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-results {
+        max-height: 160px;
+        border-radius: 10px;
+        top: calc(100% + 4px);
+        left: -60px;
+        right: -60px;
+        width: 200px;
+    }
+
+    .search-results a {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+/* ===================== FIX: BACKGROUND IMAGE ===================== */
+@media (max-width: 768px) {
+    body {
+        background:
+            radial-gradient(circle at 18% 8%, rgba(34, 199, 232, 0.12), transparent 25%),
+            radial-gradient(circle at 82% 28%, rgba(99, 230, 255, 0.08), transparent 25%),
+            linear-gradient(rgba(7, 17, 28, 0.80), rgba(7, 17, 28, 0.88)),
+            url("../assets/images/homepage.jpeg");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background:
+            radial-gradient(circle at 18% 8%, rgba(34, 199, 232, 0.08), transparent 20%),
+            radial-gradient(circle at 82% 28%, rgba(99, 230, 255, 0.06), transparent 20%),
+            linear-gradient(rgba(7, 17, 28, 0.85), rgba(7, 17, 28, 0.92)),
+            url("../assets/images/homepage.jpeg");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+}
+
+/* ===================== FIX: HERO SECTION MOBILE ===================== */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 5% 40px !important;
+        min-height: auto !important;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(32px, 6vw, 48px) !important;
+    }
+
+    .hero-content p {
+        font-size: 17px !important;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-buttons .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+
+    .dashboard-card {
+        min-height: 320px;
+        padding: 18px;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+    .dash-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .dash-content h3 {
+        font-size: 20px;
+    }
+
+    .dash-content p {
+        font-size: 38px;
+    }
+
+    .chart-lines {
+        height: 140px;
+        gap: 10px;
+    }
+
+    .dash-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .dash-stats div {
+        padding: 12px 8px;
+        border-radius: 14px;
+    }
+
+    .dash-stats strong {
+        font-size: 20px;
+    }
+
+    .dash-stats span {
+        font-size: 11px;
+    }
+
+    .floating-card {
+        display: none !important;
+    }
+
+    .hero-visual {
+        min-height: auto !important;
+    }
+
+    .trusted-row {
+        justify-content: center;
+        font-size: 13px;
+    }
+
+    .trusted-row strong {
+        padding: 4px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 40px 4% 30px !important;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(26px, 7vw, 36px) !important;
+    }
+
+    .hero-content p {
+        font-size: 15px !important;
+        line-height: 1.6 !important;
+    }
+
+    .hero-buttons .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
+    .dashboard-card {
+        min-height: 260px;
+        padding: 14px;
+        border-radius: 20px;
+    }
+
+    .dash-content h3 {
+        font-size: 17px;
+    }
+
+    .dash-content p {
+        font-size: 30px;
+    }
+
+    .chart-lines {
+        height: 100px;
+        gap: 8px;
+    }
+
+    .dash-stats div {
+        padding: 10px 6px;
+        border-radius: 12px;
+    }
+
+    .dash-stats strong {
+        font-size: 17px;
+    }
+
+    .dash-stats span {
+        font-size: 10px;
+    }
+
+    .trusted-row {
+        font-size: 12px;
+        gap: 8px;
+    }
+
+    .trusted-row strong {
+        padding: 3px 8px;
+        font-size: 11px;
+    }
+
+    .section-badge {
+        font-size: 11px;
+        padding: 4px 12px;
+    }
+}
+
+/* ===================== FIX: STATS SECTION ===================== */
+@media (max-width: 768px) {
+    .stats-section {
+        padding: 50px 5% 60px !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    .stat-box {
+        min-height: 140px !important;
+        padding: 24px 16px !important;
+        border-radius: 20px !important;
+    }
+
+    .stat-box h3 {
+        font-size: 38px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .stat-box p {
+        font-size: 15px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-section {
+        padding: 30px 4% 40px !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+    }
+
+    .stat-box {
+        min-height: 110px !important;
+        padding: 16px 12px !important;
+        border-radius: 16px !important;
+    }
+
+    .stat-box h3 {
+        font-size: 30px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .stat-box p {
+        font-size: 13px !important;
+    }
+}
+
+/* ===================== FIX: SERVICE CARDS ===================== */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 18px !important;
+    }
+
+    .service-card {
+        min-height: 320px !important;
+        padding: 20px !important;
+        border-radius: 20px !important;
+    }
+
+    .service-card img {
+        height: 130px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .service-card h3 {
+        font-size: 18px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .service-card p {
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+    }
+
+    .service-card a {
+        font-size: 13px !important;
+        padding-top: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+    }
+
+    .service-card {
+        min-height: 260px !important;
+        padding: 14px !important;
+        border-radius: 16px !important;
+    }
+
+    .service-card img {
+        height: 100px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .service-card h3 {
+        font-size: 15px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .service-card p {
+        font-size: 11px !important;
+        line-height: 1.5 !important;
+    }
+
+    .service-card a {
+        font-size: 11px !important;
+        padding-top: 8px !important;
+    }
+}
+
+/* ===================== FIX: PROJECT CARDS ===================== */
+@media (max-width: 768px) {
+    .project-category-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .project-category-card {
+        min-height: 320px !important;
+        padding: 20px !important;
+        border-radius: 20px !important;
+    }
+
+    .project-category-card img {
+        height: 170px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .project-category-card h3 {
+        font-size: 20px !important;
+    }
+
+    .project-category-card p {
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-category-card {
+        min-height: 260px !important;
+        padding: 14px !important;
+        border-radius: 16px !important;
+    }
+
+    .project-category-card img {
+        height: 130px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .project-category-card h3 {
+        font-size: 17px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .project-category-card p {
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+    }
+
+    .project-category-card a {
+        font-size: 12px !important;
+        padding-top: 10px !important;
+    }
+}
+
+/* ===================== FIX: PROCESS & TESTIMONIALS ===================== */
+@media (max-width: 768px) {
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    .process-card {
+        padding: 20px !important;
+        border-radius: 20px !important;
+    }
+
+    .process-card span {
+        font-size: 32px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .process-card h3 {
+        font-size: 18px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .process-card p {
+        font-size: 13px !important;
+    }
+
+    .testimonial-grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+
+    .testimonial-card {
+        padding: 20px !important;
+        border-radius: 20px !important;
+    }
+
+    .testimonial-card p {
+        font-size: 15px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .testimonial-card h4 {
+        font-size: 17px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .process-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+    }
+
+    .process-card {
+        padding: 14px !important;
+        border-radius: 16px !important;
+        min-height: 140px !important;
+    }
+
+    .process-card span {
+        font-size: 26px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .process-card h3 {
+        font-size: 15px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .process-card p {
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+    }
+
+    .testimonial-card {
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+
+    .testimonial-card p {
+        font-size: 13px !important;
+        margin-bottom: 12px !important;
+        line-height: 1.6 !important;
+    }
+
+    .testimonial-card h4 {
+        font-size: 15px !important;
+    }
+
+    .testimonial-card span {
+        font-size: 12px !important;
+    }
+}
+
+/* ===================== FIX: CTA & FOOTER ===================== */
+@media (max-width: 768px) {
+    .final-cta {
+        padding: 50px 5% !important;
+    }
+
+    .final-cta-content {
+        min-height: 220px !important;
+        padding: 30px 20px !important;
+        border-radius: 24px !important;
+    }
+
+    .final-cta h2 {
+        font-size: clamp(24px, 4vw, 34px) !important;
+        margin: 12px 0 20px !important;
+    }
+
+    .footer {
+        padding: 40px 5% 20px !important;
+    }
+
+    .footer-container,
+    .upgraded-footer {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 30px !important;
+    }
+
+    .footer-brand p {
+        font-size: 14px !important;
+        max-width: 100% !important;
+    }
+
+    .footer-column h4 {
+        font-size: 16px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .footer-column a {
+        font-size: 13px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .social-icons a {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 14px !important;
+    }
+
+    .footer-bottom {
+        margin-top: 30px !important;
+        padding-top: 16px !important;
+    }
+
+    .footer-bottom p {
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .final-cta {
+        padding: 30px 4% !important;
+    }
+
+    .final-cta-content {
+        min-height: 180px !important;
+        padding: 24px 16px !important;
+        border-radius: 18px !important;
+    }
+
+    .final-cta h2 {
+        font-size: clamp(20px, 5vw, 28px) !important;
+        margin: 8px 0 16px !important;
+    }
+
+    .final-cta .btn {
+        padding: 10px 18px !important;
+        font-size: 13px !important;
+        border-radius: 10px !important;
+    }
+
+    .footer {
+        padding: 30px 4% 16px !important;
+    }
+
+    .footer-container,
+    .upgraded-footer {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .footer-brand .header-logo img {
+        width: 44px !important;
+        height: 44px !important;
+    }
+
+    .footer-brand .header-logo span {
+        font-size: 20px !important;
+    }
+
+    .footer-column h4 {
+        font-size: 14px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .footer-column a {
+        font-size: 12px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .footer-bottom p {
+        font-size: 11px !important;
+    }
+}
+
+/* ===================== FIX: CHAT BUTTON ===================== */
+@media (max-width: 768px) {
+    .chat-btn {
+        width: 56px !important;
+        height: 56px !important;
+        right: 16px !important;
+        bottom: 90px !important;
+    }
+
+    .chat-btn img {
+        width: 64px !important;
+        height: 64px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-btn {
+        width: 48px !important;
+        height: 48px !important;
+        right: 12px !important;
+        bottom: 80px !important;
+    }
+
+    .chat-btn img {
+        width: 52px !important;
+        height: 52px !important;
+    }
+}
+
+/* ===================== FIX: GENERAL SECTION HEADERS ===================== */
+@media (max-width: 768px) {
+    .section {
+        padding: 50px 5% !important;
+    }
+
+    .section-header h2 {
+        font-size: clamp(28px, 5vw, 38px) !important;
+        margin: 10px 0 !important;
+    }
+
+    .section-header p {
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+    }
+
+    .section-badge {
+        font-size: 11px !important;
+        padding: 5px 14px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 35px 4% !important;
+    }
+
+    .section-header h2 {
+        font-size: clamp(22px, 6vw, 30px) !important;
+        margin: 8px 0 !important;
+    }
+
+    .section-header p {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+    }
+
+    .section-badge {
+        font-size: 10px !important;
+        padding: 4px 10px !important;
+    }
+}
+
+/* ===================== FIX: BODY PADDING FOR MOBILE NAV ===================== */
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 76px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-bottom: 68px !important;
+    }
+}
+
+/* ===================== FIX: EMAIL ICON VISIBILITY ===================== */
+/* Email icon should be hidden on mobile (already handled above) */
+/* If you want to show it on tablet, adjust the breakpoint */
+
+/* ===================== FIX: LOGO ON MOBILE ===================== */
+@media (max-width: 650px) {
+    .header-logo {
+        min-width: auto !important;
+        gap: 10px !important;
+    }
+
+    .header-logo img {
+        width: 42px !important;
+        height: 42px !important;
+    }
+
+    .header-logo span {
+        font-size: 18px !important;
+        letter-spacing: 1px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-logo img {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .header-logo span {
+        font-size: 15px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .header {
+        padding: 0 4% !important;
+        gap: 10px !important;
+        height: 64px !important;
+    }
+
+    :root {
+        --header-h: 64px !important;
+    }
+}
+/* =========================================================
+   SIMPLE RESPONSIVE BACKGROUND
+   Add this to your style.css
+   ========================================================= */
+
+body {
+    min-height: 100%;
+    background-color: #07111c;
+    background-image: url("../assets/images/homepage.jpeg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Add gradient overlay using pseudo-element */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 18% 8%, rgba(34,199,232,.16), transparent 28%),
+        radial-gradient(circle at 82% 28%, rgba(99,230,255,.10), transparent 30%),
+        linear-gradient(rgba(7,17,28,.72), rgba(7,17,28,.82));
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    body {
+        background-size: cover;
+        background-position: center 30%;
+    }
+    
+    body::before {
+        background: 
+            radial-gradient(circle at 18% 8%, rgba(34,199,232,.10), transparent 20%),
+            radial-gradient(circle at 82% 28%, rgba(99,230,255,.05), transparent 20%),
+            linear-gradient(rgba(7,17,28,.82), rgba(7,17,28,.90));
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background-position: center 40%;
+    }
+    
+    body::before {
+        background: 
+            radial-gradient(circle at 18% 8%, rgba(34,199,232,.08), transparent 15%),
+            radial-gradient(circle at 82% 28%, rgba(99,230,255,.04), transparent 15%),
+            linear-gradient(rgba(7,17,28,.88), rgba(7,17,28,.95));
+    }
+}
+
+/* For very tall screens (like ultra-wide) */
+@media (min-aspect-ratio: 16/9) {
+    body {
+        background-size: auto 100%;
+        background-position: center center;
+    }
+}
+
+/* For very wide screens */
+@media (max-aspect-ratio: 4/3) {
+    body {
+        background-size: 100% auto;
+        background-position: center center;
+    }
 }
